@@ -6,18 +6,18 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/30 11:29:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/10/31 12:15:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    return ('A');
+	return ('A');
 }
 
 int main(void)
 {
-    
+	
 }
