@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:11:03 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/01 11:21:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/01 13:33:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static int	ft_print_param(char c, va_list args)
 	else if (c == 'i' || c == 'd')
 		return (ft_putnbr(va_arg(args, int)));
 	else if (c == 'p')
-		return (ft_putptr(va_arg(args, void *)));
+		return (ft_nbr((unsigned long int) va_arg(args, void *), HEX_LOW, 'p'));
 	else if (c == 'u')
-		return (ft_putnbr_u(va_arg(args, unsigned int)));
-	else if (c == 'X' || c == 'x')
-		return (ft_putnbr_hex(va_arg(args, int), c));
+		return (ft_nbr(va_arg(args, unsigned int), DEC, 'u'));
+	else if (c == 'X')
+		return (ft_nbr(va_arg(args, unsigned int), HEX_UP, 'u'));
+	else if (c == 'x')
+		return (ft_nbr(va_arg(args, unsigned int), HEX_LOW, 'u'));
 	else
 	{
 		write(1, "%%", 1);

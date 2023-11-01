@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_hex.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:20:35 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/20 10:56:13 by yioffe           ###   ########.fr       */
+/*   Created: 2023/11/01 12:08:55 by yioffe            #+#    #+#             */
+/*   Updated: 2023/11/01 13:33:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_putnbr_hex_rec(unsigned int n, int len, char *hex_string)
+static int	ft_putnbr_base_rec(size_t n, int len, char *base)
 {
-	if (n >= 16)
-		len = (ft_putnbr_hex_rec(n / 16, len, hex_string));
-	len += ft_putchar(hex_string[n % 16]);
+	size_t	base_len;
+
+	base_len = ft_strlen(base);
+	if (n >= base_len)
+		len = (ft_putnbr_base_rec(n / base_len, len, base));
+	len += ft_putchar(base[n % base_len]);
 	return (len);
 }
 
-int	ft_putnbr_hex(int n, char c)
+int	ft_nbr(long long int n, char *base, char type)
 {
 	int		len;
 
 	len = 0;
-	if (c == 'x')
-		len += ft_putnbr_hex_rec((unsigned int) n, len, "0123456789abcdef");
-	else if (c == 'X')
-		len += ft_putnbr_hex_rec((unsigned int) n, len, "0123456789ABCDEF");
+	if (type == 'p')
+	{
+		if (n == 0)
+			return (ft_putstr("(nil)"));
+		len += ft_putstr("0x");
+		len += ft_nbr((unsigned long int) n, HEX_LOW, 'u');
+	}
+	else
+		len += ft_putnbr_base_rec(n, len, base);
 	return (len);
 }
 
