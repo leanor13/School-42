@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:09:54 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/20 11:22:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/01 11:14:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <limits.h>
 # include "libft/libft.h"
 
 int	ft_printf(const char *str, ...);
