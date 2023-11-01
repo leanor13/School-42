@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:11:03 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/01 13:33:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/01 14:13:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_print_param(char c, va_list args)
 	else if (c == 'c')
 		return (ft_putchar(va_arg(args, int)));
 	else if (c == 'i' || c == 'd')
-		return (ft_putnbr(va_arg(args, int)));
+		return (ft_nbr(va_arg(args, int), DEC, 'i'));
 	else if (c == 'p')
 		return (ft_nbr((unsigned long int) va_arg(args, void *), HEX_LOW, 'p'));
 	else if (c == 'u')
@@ -72,8 +72,8 @@ int	ft_printf(const char *str, ...)
 /* int	main(void)
 {
 	//char	str[]="Hello";
-	printf("\noriginal length: %d\n", printf("%p", -1));
-	printf("\nmy length: %d\n", ft_printf("%p", -1));
+	printf("\noriginal length: %d\n", printf("%i\n", 2147483648));
+	printf("\nmy length: %d\n", ft_printf("%i\n", 2147483648));
 	//printf("%d\n", ft_printf("%y","Hi"));
 	//ft_printf("ggg%c, sfd%sf%ifmdfl\n", 'N', "HELLO", 3428347);
 	//printf("%d\n", ft_printf("ggg%c, sfd%sf%ifmdfl", 'N', "HELLO", 3428347));

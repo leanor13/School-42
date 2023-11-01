@@ -6,12 +6,11 @@
 #    By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2023/11/01 13:34:34 by yioffe           ###   ########.fr        #
+#    Updated: 2023/11/01 13:52:30 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = ft_printf.c ft_nbr.c \
-	ft_putchar.c ft_putnbr.c ft_putstr.c ft_strlen.c
+SRCS = ft_printf.c ft_printf_helper.c
 OBJS = $(SRCS:.c=.o)
 NAME = libftprintf.a
 
