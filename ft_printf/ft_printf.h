@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:09:54 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/01 14:06:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/02 12:16:22 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@
 
 # ifndef DEC
 #  define DEC "0123456789"
+# endif
+
+# ifndef BONUS_FLAGS
+#  define BONUS_FLAGS "# +"
 # endif
 
 int	ft_printf(const char *str, ...);

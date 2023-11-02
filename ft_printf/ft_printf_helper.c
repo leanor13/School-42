@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/01 13:52:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/02 12:14:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_putchar(char c)
 	return (1);
 }
 
-int	ft_strlen(const char *str)
+static int	ft_strlen(const char *str)
 {
 	int	len;
 
