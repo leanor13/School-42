@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:11:03 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/02 12:18:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:08:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_printf(const char *str, ...)
 	va_end(args);
 	return (len);
 }
-
+/* 
 int	main(void)
 {
 	//char	str[]="Hello";
@@ -80,4 +80,4 @@ int	main(void)
 	//printf("%d\n", printf(" %d %d %d %d %d %d %d", INT_MAX,
 	//INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42));
 	//printf("%d\n", printf("%i%s%l\n", 4535, "HellO", '!'));
-}
+} */

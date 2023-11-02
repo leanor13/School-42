@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/02 12:14:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:08:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	ft_putchar(char c)
 {
-	write(1, &c, 1);
-	return (1);
+	return (write(1, &c, 1));
 }
 
 static int	ft_strlen(const char *str)
@@ -32,8 +31,7 @@ int	ft_putstr(char *s)
 {
 	if (!s)
 		return (ft_putstr("(null)"));
-	write(1, s, ft_strlen(s));
-	return (ft_strlen(s));
+	return (write(1, s, ft_strlen(s)));
 }
 
 static int	ft_putnbr_base_rec(size_t n, int len, char *base)
@@ -57,7 +55,7 @@ int	ft_nbr(long long int n, char *base, char type)
 		if (n == 0)
 			return (ft_putstr("(nil)"));
 		len += ft_putstr("0x");
-		len += ft_nbr((unsigned long int) n, HEX_LOW, 'u');
+		len += ft_nbr((unsigned long int) n, base, 'u');
 	}
 	else if (type == 'u')
 		len += ft_putnbr_base_rec(n, len, base);
@@ -71,7 +69,7 @@ int	ft_nbr(long long int n, char *base, char type)
 			n *= -1;
 			len ++;
 		}
-		len += ft_nbr((int) n, DEC, 'u');
+		len += ft_nbr((int) n, base, 'u');
 	}
 	return (len);
 }
