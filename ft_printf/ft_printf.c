@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 12:11:03 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/01 14:13:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/11/02 12:01:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	ft_printf(const char *str, ...)
 		else if (*str == '%')
 		{
 			if (*(str + 1) == '\0') 
-				len += ft_putchar('%');
+				len = -1;
 			else
 			{
 				len += ft_print_param(*(str + 1), args);
@@ -72,8 +72,8 @@ int	ft_printf(const char *str, ...)
 /* int	main(void)
 {
 	//char	str[]="Hello";
-	printf("\noriginal length: %d\n", printf("%i\n", 2147483648));
-	printf("\nmy length: %d\n", ft_printf("%i\n", 2147483648));
+	printf("\noriginal length: %d\n", printf("hello%i\n%", 21474838));
+	printf("\nmy length: %d\n", ft_printf("hello%i\n%", 21474838));
 	//printf("%d\n", ft_printf("%y","Hi"));
 	//ft_printf("ggg%c, sfd%sf%ifmdfl\n", 'N', "HELLO", 3428347);
 	//printf("%d\n", ft_printf("ggg%c, sfd%sf%ifmdfl", 'N', "HELLO", 3428347));
