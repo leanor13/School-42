@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:26:07 by yioffe            #+#    #+#             */
-/*   Updated: 2023/12/05 12:40:46 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/12/05 13:24:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 # ifndef MAX_FILE_NUM
-#  define MAX_FILE_NUM 100
+#  define MAX_FILE_NUM 10000
 # endif
 
 char	*get_next_line(int fd);
@@ -33,7 +33,3 @@ void	ft_free(int *nl_finder, char *buffer);
 void	ft_bzero(void *s, size_t n);
 
 #endif
-
-/* 1001 1011 >> 4 =  0000 1001 |
-1001 1011 << 4 =  1011 0000
-                  1011 1001 */

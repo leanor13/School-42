@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2023/12/05 12:40:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/12/05 13:21:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,43 +38,42 @@ char	*get_next_line(int fd)
 
 /* void test_gnl(int fd, char *expected)
 {
-    char *line;
+	char *line;
+	int i = 1;
 
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("Line: %s\n", line);
-        free(line);
-    }
+	printf("Test %d:\n", i);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Line: %s\n", line);
+		free(line);
+	}
 
-    if (expected == NULL)
-        printf("Expected: NULL\n");
-    else
-        printf("Expected: %s\n", expected);
-} */
+	printf("Expected: %s\n\n", expected);
+}
 
-/* int main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-    int fd;
+	if (argc < 2)
+	{
+		printf("Usage: %s <file1> <file2> ...\n", argv[0]);
+		return 1;
+	}
 
-    if (argc == 2)
-    {
-        // Read from file
-        fd = open(argv[1], O_RDONLY);
-        if (fd == -1)
-        {
-            perror("Error opening file");
-            return 1;
-        }
-    }
-    else
-    {
-        // Read from standard input
-        fd = 0;
-    }
+	for (int i = 1; i < argc; ++i)
+	{
+		int fd = open(argv[i], O_RDONLY);
 
-    test_gnl(fd, NULL);
+		if (fd == -1)
+		{
+			perror("Error opening file");
+			continue;
+		}
 
-    close(fd);
+		char expected[] = "See your file"; // Replace with the actual expected output
+		test_gnl(fd, expected);
 
-    return 0;
+		close(fd);
+	}
+
+	return 0;
 } */
