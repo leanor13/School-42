@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2023/12/05 12:40:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:40:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[MAX_FILE_NUM][BUFFER_SIZE + 1];
 	char		*line;
 	int			new_line;
 
 	new_line = 1;
 	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0 || fd >= MAX_FILE_NUM)
 	{
-		ft_bzero(buffer, BUFFER_SIZE + 1);
+		if (fd > 0 && fd < MAX_FILE_NUM)
+			ft_bzero(buffer[fd], BUFFER_SIZE + 1);
 		return (NULL);
 	}
-	while (new_line && (buffer[0] || read(fd, buffer, BUFFER_SIZE)))
+	while (new_line && (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE)))
 	{
-		line = ft_linejoin(line, buffer);
-		ft_free(&new_line, buffer);
+		line = ft_linejoin(line, buffer[fd]);
+		ft_free(&new_line, buffer[fd]);
 		if (line == NULL)
 			return (NULL);
 	}

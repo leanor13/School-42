@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 18:42:17 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/10 11:58:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2023/12/05 12:30:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	size_t			i;
 	unsigned char	*ptr;
 
-	i = 0;
 	ptr = s;
-	while (i < n)
-	{
-		*ptr = '\0';
-		ptr ++;
-		i ++;
-	}
+	while (n--)
+		*ptr++ = '\0';
 }
 
 /* #include <stdio.h>
