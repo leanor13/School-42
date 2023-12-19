@@ -43,7 +43,7 @@ void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(void *, v
 
 int	comp(void *a, void *b)
 {
-	return ((int *)a == (int *)b);
+	return ((intptr_t)a == (intptr_t)b);
 }
 
 int	main(void)
@@ -59,8 +59,8 @@ int	main(void)
     }
 
 	node2 -> data = (void *)1;
-	node1 -> data = (void *)8;
-	node0 -> data = (void *)1;
+	node1 -> data = (void *)2;
+	node0 -> data = (void *)8;
 	node2 -> next = NULL;
 	node1 -> next = node2;
 	node0 -> next = node1;
@@ -68,15 +68,15 @@ int	main(void)
 	curr = node0;
 	while (curr)
 	{
-		printf("%p\n", (int *)curr->data);
+		printf("%ld\n", (intptr_t)curr->data);
 		curr = curr -> next;
 	}
-	ft_list_remove_if(&node0, (void *)1, comp);
+	ft_list_remove_if(&node0, (void *)8, comp);
 	curr = node0;
 	printf("New list:\n");
 	while (curr)
 	{
-		printf("%p\n", (int *)curr->data);
+		printf("%ld\n", (intptr_t)curr->data);
 		curr = curr -> next;
 	}
 	return (0);
