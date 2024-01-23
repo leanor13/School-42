@@ -1,0 +1,12 @@
+{
+    "files.autoSave": "onFocusChange",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "/usr/bin/env",
+            "args": ["--", "flatpak-spawn", "--host", "--env=TERM=xterm-256color", "zsh"]
+            },
+        },
+    "terminal.integrated.defaultProfile.linux": "zsh",
+}

@@ -1,77 +1,59 @@
- NAME = minitalk
- 
- CC = cc
- 
- STANDARD_FLAGS     = -Wall -Werror -Wextra -g #-fsanitize=address
- 
- INCLUDE = -Iincludes
- 
- LIBFT_DIR = libft
- LIBFT_A = $(LIBFT_DIR)/libft.a
- 
- MINITALK_LIB = minitalk.a
- 
- CLIENT = client
- SERVER = server
- 
- CLIENT_SRC = src/client.c
- CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
- 
- SERVER_SRC = src/server.c
- SERVER_OBJ = $(SERVER_SRC:.c=.o)
- 
- CLIENT_BONUS = client_bonus
- SERVER_BONUS = server_bonus
- 
- CLIENT_BONUS_SRC = bonus_src/client.c
- CLIENT_BONUS_OBJ = $(CLIENT_BONUS_SRC:.c=.o)
- 
- SERVER_BONUS_SRC = bonus_src/server.c
- SERVER_BONUS_OBJ = $(SERVER_BONUS_SRC:.c=.o)
- 
- %.o: %.c
-     @$(CC) $(STANDARD_FLAGS) -o $@ -c $<
- 
- all: $(SERVER) $(CLIENT)
- 
- bonus: $(SERVER_BONUS) $(CLIENT_BONUS)
- 
- $(CLIENT): $(CLIENT_OBJ) $(OBJ)
-     @echo "Compiling $@"
-     @make -C $(LIBFT_DIR) > /dev/null
-     @$(CC) $(STANDARD_FLAGS) $(INCLUDE) $(CLIENT_OBJ) $(LIBFT_A)  -o client > /dev/null
-     @echo "client has been created."
- 
- $(SERVER): $(SERVER_OBJ) $(OBJ)
-     @echo "Compiling $@"
-     @make -C $(LIBFT_DIR) > /dev/null
-     @$(CC) $(STANDARD_FLAGS) $(INCLUDE) $(SERVER_OBJ) $(LIBFT_A)  -o server > /dev/null
-     @echo "server has been created."
- 
- $(CLIENT_BONUS): $(CLIENT_BONUS_OBJ) $(OBJ)
-     @echo "Compiling $@"
-     @make -C $(LIBFT_DIR) > /dev/null
-     @$(CC) $(STANDARD_FLAGS) $(INCLUDE) $(CLIENT_BONUS_OBJ) $(LIBFT_A)  -o client_bonus > /dev/null
-     @echo "client_bonus has been created."
- 
- $(SERVER_BONUS): $(SERVER_BONUS_OBJ) $(OBJ)
-     @echo "Compiling $@"
-     @make -C $(LIBFT_DIR) > /dev/null
-     @$(CC) $(STANDARD_FLAGS) $(INCLUDE) $(SERVER_BONUS_OBJ) $(LIBFT_A)  -o server_bonus > /dev/null
-     @echo "server_bonus has been created."
- 
- clean:
-     @rm -f src/*.o
-     @rm -f bonus_src/*.o
-     @make -C $(LIBFT_DIR) clean > /dev/null
-     @echo Object files have been deleted.
- 
- fclean: clean
-     @rm -f $(SERVER) $(CLIENT)
-     @rm -f $(SERVER_BONUS) $(CLIENT_BONUS)
-     @make -C $(LIBFT_DIR) fclean > /dev/null
-     @echo All created files have been deleted.
- 
- re: fclean all
- 
- .PHONY: fclean clean all re
+NAME = push_swap
+BONUS_NAME = push_swap_bonus
+
+BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
+B = 
+
+SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
+S = 
+
+COMPRESS = ar rcs
+RM = rm -f
+CFLAGS = -Wall -Wextra -Werror
+CC = cc
+
+OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
+
+BONUS_OBJS = $(addprefix $(OBJS_DIR_BONUS)/,$(BONUS:bonus/%.c=%.o))
+OBJS_DIR = objs
+OBJS_DIR_BONUS = objs_bonus
+
+LIBFT_DIR = ./includes/libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+all: $(NAME) 
+bonus: $(BONUS_NAME)
+
+$(OBJS_DIR)/%.o: srcs/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJS_DIR_BONUS)/%.o: bonus/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT)
+
+$(BONUS_NAME): $(BONUS_OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(LIBFT)
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
+
+clean:
+	@$(RM) -r $(OBJS_DIR)
+	@$(RM) -r $(OBJS_DIR_BONUS)
+	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+
+fclean: clean
+	@$(RM) $(NAME)
+	@$(RM) $(BONUS_NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+
+run: all
+	./$(NAME) 
+
+re: fclean all
+
+.PHONY: all fclean clean re
