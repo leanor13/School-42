@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/23 17:11:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/23 17:31:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ int	validate_input(char **av, int ac)
 		ac --;
 	}
 	return (1);
+}
+
+t_dlist **read_input()
+{
+	
 }
 
 int	main(int ac, char **av)
