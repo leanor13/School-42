@@ -6,19 +6,19 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 13:40:11 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/09 18:58:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/23 11:40:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new_node)
 {
-	if (lst && new)
+	if (lst && new_node)
 	{
 		if (*lst)
-			new -> next = *lst;
-		*lst = new;
+			new_node -> next = *lst;
+		*lst = new_node;
 	}
 }
 

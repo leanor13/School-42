@@ -1,5 +1,5 @@
 NAME = push_swap
-BONUS_NAME = push_swap_bonus
+BONUS_NAME = checker
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
