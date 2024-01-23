@@ -1,0 +1,19 @@
+#!/bin/bash
+
+repo_42="/home/yioffe/Projects/School-42"
+
+if [ -z "$1" ]; then
+    repo_path=$(pwd)
+elif [[ "$1" == "42" ]]; then
+    repo_path="$repo_42"
+else
+    echo "wrong push parameter"
+    exit 1
+fi
+
+cd "$repo_path" || exit
+git add .
+current_date=$(date +"%d-%m-%Y")
+git commit -m "school $current_date"
+git push
+
