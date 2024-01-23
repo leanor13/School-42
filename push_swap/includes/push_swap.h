@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/23 11:35:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/23 16:37:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "libft/libft.h"
+#include "ft_printf/ft_printf.h"
 
 typedef struct d_list
 {
