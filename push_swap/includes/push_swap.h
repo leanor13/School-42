@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:50:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 15:19:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
+
+# define ERROR_EMPTY_INPUT "Needed at least one integer"
+# define ERROR_INVALID_INPUT "Invalid input, only digits are allowed"
 
 typedef struct d_list
 {

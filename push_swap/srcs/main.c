@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:58:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 15:19:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	validate_input(char **av, int ac)
 	{
 		if (!ft_isnum(av[ac - 1]))
 		{
-			ft_printf("Invalid input, only digits are allowed");
+			ft_printf(ERROR_INVALID_INPUT);
 			return (0);
 		}
 		ac --;
@@ -45,6 +45,7 @@ int	validate_input(char **av, int ac)
 t_dlist	**read_input(int ac, char **av)
 {
 	t_dlist	**stack;
+	t_dlist	*new_node;
 	int		num;
 	int		i;
 
@@ -55,7 +56,13 @@ t_dlist	**read_input(int ac, char **av)
 	while (i < ac)
 	{
 		num = ft_atoi(av[i]);
-		ft_dlstadd_back(stack, ft_dlstnew(num));
+		new_node = ft_dlstnew(num);
+		if (!new_node)
+		{
+			ft_dlst_free(stack);
+			return (NULL);
+		}
+		ft_dlstadd_back(stack, new_node);
 		i ++;
 	}
 	return (stack);
@@ -67,7 +74,7 @@ int	main(int ac, char **av)
 
 	if (ac < 2)
 	{
-		ft_printf("Needed at least one integer");
+		ft_printf(ERROR_EMPTY_INPUT);
 		return (0);
 	}
 	if (validate_input(av, ac))
