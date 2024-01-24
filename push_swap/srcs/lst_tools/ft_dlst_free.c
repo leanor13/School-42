@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dlstnew.c                                       :+:      :+:    :+:   */
+/*   ft_dlst_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 13:24:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:46:16 by yioffe           ###   ########.fr       */
+/*   Created: 2024/01/24 14:48:43 by yioffe            #+#    #+#             */
+/*   Updated: 2024/01/24 14:58:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
-t_dlist	*ft_dlstnew(int content)
+void	ft_dlst_free(t_dlist **lst)
 {
-	t_dlist	*res;
-
-	res = (t_dlist *)malloc(sizeof(t_dlist));
-	if (!res)
-		return (NULL);
-	res -> num = content;
-	res -> next = NULL;
-	res -> prev = NULL;
-	return (res);
+	return ;
 }

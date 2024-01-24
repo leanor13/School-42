@@ -6,24 +6,22 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:35:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:50:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include "libft/libft.h"
-#include "ft_printf/ft_printf.h"
+# include "libft/libft.h"
+# include "ft_printf/ft_printf.h"
 
 typedef struct d_list
 {
 	int				num;
 	struct d_list	*next;
 	struct d_list	*prev;
-} t_dlist;
+}	t_dlist;
 
 void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
 void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
@@ -33,6 +31,6 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 t_dlist	*ft_dlstlast(t_dlist *lst);
 t_dlist	*ft_dlstnew(int content);
 int		ft_dlstsize(t_dlist *lst);
-
+void	ft_dlst_free(t_dlist **lst);
 
 #endif

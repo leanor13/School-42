@@ -6,17 +6,17 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:31:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:58:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int ft_isnum(char *s)
+int	ft_isnum(char *s)
 {
 	if (*s == '-')
 		s ++;
-	if (!s)
+	if (!s || !*s)
 		return (0);
 	while (*s)
 	{
@@ -28,7 +28,7 @@ int ft_isnum(char *s)
 	return (1);
 }
 
-int	validate_input(char **av, size_t ac)
+int	validate_input(char **av, int ac)
 {
 	while (ac >= 2)
 	{
@@ -42,36 +42,36 @@ int	validate_input(char **av, size_t ac)
 	return (1);
 }
 
-t_dlist **read_input(size_t nmemb, char **av)
+t_dlist	**read_input(int ac, char **av)
 {
-	t_dlist **stack_a;
-	t_dlist	*next;
-	t_dlist	*prev;
+	t_dlist	**stack;
 	int		num;
 	int		i;
 
-	stack_a = ft_calloc(nmemb, sizeof(t_dlist *));
-	if (!stack_a)
+	stack = ft_calloc(ac, sizeof(t_dlist *));
+	if (!stack)
 		return (NULL);
-	prev = NULL;
 	i = 1;
-	while (i < nmemb)
+	while (i < ac)
 	{
 		num = ft_atoi(av[i]);
-		ft_dlstadd_back(stack_a, ft_dlstnew(num));
+		ft_dlstadd_back(stack, ft_dlstnew(num));
 		i ++;
 	}
+	return (stack);
 }
 
 int	main(int ac, char **av)
 {
-	if (ac == 1)
+	t_dlist	**stack_a;
+
+	if (ac < 2)
 	{
-		ft_printf("needed at least one integer");
+		ft_printf("Needed at least one integer");
 		return (0);
 	}
 	if (validate_input(av, ac))
-		ft_printf("input is valid");
+		stack_a = read_input(ac, av);
+	ft_dlst_free(stack_a);
 	return (0);
 }
-
