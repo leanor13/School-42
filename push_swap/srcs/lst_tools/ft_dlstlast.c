@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_dlstlast.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:12:17 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/06 19:20:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:26:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/push_swap.h"
 
-t_list	*ft_lstlast(t_list *lst)
+t_dlist	*ft_dlstlast(t_dlist *lst)
 {
-	t_list	*curr;
+	t_dlist	*curr;
 
 	curr = lst;
 	if (curr == NULL)

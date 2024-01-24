@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 13:28:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:31:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,18 @@ t_dlist **read_input(size_t nmemb, char **av)
 	t_dlist	*next;
 	t_dlist	*prev;
 	int		num;
+	int		i;
 
 	stack_a = ft_calloc(nmemb, sizeof(t_dlist *));
 	if (!stack_a)
 		return (NULL);
 	prev = NULL;
-	while (nmemb >= 1)
+	i = 1;
+	while (i < nmemb)
 	{
-		num = ft_atoi(av[nmemb - 1]);
-		ft_dlstadd_front();
-		nmemb --;
+		num = ft_atoi(av[i]);
+		ft_dlstadd_back(stack_a, ft_dlstnew(num));
+		i ++;
 	}
 }
 

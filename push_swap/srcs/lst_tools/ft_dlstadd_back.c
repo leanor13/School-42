@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:21:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 13:28:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 14:25:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node)
 	}
 	else
 	{
-		last = ft_lstlast(*lst);
+		last = ft_dlstlast(*lst);
 		last -> next = new_node;
+		new_node -> prev = last;
 	}
 }
 

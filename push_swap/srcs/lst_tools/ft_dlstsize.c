@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 18:56:44 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 13:28:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 13:39:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/push_swap.h"
 
 int	ft_dlstsize(t_list *lst)
 {
