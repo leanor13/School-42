@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/23 17:31:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/24 13:28:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int ft_isnum(char *s)
 {
+	if (*s == '-')
+		s ++;
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (!ft_isdigit(*s))
@@ -24,7 +28,7 @@ int ft_isnum(char *s)
 	return (1);
 }
 
-int	validate_input(char **av, int ac)
+int	validate_input(char **av, size_t ac)
 {
 	while (ac >= 2)
 	{
@@ -38,9 +42,23 @@ int	validate_input(char **av, int ac)
 	return (1);
 }
 
-t_dlist **read_input()
+t_dlist **read_input(size_t nmemb, char **av)
 {
-	
+	t_dlist **stack_a;
+	t_dlist	*next;
+	t_dlist	*prev;
+	int		num;
+
+	stack_a = ft_calloc(nmemb, sizeof(t_dlist *));
+	if (!stack_a)
+		return (NULL);
+	prev = NULL;
+	while (nmemb >= 1)
+	{
+		num = ft_atoi(av[nmemb - 1]);
+		ft_dlstadd_front();
+		nmemb --;
+	}
 }
 
 int	main(int ac, char **av)
