@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlstnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 13:24:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:46:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/25 14:25:57 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_dlist	*ft_dlstnew(int content)
 	res = (t_dlist *)malloc(sizeof(t_dlist));
 	if (!res)
 		return (NULL);
-	res -> num = content;
+	res -> content = content;
 	res -> next = NULL;
 	res -> prev = NULL;
 	return (res);

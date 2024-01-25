@@ -5,7 +5,8 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main
+S = main lst_tools/ft_dlst_free lst_tools/ft_dlstadd_back \
+	lst_tools/ft_dlstnew lst_tools/ft_dlstlast 
 
 COMPRESS = ar rcs
 RM = rm -f

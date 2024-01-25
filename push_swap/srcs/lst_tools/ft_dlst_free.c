@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dlst_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 14:48:43 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 14:58:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/25 14:25:34 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,14 @@
 
 void	ft_dlst_free(t_dlist **lst)
 {
-	return ;
+	t_dlist	*tmp;
+
+	if (!lst || !*lst)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
+	}
 }

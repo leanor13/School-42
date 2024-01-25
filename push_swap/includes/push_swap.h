@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/24 15:19:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/25 15:01:43 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # include "ft_printf/ft_printf.h"
 
 # define ERROR_EMPTY_INPUT "Needed at least one integer"
-# define ERROR_INVALID_INPUT "Invalid input, only digits are allowed"
+# define ERROR_INVALID_CHARACTERS "Invalid input, only digits are allowed"
+# define ERROR_DUPLICATE "Duplicate numbers are not allowed"
+# define ERROR_MALLOC "Malloc error"
 
 typedef struct d_list
 {
-	int				num;
+	int				content;
 	struct d_list	*next;
 	struct d_list	*prev;
 }	t_dlist;
