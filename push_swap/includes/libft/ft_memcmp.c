@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:55:20 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 19:15:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:17:36 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-/* #include <stdio.h>
-#include <string.h>
-
-int	main(void)
-{
-	size_t			n = 4;
-	char			s1[] = {0, 1, 2, 4, 4, 5};
-	char			s2[] = {0, 1, 2, 3, 4, 5};
-
-	printf("My fun result: %d\n", ft_memcmp(s1, s2, n));
-	printf("Original fun result: %d\n", memcmp(s1, s2, n));
-	printf("are they equal (1 if yes): %d", \
-		ft_memcmp(s1, s2, n) == memcmp(s1, s2, n));
-} */

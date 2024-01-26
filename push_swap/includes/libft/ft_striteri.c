@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 11:36:49 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/10 12:01:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:26 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 		i ++;
 	}
 }
-
-/* #include <stdio.h>
-#include <string.h>
-
-void print_index_and_char(unsigned int index, char *c)
-{
-    printf("Index: %u, Character: %c\n", index, *c);
-}
-
-int main()
-{
-    char str[] = "Hello, world!";
-
-    printf("Original String: %s\n", str);
-
-    printf("Testing ft_striteri:\n");
-    ft_striteri(str, print_index_and_char);
-
-    return 0;
-} */

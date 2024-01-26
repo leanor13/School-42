@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:00:48 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/05 18:47:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:19:17 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(res, s1 + begin, res_len + 1);
 	return (res);
 }
-/* 
-#include <stdio.h>
-
-int	main(void)
-{
-	char	s1[] = "ddsfasfsasfasfsdgsdg";
-	char	set[] = "d";
-	char	*res;
-
-	res = ft_strtrim(s1, set);
-	printf("Original: %s, trimmed: %s", s1, res);
-	free(res);
-	return (0);
-} */

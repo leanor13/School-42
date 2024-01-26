@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:43:55 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/05 18:34:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:22 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,3 @@ char	*ft_strdup(const char *src)
 	str_new[i] = '\0';
 	return (str_new);
 }
-
-/*
-#include <string.h>
-#include <stdio.h>
-int	main(void)
-{
-	char	*a;
-	char	*b;
-	char	*n = "UEUE nff bfbkbskdjbf";
-
-	a = strdup(n);
-	b = ft_strdup(n);
-	printf("real %s, my %s", a, b);
-	free(a);
-	free(b);
-}*/

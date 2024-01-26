@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2023/11/02 17:08:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:14:38 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,3 @@ int	ft_nbr(long long int n, char *base, char type)
 	}
 	return (len);
 }
-
-/* int	main(void)
-{
-	ft_putnbr_hex(15, 'x');
-	return (0);
-}
- */

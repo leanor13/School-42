@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 19:45:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:15:49 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,3 @@ int	ft_atoi(const char *str)
 	}
 	return (sign * number);
 }
-
-/* #include <stdio.h>
-
-int	main(int argc, char **argv)
-{
-	if (argc == 2)
-	{
-		printf("result: %d\n", ft_atoi(argv[1]));
-	}
-	else
-		printf("\n");
-	return (0);
-} */

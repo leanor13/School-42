@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:36:31 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 14:15:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:18 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,3 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
-
-/* #include <stdio.h>
-#include <string.h>
-
-int	main(int argc, char **argv)
-{
-	printf("My result: %s\n", ft_strchr("mytest", 357));
-	printf("Real result: %s\n", strchr("mytest", 357));
-	printf("My result: %s\n", ft_strchr("mytest", 1024));
-	printf("Real result: %s\n", strchr("mytest", 1024));
-	if (argc != 3)
-		return (0);
-	printf("My result: %s\n", ft_strchr(argv[1], *argv[2]));
-	printf("Real result: %s\n", strchr(argv[1], *argv[2]));
-	return (0);
-} */

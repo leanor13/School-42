@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:23:56 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 19:37:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:19:06 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-
-/* //#include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{
-	char	to_find[] = "needle";
-	char	str1[] = "this is the neele for sewingneed";
-	char	str2[] = "this is the needle";
-	size_t	n = 15;
-
-	printf("original: %s\nanswer: %s\n", str1, ft_strnstr(str1, to_find, n));
-	//printf("original: %s\nanswer: %s\n", str1, strnstr(str1, to_find, n));
-	printf("original: %s\nanswer: %s\n", str2, ft_strnstr(str2, to_find, n));
-	//printf("original: %s\nanswer: %s\n", str2, strnstr(str2, to_find, n));
-
-} */

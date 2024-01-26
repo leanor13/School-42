@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 12:33:04 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/06 13:05:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:04 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,3 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	ft_putchar_fd(n % 10 + '0', fd);
 }
-
-/* int	main(void)
-{
-	ft_putnbr_fd(-10000043, 1);
-	return (0);
-} */

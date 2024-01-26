@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 19:57:38 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/06 10:34:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:16:11 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,3 @@ char	*ft_itoa(int n)
 	write_num(res, n, digits);
 	return (res);
 }
-
-/* #include <stdio.h>
-
-int	main(void)
-{
-	char	*res;
-	int		num = -623;
-
-	res = ft_itoa(num);
-	printf("result: %s", res);
-	free(res);
-} */

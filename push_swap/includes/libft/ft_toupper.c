@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 13:17:48 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 13:30:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:19:30 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,3 @@ int	ft_toupper(int c)
 	else
 		return (c);
 }
-
-/*
-#include <stdio.h>
-#include <ctype.h>
-
-int	main(void)
-{
-	int	i = 0;
-
-	while (i < 530)
-			{
-				if (ft_toupper(i) != toupper(i))
-					printf("%d\n", i);
-				i++;
-			}
-	return (0);
-}*/

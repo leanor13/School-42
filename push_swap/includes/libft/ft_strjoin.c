@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 15:49:09 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/05 12:40:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:30 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,3 @@ char	*ft_strjoin(char const *dest, char const *src)
 	*result = '\0';
 	return (start_ptr);
 }
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char	str1[] = "hey";
-	char	str2[] = "is it a   ";
-	char	*res;
-
-	res = ft_strjoin(str1, str2);
-	printf("str1: %s\nstr2: %s\nresult: %s\n", str1, str2, res);
-	free(res);
-} */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:50:22 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/10 11:16:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:18:12 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,3 @@ char	**ft_split(char const *s, char c)
 	result[i] = NULL;
 	return (result);
 }
-
-/* #include <stdio.h>
-
-int	main(void)
-{
-	char	s[]="";
-	char	c = 'd';
-	char	**res;
-	int		i = 0;
-
-	res = ft_split(s, c);
-	while (res[i])
-	{
-		printf("%d: %s\n", i, res[i]);
-		free(res[i]);
-		i ++;
-	}
-	free(res);
-} */

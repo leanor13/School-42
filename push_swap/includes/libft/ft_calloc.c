@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:55:02 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/05 12:08:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:15:31 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,56 +28,3 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	ft_bzero(ptr, total_size);
 	return (ptr);
 }
-
-/* #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(void)
-{
-	size_t nmemb = 2;
-	size_t size = 0;
-
-	int *arr = (int *)ft_calloc(nmemb, size);
-
-	if (arr != NULL)
-	{
-		printf("My calloc Memory allocation successful.\n");
-
-		// Print the allocated array to verify zero initialization
-		printf("Allocated array: ");
-		for (size_t i = 0; i < nmemb; i++)
-		{
-			printf("%d ", arr[i]);
-		}
-		printf("\n");
-
-		free(arr); // Don't forget to free the allocated memory
-	}
-	else
-	{
-		printf("My calloc Memory allocation failed.\n");
-	}
-	int *arr2 = (int *)calloc(nmemb, size);
-
-	if (arr2 != NULL)
-	{
-		printf("Original calloc Memory allocation successful.\n");
-
-		// Print the allocated array to verify zero initialization
-		printf("Allocated array: ");
-		for (size_t i = 0; i < nmemb; i++)
-		{
-			printf("%d ", arr2[i]);
-		}
-		printf("\n");
-
-		free(arr2); // Don't forget to free the allocated memory
-	}
-	else
-	{
-		printf("Original calloc Memory allocation failed.\n");
-	}
-
-	return 0;
-} */

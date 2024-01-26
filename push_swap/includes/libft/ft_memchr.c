@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 17:40:21 by yioffe            #+#    #+#             */
-/*   Updated: 2023/10/04 19:15:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/26 12:17:30 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-
-/* #include <string.h>
-#include <stdio.h>
-
-int	main(void)
-{	
-	void			*s1_ptr;
-	int				c = 2;
-	char	s1[] = {0, 1, 2 ,3 ,4 ,5};
-	int				n = 3;
-
-	s1_ptr = s1;
-	printf("My fun result: %p\n", ft_memchr(s1, c, n));
-	printf("Original fun result: %p\n", memchr(s1, c, n));
-	printf("are they equal (1 if yes): %d", \
-		ft_memchr(s1, c, n) == memchr(s1, c, n));
-} */
