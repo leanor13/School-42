@@ -26,7 +26,8 @@ PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 LIBS = $(LIBFT) $(PRINTF)
 
-TEST_SRC = tests/test_input_validation.c tests/test_push_swap.c
+TEST_SRC = $(addprefix tests/,$(addsuffix .c, $(T)))
+T = test_input_validation test_push_swap test_list_tools test_swap_helper
 TEST_OBJ = $(addprefix $(OBJS_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
 TEST_NAME = run_tests
 

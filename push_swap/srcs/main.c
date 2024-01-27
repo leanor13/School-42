@@ -6,39 +6,11 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/26 12:27:03 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/27 21:17:51 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-t_dlist	**read_input(int ac, char **av)
-{
-	t_dlist	**stack;
-	t_dlist	*new_node;
-	int		num;
-	int		i;
-
-	stack = ft_calloc(ac, sizeof(t_dlist *));
-	if (!stack)
-		return (ft_printf(ERROR_MALLOC), NULL);
-	i = 1;
-	while (i < ac)
-	{
-		num = ft_atoi(av[i]);
-		new_node = ft_dlstnew(num);
-		if (!new_node)
-		{
-			ft_dlst_free(stack);
-			return (ft_printf(ERROR_MALLOC), NULL);
-		}
-		ft_dlstadd_back(stack, new_node);
-		i ++;
-	}
-	if (has_duplicate(stack))
-		ft_dlst_free(stack);
-	return (stack);
-}
 
 void	print_stack(t_dlist **stack)
 {

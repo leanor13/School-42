@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/26 13:21:47 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/27 21:02:09 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_dlst_free(t_dlist **lst)
 		free(*lst);
 		*lst = tmp;
 	}
+	*lst = NULL;
 }
 
 t_dlist	*ft_dlstnew(int content)
