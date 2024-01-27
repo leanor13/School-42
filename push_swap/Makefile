@@ -24,6 +24,12 @@ LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF_DIR = ./includes/ft_printf
 PRINTF = $(PRINTF_DIR)/libftprintf.a
 
+LIBS = $(LIBFT) $(PRINTF)
+
+TEST_SRC = tests/main_test.c
+TEST_OBJ = $(addprefix $(OBJS_DIR)/, $(TEST_SRC:.c=.o))
+TEST_NAME = run_tests
+
 all: $(NAME) 
 bonus: $(BONUS_NAME)
 
@@ -35,11 +41,15 @@ $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT) $(PRINTF)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PRINTF)
+$(OBJS_DIR)/%.o: tests/%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-$(BONUS_NAME): $(BONUS_OBJS) $(LIBFT) $(PRINTF)
-	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(LIBFT) $(PRINTF)
+$(NAME): $(OBJS) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
+
+$(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(LIBS)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
@@ -47,9 +57,16 @@ $(LIBFT):
 $(PRINTF):
 	@$(MAKE) -C $(PRINTF_DIR) --no-print-directory
 
+$(TEST_NAME): $(TEST_OBJ) $(OBJS)
+    @$(CC) $(CFLAGS) -o $(TEST_NAME) $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
+
+test: $(TEST_NAME)
+	./$(TEST_NAME)
+
 clean:
 	@$(RM) -r $(OBJS_DIR)
 	@$(RM) -r $(OBJS_DIR_BONUS)
+	@$(RM) $(TEST_OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 	@$(MAKE) -C $(PRINTF_DIR) clean --no-print-directory
 
@@ -64,4 +81,4 @@ run: all
 
 re: fclean all
 
-.PHONY: all fclean clean re
+.PHONY: all fclean clean re test
