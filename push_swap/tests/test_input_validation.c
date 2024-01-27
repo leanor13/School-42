@@ -6,12 +6,12 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/27 20:02:59 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/27 20:39:19 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <assert.h>
 #include "../includes/push_swap.h"
+#include "tests.h"
 
 void	test_ft_isnum(void)
 {
@@ -53,13 +53,4 @@ void	test_validate_input(void)
 
 	assert(validate_input(av2, ac) == 0);
 	printf("All validate_input tests passed.\n");
-}
-
-int	main(void)
-{
-	test_ft_isnum();
-	test_has_duplicate();
-	test_validate_input();
-	printf("All tests passed.\n");
-	return 0;
 }

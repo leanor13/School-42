@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/26 13:20:42 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/27 20:27:33 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct d_list
 
 int		validate_input(char **av, int ac);
 int		has_duplicate(t_dlist **stack);
+int		ft_isnum(char *s);
 
 void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
 void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
