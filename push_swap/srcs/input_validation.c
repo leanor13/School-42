@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 13:46:42 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 21:40:28 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_dlist	**read_input(int ac, char **av)
 	t_dlist *new_node;
     int		i;
 
-    stack = ft_calloc(ac, sizeof(t_dlist *));
+    stack = ft_calloc(ac - 1, sizeof(t_dlist *));
     if (!stack)
         return (NULL);
     i = 1;
@@ -101,7 +101,7 @@ int	has_duplicate(t_dlist **stack)
 	return (0);
 }
 
-int	validate_input(char **av, int ac)
+int	all_is_num(char **av, int ac)
 {
 	while (ac >= 2)
 	{

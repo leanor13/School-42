@@ -21,4 +21,6 @@ void test_ft_push(void);
 void test_ft_rotate(void);
 void test_ft_reverse_rotate(void);
 
+void	test_swap_operations(void);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 13:44:26 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 20:19:57 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void	test_validate_input(void)
 {
 	char *av[] = {"prog", "1", "0", "3", NULL};
 	int ac = 4;
-	assert(validate_input(av, ac) == 1);
+	assert(all_is_num(av, ac) == 1);
 
 	char *av2[] = {"prog", "1", "2", "a", NULL};
 	ac = 4;
-	assert(validate_input(av2, ac) == 0);
+	assert(all_is_num(av2, ac) == 0);
 
 	printf("\nAll validate_input tests passed.\n");
 }

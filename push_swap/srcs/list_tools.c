@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 12:14:40 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 21:42:16 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_dlist	*ft_dlstnew(int content)
 
 	res = (t_dlist *)malloc(sizeof(t_dlist));
 	if (!res)
-		return (ft_printf(ERROR), NULL);
+		return (NULL);
 	res->content = content;
 	res->next = NULL;
 	res->prev = NULL;
