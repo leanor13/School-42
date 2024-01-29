@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/27 21:11:21 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 12:19:06 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
+# include <limits.h>
 
-# define ERROR_EMPTY_INPUT "Needed at least one integer"
-# define ERROR_INVALID_CHARACTERS "Invalid input, only digits are allowed"
-# define ERROR_DUPLICATE "Duplicate numbers are not allowed"
-# define ERROR_MALLOC "Malloc error"
+# define ERROR "Error\n"
 
 typedef struct d_list
 {
@@ -32,6 +30,7 @@ t_dlist	**read_input(int ac, char **av);
 int		validate_input(char **av, int ac);
 int		has_duplicate(t_dlist **stack);
 int		ft_isnum(char *s);
+int		ft_atoi_custom(const char *str);
 
 void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
 void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);

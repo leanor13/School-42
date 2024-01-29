@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/27 21:30:03 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 13:46:42 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,50 @@
 
 static t_dlist	*create_node(t_dlist **stack, char *av)
 {
-    int		num;
-    t_dlist	*new_node;
+	int			num;
+	t_dlist		*new_node;
 
-    num = ft_atoi(av);
-    new_node = ft_dlstnew(num);
-    if (!new_node)
-    {
-        ft_dlst_free(stack);
-        free(stack);
-        return (NULL);
-    }
-    return (new_node);
+	num = ft_atoi_custom(av);
+	if (num == 0 && av[0] != '0')
+	{
+		ft_dlst_free(stack);
+		free(stack);
+		return (NULL);
+	}
+	new_node = ft_dlstnew(num);
+	if (!new_node)
+	{
+		ft_dlst_free(stack);
+		free(stack);
+		return (NULL);
+	}
+	return (new_node);
 }
 
 t_dlist	**read_input(int ac, char **av)
 {
     t_dlist	**stack;
+	t_dlist *new_node;
     int		i;
 
     stack = ft_calloc(ac, sizeof(t_dlist *));
     if (!stack)
-        return (ft_printf(ERROR_MALLOC), NULL);
+        return (NULL);
     i = 1;
     while (i < ac)
     {
-        t_dlist *new_node = create_node(stack, av[i]);
+		new_node = create_node(stack, av[i]);
         if (!new_node)
-            return (ft_printf(ERROR_MALLOC), NULL);
+            return (NULL);
         ft_dlstadd_back(stack, new_node);
         i++;
     }
     if (has_duplicate(stack))
-        return (ft_dlst_free(stack), free(stack), NULL);
+	{
+		ft_dlst_free(stack);
+		free(stack);
+        return (NULL);
+	}
     return (stack);
 }
 
@@ -58,13 +69,12 @@ int	ft_isnum(char *s)
 		s ++;
 	if (!*s)
 		return (0);
+	if (*s == '0' && *(s + 1) != '\0')
+		return (0);
 	while (*s)
 	{
 		if (!ft_isdigit(*s))
-		{
-			ft_printf(ERROR_INVALID_CHARACTERS);
 			return (0);
-		}
 		else
 			s ++;
 	}
@@ -83,10 +93,7 @@ int	has_duplicate(t_dlist **stack)
 		while (tmp2)
 		{
 			if (tmp->content == tmp2->content)
-			{
-				ft_printf(ERROR_DUPLICATE);
 				return (1);
-			}
 			tmp2 = tmp2->next;
 		}
 		tmp = tmp->next;

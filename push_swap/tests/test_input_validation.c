@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/27 21:36:50 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/29 13:44:26 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void test_read_input(void)
 {
-    char *args1[] = {"program", "5", "10", "15"};
+    char *args1[] = {"program", "5", "0", "-15"};
     t_dlist **list1 = read_input(4, args1);
     assert(list1 != NULL);
     assert((*list1)->content == 5);
-    assert((*list1)->next->content == 10);
-    assert((*list1)->next->next->content == 15);
+    assert((*list1)->next->content == 0);
+    assert((*list1)->next->next->content == -15);
     ft_dlst_free(list1);
     free(list1);
 
@@ -31,7 +31,19 @@ void test_read_input(void)
 	t_dlist **list3 = read_input(4, args3);
 	assert(list3 == NULL);
 
-    printf("\nAll read_input tests passed.\n");
+	char *args4[] = {"prog", "1", "2", "2147483648", NULL};
+	t_dlist **list4 = read_input(4, args4);
+	assert(list4 == NULL);
+
+	char *args5[] = {"prog", "1", "2", "-2147483648", NULL};
+	t_dlist **list5 = read_input(4, args5);
+	assert(list5 != NULL);
+
+	char *args6[] = {"prog", "1", "2", "-2147483649", NULL};
+	t_dlist **list6 = read_input(4, args6);
+	assert(list6 == NULL);
+
+	printf("\nAll read_input tests passed.\n");
 }
 
 void	test_ft_isnum(void)
@@ -41,6 +53,9 @@ void	test_ft_isnum(void)
 	assert(ft_isnum("-12345") == 1);
 	assert(ft_isnum("") == 0);
 	assert(ft_isnum(NULL) == 0);
+	assert(ft_isnum("0") == 1);
+	assert(ft_isnum("04") == 0);
+	assert(ft_isnum("-03") == 0);
 	printf("\nAll ft_isnum tests passed.\n");
 }
 
@@ -64,14 +79,13 @@ void	test_has_duplicate(void)
 
 void	test_validate_input(void)
 {
-	char *av[] = {"prog", "1", "2", "3", NULL};
+	char *av[] = {"prog", "1", "0", "3", NULL};
 	int ac = 4;
-
 	assert(validate_input(av, ac) == 1);
 
 	char *av2[] = {"prog", "1", "2", "a", NULL};
 	ac = 4;
-
 	assert(validate_input(av2, ac) == 0);
+
 	printf("\nAll validate_input tests passed.\n");
 }
