@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/30 16:18:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:30:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,6 @@ int	main(int ac, char **av)
 		return (ft_printf(ERROR), 0);
 	}
 	print_stack(stack_a);
-	/* ft_sa(&stack_a, &stack_b);
-	ft_pb(&stack_a, &stack_b);
-	ft_pb(stack_a, stack_b);
-	ft_pb(stack_a, stack_b);
-	ft_ra(stack_a, stack_b);
-	ft_rb(stack_a, stack_b);
-	ft_rrr(stack_a, stack_b);
-	ft_sa(stack_a, stack_b);
-	ft_pa(stack_a, stack_b);
-	ft_pa(stack_a, stack_b);
-	ft_pa(stack_a, stack_b); */
-	printf("sorted a:\n");
-	print_stack(stack_a);
-	printf("sorted b:\n");
-	print_stack(stack_b);
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
 	//free(stack_a);

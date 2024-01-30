@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:49:08 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 16:21:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:30:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	test_swap_operations(void)
 	ft_pa(&stack_a, &stack_b);
 	ft_pa(&stack_a, &stack_b);
 	
-	//assert(stack_b == NULL);
+	assert(stack_b == NULL);
 
 	current = stack_a;
 	printf("sorted a:\n");
@@ -65,7 +65,7 @@ void	test_swap_operations(void)
         assert(current->content == expected_values_a[i]);
         current = current->next;
     }
-    //assert(current == NULL);
+    assert(current == NULL);
 	
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
