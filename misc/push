@@ -1,6 +1,8 @@
 #!/bin/bash
 
 repo_42="/home/yioffe/Projects/School-42"
+current_date=$(date +"%d-%m-%Y")
+location="school"
 
 if [ -z "$1" ]; then
     repo_path=$(pwd)
@@ -13,7 +15,12 @@ fi
 
 cd "$repo_path" || exit
 git add .
-current_date=$(date +"%d-%m-%Y")
-git commit -m "school $current_date"
-git push
 
+if [[ -n "$2" ]]; then
+	commit_message="$2"
+else
+	commit_message="$location $current_date"
+fi
+
+git commit -m "$commit_message"
+git push
