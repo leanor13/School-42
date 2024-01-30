@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/29 21:47:21 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:18:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static void	print_stack(t_dlist **stack)
+static void	print_stack(t_dlist *stack)
 {
 	t_dlist	*tmp;
 
-	tmp = *stack;
+	tmp = stack;
 	while (tmp)
 	{
 		ft_printf("%d\n", tmp->content);
@@ -24,9 +24,9 @@ static void	print_stack(t_dlist **stack)
 	}
 }
 
-t_dlist	**construct_input(int ac, char **av)
+t_dlist	*construct_input(int ac, char **av)
 {
-	t_dlist	**stack;
+	t_dlist	*stack;
 
 	stack = NULL;
 	if (ac < 2 || !all_is_num(av, ac))
@@ -39,20 +39,20 @@ t_dlist	**construct_input(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_dlist	**stack_a;
-	t_dlist	**stack_b;
+	t_dlist	*stack_a;
+	t_dlist	*stack_b;
 
 	stack_a = construct_input(ac, av);
-	stack_b = ft_calloc(ac - 1, sizeof(t_dlist *));
-	if (!stack_a || !stack_b)
+	stack_b = NULL;
+	if (!stack_a)
 	{
-		ft_dlst_free(stack_a);
-		ft_dlst_free(stack_b);
+		ft_dlst_free(&stack_a);
+		ft_dlst_free(&stack_b);
 		return (ft_printf(ERROR), 0);
 	}
 	print_stack(stack_a);
-	ft_sa(stack_a, stack_b);
-	ft_pb(stack_a, stack_b);
+	/* ft_sa(&stack_a, &stack_b);
+	ft_pb(&stack_a, &stack_b);
 	ft_pb(stack_a, stack_b);
 	ft_pb(stack_a, stack_b);
 	ft_ra(stack_a, stack_b);
@@ -61,15 +61,15 @@ int	main(int ac, char **av)
 	ft_sa(stack_a, stack_b);
 	ft_pa(stack_a, stack_b);
 	ft_pa(stack_a, stack_b);
-	ft_pa(stack_a, stack_b);
+	ft_pa(stack_a, stack_b); */
 	printf("sorted a:\n");
 	print_stack(stack_a);
 	printf("sorted b:\n");
 	print_stack(stack_b);
-	ft_dlst_free(stack_a);
-	ft_dlst_free(stack_b);
-	free(stack_a);
-	free(stack_b);
+	ft_dlst_free(&stack_a);
+	ft_dlst_free(&stack_b);
+	//free(stack_a);
+	//free(stack_b);
 
 	return (0);
 }

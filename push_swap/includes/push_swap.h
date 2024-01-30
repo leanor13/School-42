@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/29 21:46:34 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:44:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ typedef struct d_list
 	struct d_list	*prev;
 }	t_dlist;
 
-t_dlist	**read_input(int ac, char **av);
+t_dlist	*read_input(int ac, char **av);
 int		all_is_num(char **av, int ac);
-int		has_duplicate(t_dlist **stack);
+int		has_duplicate(t_dlist *stack);
 int		ft_isnum(char *s);
 int		ft_atoi_custom(const char *str);
 

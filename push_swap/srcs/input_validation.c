@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 21:40:28 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/30 16:03:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static t_dlist	*create_node(t_dlist **stack, char *av)
+static t_dlist	*create_node(t_dlist *stack, char *av)
 {
 	int			num;
 	t_dlist		*new_node;
@@ -20,42 +20,43 @@ static t_dlist	*create_node(t_dlist **stack, char *av)
 	num = ft_atoi_custom(av);
 	if (num == 0 && av[0] != '0')
 	{
-		ft_dlst_free(stack);
-		free(stack);
+		ft_dlst_free(&stack);
+		//free(stack);
 		return (NULL);
 	}
 	new_node = ft_dlstnew(num);
 	if (!new_node)
 	{
-		ft_dlst_free(stack);
-		free(stack);
+		ft_dlst_free(&stack);
+		//free(stack);
 		return (NULL);
 	}
 	return (new_node);
 }
 
-t_dlist	**read_input(int ac, char **av)
+t_dlist	*read_input(int ac, char **av)
 {
-    t_dlist	**stack;
+    t_dlist	*stack;
 	t_dlist *new_node;
     int		i;
 
-    stack = ft_calloc(ac - 1, sizeof(t_dlist *));
+    /* stack = ft_calloc(1, sizeof(t_dlist));
     if (!stack)
-        return (NULL);
-    i = 1;
+        return (NULL); */
+	stack = create_node(NULL, av[1]);
+    i = 2;
     while (i < ac)
     {
 		new_node = create_node(stack, av[i]);
         if (!new_node)
             return (NULL);
-        ft_dlstadd_back(stack, new_node);
+        ft_dlstadd_back(&stack, new_node);
         i++;
     }
     if (has_duplicate(stack))
 	{
-		ft_dlst_free(stack);
-		free(stack);
+		ft_dlst_free(&stack);
+		//free(stack);
         return (NULL);
 	}
     return (stack);
@@ -81,12 +82,12 @@ int	ft_isnum(char *s)
 	return (1);
 }
 
-int	has_duplicate(t_dlist **stack)
+int	has_duplicate(t_dlist *stack)
 {
 	t_dlist	*tmp;
 	t_dlist	*tmp2;
 
-	tmp = *stack;
+	tmp = stack;
 	while (tmp)
 	{
 		tmp2 = tmp->next;

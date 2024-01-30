@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 21:42:16 by leanor           ###   ########.fr       */
+/*   Updated: 2024/01/30 15:46:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_dlist	*ft_dlstnew(int content)
 {
 	t_dlist	*res;
 
-	res = (t_dlist *)malloc(sizeof(t_dlist));
+	res = ft_calloc(1, sizeof(t_dlist));
 	if (!res)
 		return (NULL);
 	res->content = content;
@@ -66,9 +66,7 @@ void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node)
 	}
 	else
 	{
-		last = *lst;
-		while (last->next != NULL)
-			last = last->next;
+		last = ft_dlstlast(*lst);
 		last->next = new_node;
 		new_node->prev = last;
 	}
