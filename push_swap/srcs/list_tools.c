@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 15:46:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 14:21:47 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_dlist	*ft_dlstnew(int content)
 	if (!res)
 		return (NULL);
 	res->content = content;
+	res->index = 0;
 	res->next = NULL;
 	res->prev = NULL;
 	return (res);

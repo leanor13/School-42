@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_push_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:15:06 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 16:27:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 15:42:36 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(void)
 	test_ft_reverse_rotate();
 
 	test_swap_operations();
+
+	test_calculate_indexes();
 	ft_printf("All tests passed.\n");
 	return (0);
 }

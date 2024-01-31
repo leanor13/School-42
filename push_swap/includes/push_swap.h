@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/30 15:44:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 14:35:33 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct d_list
 {
 	int				content;
+	int				index;
 	struct d_list	*next;
 	struct d_list	*prev;
 }	t_dlist;
@@ -31,6 +32,7 @@ int		all_is_num(char **av, int ac);
 int		has_duplicate(t_dlist *stack);
 int		ft_isnum(char *s);
 int		ft_atoi_custom(const char *str);
+void	calculate_indexes(t_dlist **stack);
 
 void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
 void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);

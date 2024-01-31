@@ -8,6 +8,7 @@ void	test_ft_isnum(void);
 void	test_has_duplicate(void);
 void	test_validate_input(void);
 void	test_read_input(void);
+void	test_calculate_indexes(void);
 
 void test_ft_dlstnew(void);
 void test_ft_dlstadd_front(void);

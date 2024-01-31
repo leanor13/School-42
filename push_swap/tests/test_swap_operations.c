@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   test_swap_operations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:49:08 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 16:30:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 13:53:22 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 
-static void	print_stack(t_dlist *stack)
+/* static void	print_stack(t_dlist *stack)
 {
 	t_dlist	*tmp;
 
@@ -22,7 +22,7 @@ static void	print_stack(t_dlist *stack)
 		ft_printf("%d\n", tmp->content);
 		tmp = tmp->next;
 	}
-}
+} */
 
 void	test_swap_operations(void)
 {
@@ -35,12 +35,8 @@ void	test_swap_operations(void)
 
 	stack_a = NULL;
 	stack_b = NULL;
-
 	for (i = 0; i < 6; i++)
         ft_dlstadd_back(&stack_a, ft_dlstnew(values_a[i]));
-	
-	printf("new a:\n");
-	print_stack(stack_a);
 
 	ft_sa(&stack_a, &stack_b);
 	ft_pb(&stack_a, &stack_b);
@@ -57,8 +53,6 @@ void	test_swap_operations(void)
 	assert(stack_b == NULL);
 
 	current = stack_a;
-	printf("sorted a:\n");
-	print_stack(stack_a);
     for (i = 0; i < 6; i++)
     {
         assert(current != NULL);
@@ -69,7 +63,5 @@ void	test_swap_operations(void)
 	
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
-	//free(stack_a);
-	//free(stack_b);
 	printf("Swap operations test OK\n");
 }

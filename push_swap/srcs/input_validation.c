@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 16:03:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 15:31:46 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-static t_dlist	*create_node(t_dlist *stack, char *av)
+t_dlist	*create_node(t_dlist *stack, char *av)
 {
 	int			num;
 	t_dlist		*new_node;
@@ -21,14 +21,12 @@ static t_dlist	*create_node(t_dlist *stack, char *av)
 	if (num == 0 && av[0] != '0')
 	{
 		ft_dlst_free(&stack);
-		//free(stack);
 		return (NULL);
 	}
 	new_node = ft_dlstnew(num);
 	if (!new_node)
 	{
 		ft_dlst_free(&stack);
-		//free(stack);
 		return (NULL);
 	}
 	return (new_node);
@@ -40,11 +38,8 @@ t_dlist	*read_input(int ac, char **av)
 	t_dlist *new_node;
     int		i;
 
-    /* stack = ft_calloc(1, sizeof(t_dlist));
-    if (!stack)
-        return (NULL); */
-	stack = create_node(NULL, av[1]);
-    i = 2;
+	stack = NULL;
+    i = 1;
     while (i < ac)
     {
 		new_node = create_node(stack, av[i]);
@@ -56,7 +51,6 @@ t_dlist	*read_input(int ac, char **av)
     if (has_duplicate(stack))
 	{
 		ft_dlst_free(&stack);
-		//free(stack);
         return (NULL);
 	}
     return (stack);
@@ -111,4 +105,26 @@ int	all_is_num(char **av, int ac)
 		ac --;
 	}
 	return (1);
+}
+
+void	calculate_indexes(t_dlist **stack)
+{
+	int		i;
+	t_dlist *tmp;
+	t_dlist *inner;
+
+	tmp = *stack;
+	while (tmp)
+	{
+		i = 0;
+		inner = *stack;
+		while (inner)
+		{
+			if (inner->content < tmp->content)
+				i++;
+			inner = inner->next;
+		}
+		tmp->index = i;
+		tmp = tmp->next;
+	}
 }

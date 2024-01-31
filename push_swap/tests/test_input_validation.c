@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_input_validation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/30 15:55:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 15:41:57 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,30 @@ void	test_validate_input(void)
 	assert(all_is_num(av2, ac) == 0);
 
 	printf("\nAll validate_input tests passed.\n");
+}
+
+void test_calculate_indexes(void)
+{
+    // Create a doubly linked list
+    t_dlist *stack1 = NULL;
+    ft_dlstadd_back(&stack1, ft_dlstnew(5));
+    ft_dlstadd_back(&stack1, ft_dlstnew(3));
+    ft_dlstadd_back(&stack1, ft_dlstnew(9));
+    ft_dlstadd_back(&stack1, ft_dlstnew(-1));
+    ft_dlstadd_back(&stack1, ft_dlstnew(6));
+
+    // Call the function to test
+    calculate_indexes(&stack1);
+
+    // Check the results
+    t_dlist *tmp = stack1;
+    assert(tmp->index == 2); tmp = tmp->next;
+    assert(tmp->index == 1); tmp = tmp->next;
+    assert(tmp->index == 4); tmp = tmp->next;
+    assert(tmp->index == 0); tmp = tmp->next;
+    assert(tmp->index == 3); tmp = tmp->next;
+
+    // Clean up
+   ft_dlst_free(&stack1);
+   printf("\nAll calculate_indexes tests passed.\n");
 }

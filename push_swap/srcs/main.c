@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/30 16:30:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/01/31 15:36:23 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 static void	print_stack(t_dlist *stack)
 {
 	t_dlist	*tmp;
+	int		content;
+	int		index;
 
 	tmp = stack;
 	while (tmp)
 	{
-		ft_printf("%d\n", tmp->content);
+		content = tmp->content;
+        index = tmp->index;
+		//ft_printf("content: %d, index: %d\n", content, index);
+        ft_printf("content: %d", content);
+        ft_printf(" index: %d\n", index);
 		tmp = tmp->next;
 	}
 }
@@ -34,6 +40,7 @@ t_dlist	*construct_input(int ac, char **av)
 	stack = read_input(ac, av);
 	if (!stack)
 		return (NULL);
+	calculate_indexes(&stack);
 	return (stack);
 }
 
@@ -53,8 +60,6 @@ int	main(int ac, char **av)
 	print_stack(stack_a);
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
-	//free(stack_a);
-	//free(stack_b);
 
 	return (0);
 }
