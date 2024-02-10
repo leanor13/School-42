@@ -6,11 +6,12 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/31 15:36:23 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/09 10:53:29 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+#include <stdio.h>
 
 static void	print_stack(t_dlist *stack)
 {
@@ -23,9 +24,7 @@ static void	print_stack(t_dlist *stack)
 	{
 		content = tmp->content;
         index = tmp->index;
-		//ft_printf("content: %d, index: %d\n", content, index);
-        ft_printf("content: %d", content);
-        ft_printf(" index: %d\n", index);
+		printf("content: %d, index: %d\n", content, index);
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:49:42 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 21:39:29 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/10 10:13:29 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	ft_rb(t_dlist **stack_a, t_dlist **stack_b)
 
 void	ft_rr(t_dlist **stack_a, t_dlist **stack_b)
 {
-	ft_ra(stack_a, stack_b);
-	ft_rb(stack_a, stack_b);
+	ft_rotate(stack_a);
+	ft_rotate(stack_b);
 	ft_printf("rr\n");
 }
 
@@ -83,7 +83,7 @@ void	ft_rrb(t_dlist **stack_a, t_dlist **stack_b)
 
 void	ft_rrr(t_dlist **stack_a, t_dlist **stack_b)
 {
-	ft_rra(stack_a, stack_b);
-	ft_rrb(stack_a, stack_b);
+	ft_reverse_rotate(stack_a);
+	ft_reverse_rotate(stack_b);
 	ft_printf("rrr\n");
 }
