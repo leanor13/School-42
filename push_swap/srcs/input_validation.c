@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/31 15:31:46 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/11 12:32:02 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	calculate_indexes(t_dlist **stack)
 	tmp = *stack;
 	while (tmp)
 	{
-		i = 0;
+		i = 1;
 		inner = *stack;
 		while (inner)
 		{

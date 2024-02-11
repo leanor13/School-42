@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/31 15:41:57 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/11 12:33:14 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,11 +105,11 @@ void test_calculate_indexes(void)
 
     // Check the results
     t_dlist *tmp = stack1;
+    assert(tmp->index == 3); tmp = tmp->next;
     assert(tmp->index == 2); tmp = tmp->next;
+    assert(tmp->index == 5); tmp = tmp->next;
     assert(tmp->index == 1); tmp = tmp->next;
     assert(tmp->index == 4); tmp = tmp->next;
-    assert(tmp->index == 0); tmp = tmp->next;
-    assert(tmp->index == 3); tmp = tmp->next;
 
     // Clean up
    ft_dlst_free(&stack1);

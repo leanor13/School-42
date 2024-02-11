@@ -29,7 +29,7 @@ LIBS = $(LIBFT) $(PRINTF)
 
 TEST_SRC = $(addprefix tests/,$(addsuffix .c, $(T)))
 T = test_input_validation test_push_swap test_list_tools test_swap_helper \
-	test_swap_operations
+	test_swap_operations test_sort
 TEST_OBJ = $(addprefix $(OBJS_DIR)/, $(notdir $(TEST_SRC:.c=.o)))
 TEST_NAME = run_tests
 

@@ -9,25 +9,35 @@ void	sort_2(t_dlist **stack_a, t_dlist **stack_b)
 
 void	sort_3(t_dlist **stack_a, t_dlist **stack_b)
 {
-	if ((*stack_a)->index == 0 && (*stack_a)->next->index == 2)
+	int	x;
+	int	y;
+	int	z;
+
+	x = (*stack_a)->index;
+	y = (*stack_a)->next->index;
+	z = (*stack_a)->next->next->index;
+	if ((x < y && x < z) && y > z)
 	{
 		ft_sa(stack_a, stack_b);
 		ft_ra(stack_a, stack_b);
 	}
-	else if ((*stack_a)->index == 1)
-	{
-		if ((*stack_a)->next->index == 2)
+	else if (x < y && x > z)
 			ft_rra(stack_a, stack_b);
-		else
+	else if (x < z && x > y)
 			ft_sa(stack_a, stack_b);
-	}
-	else if ((*stack_a)->index == 2)
+	else if (x > y && x > z)
 	{
 		ft_ra(stack_a, stack_b);
-		if ((*stack_a)->index == 1)
+		if (y > z)
 			ft_sa(stack_a, stack_b);
 	}
 }
+void	sort_5(t_dlist **stack_a, t_dlist **stack_b)
+{
+	ft_sa(stack_a, stack_b);
+	return ;
+}
+
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b)
 {
 	int	size;
