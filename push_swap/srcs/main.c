@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/09 10:53:29 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/11 11:00:13 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ int	main(int ac, char **av)
 		ft_dlst_free(&stack_b);
 		return (ft_printf(ERROR), 0);
 	}
+	ft_printf("Original stack:\n");
+	print_stack(stack_a);
+	sort_stack(&stack_a, &stack_b);
+	ft_printf("Stack b size: %d, Sorted stack:\n", ft_dlstlen(stack_b));
 	print_stack(stack_a);
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
-
 	return (0);
 }

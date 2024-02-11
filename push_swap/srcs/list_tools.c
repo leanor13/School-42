@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/31 14:21:47 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/11 10:50:22 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node)
 		new_node->prev = last;
 	}
 }
-
+/*
+TODO: remove if not needed
+*/
 void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node)
 {
 	if (!lst || !new_node)
@@ -87,4 +89,16 @@ void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node)
 		(*lst)->prev = new_node;
 		*lst = new_node;
 	}
+}
+int	ft_dlstlen(t_dlist *lst)
+{
+	int	len;
+
+	len = 0;
+	while (lst)
+	{
+		len ++;
+		lst = lst->next;
+	}
+	return (len);
 }

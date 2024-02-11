@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/31 14:35:33 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/11 10:53:25 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 t_dlist	*ft_dlstnew(int content);
 void	ft_dlst_free(t_dlist **lst);
+int		ft_dlstlen(t_dlist *lst);
 
 t_dlist	*ft_detach_node(t_dlist **stack, t_dlist *node);
 void	ft_swap(t_dlist **stack);
@@ -57,5 +58,9 @@ void	ft_rr(t_dlist **stack_a, t_dlist **stack_b);
 void	ft_rra(t_dlist **stack_a, t_dlist **stack_b);
 void	ft_rrb(t_dlist **stack_a, t_dlist **stack_b);
 void	ft_rrr(t_dlist **stack_a, t_dlist **stack_b);
+
+void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);
+void	sort_2(t_dlist **stack_a, t_dlist **stack_b);
+void	sort_3(t_dlist **stack_a, t_dlist **stack_b);
 
 #endif
