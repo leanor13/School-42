@@ -86,7 +86,7 @@ void	quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len)
 	int		i;
 
 	i = 0;
-	med = ft_med_count(stack_a, len);
+	med = len/2;
 	while (i < len)
 	{
 		if ((*stack_b)->index > med)
