@@ -21,9 +21,9 @@ void test_sort_3(void)
         sort_3(&stack_a, ASC);
 
         t_dlist *tmp = stack_a;
-        assert(tmp->index == 1); tmp = tmp->next;
-        assert(tmp->index == 2); tmp = tmp->next;
-        assert(tmp->index == 3); tmp = tmp->next;
+        assert(tmp->n_cont == 1); tmp = tmp->next;
+        assert(tmp->n_cont == 2); tmp = tmp->next;
+        assert(tmp->n_cont == 3); tmp = tmp->next;
 
         ft_dlst_free(&stack_a);
     }
@@ -38,9 +38,9 @@ void test_sort_3(void)
         sort_3(&stack_a, DESC);
 
         t_dlist *tmp = stack_a;
-        assert(tmp->index == 3); tmp = tmp->next;
-        assert(tmp->index == 2); tmp = tmp->next;
-        assert(tmp->index == 1); tmp = tmp->next;
+        assert(tmp->n_cont == 3); tmp = tmp->next;
+        assert(tmp->n_cont == 2); tmp = tmp->next;
+        assert(tmp->n_cont == 1); tmp = tmp->next;
 
         ft_dlst_free(&stack_a);
     }

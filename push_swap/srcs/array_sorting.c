@@ -10,36 +10,49 @@ static void	ft_pt_swap(int *a, int *b)
     *b = temp;
 }
 
-static int	partition(int *arr, int low, int high)
+static void	arr_qsort(int *arr, int len)
 {
     int	pivot;
     int	i;
     int	j;
 
-    pivot = arr[high];
-    i = low - 1;
-    j = low;
-    while (j <= high - 1)
+    if (len < 2)
+        return ;
+    pivot = arr[len / 2];
+    i = 0;
+    j = len - 1;
+    while (1)
     {
-        if (arr[j] <= pivot)
-        {
-            i++;
-            ft_pt_swap(&arr[i], &arr[j]);
-        }
-        j++;
+        while (arr[i] < pivot)
+            i ++;
+        while (arr[j] > pivot)
+            j --;
+        if (i >= j)
+            break ;
+        ft_pt_swap(&arr[i], &arr[j]);
+        i ++;
+        j --;
     }
-    ft_pt_swap(&arr[i + 1], &arr[high]);
-    return (i + 1);
+    arr_qsort(arr, i);
+    arr_qsort(arr + i,len - i);
 }
-
-void	arr_qsort(int *arr, int low, int high)
+int	ft_med_count(t_dlist *lst, int len)
 {
-    int	pi;
+	int	*indexes;
+	int	i;
+	int med;
 
-    if (low < high)
-    {
-        pi = partition(arr, low, high);
-        arr_qsort(arr, low, pi - 1);
-        arr_qsort(arr, pi + 1, high);
-    }
+	indexes = malloc(sizeof(int) * len);
+	if (!indexes)
+		return (0);
+	i = 0;
+	while (i < len && lst)
+	{
+		indexes[i] = lst->n_cont;
+		lst = lst->next;
+		i ++;
+	}
+	arr_qsort(indexes, len);
+    med = indexes[len / 2];
+	return (free(indexes), med);
 }

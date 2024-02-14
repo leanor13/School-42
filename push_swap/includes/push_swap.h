@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 13:56:03 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 18:50:42 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct d_list
 {
 	int				content;
-	int				index;
+	int				n_cont;
 	struct d_list	*next;
 	struct d_list	*prev;
 }	t_dlist;
@@ -68,6 +68,6 @@ void	sort_2(t_dlist **stack, int order);
 void	sort_3(t_dlist **stack, int order);
 int		quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len);
 int		quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len);
-void	arr_qsort(int *arr, int low, int high);
+//void	arr_qsort(int *arr, int low, int high);
 
 #endif

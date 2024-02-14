@@ -76,6 +76,7 @@ clean:
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS_NAME)
+	@$(RM) $(TEST_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@$(MAKE) -C $(PRINTF_DIR) fclean --no-print-directory
 

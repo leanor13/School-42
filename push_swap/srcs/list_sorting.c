@@ -35,9 +35,9 @@ void	sort_3(t_dlist **stack, int order)
 
 	if (sort_check(*stack, order, 3))
 		return ;
-	x = (*stack)->index;
-	y = (*stack)->next->index;
-	z = (*stack)->next->next->index;
+	x = (*stack)->n_cont;
+	y = (*stack)->next->n_cont;
+	z = (*stack)->next->next->n_cont;
 	if (order == ASC)
 	{
 		if ((x < y && x < z) && y > z)
@@ -101,7 +101,7 @@ int	quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len)
 	if (!med)
 		return (0);
 	while (len != count / 2 + count % 2)
-		if ((*stack_a)->index < med && (len--))
+		if ((*stack_a)->n_cont < med && (len--))
 			ft_pb(stack_a, stack_b);
 		else if ((++pushed))
 			ft_ra(stack_a);
@@ -138,7 +138,7 @@ int	quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len)
 	count = len;
 	while (len != count / 2)
 	{
-		if ((*stack_b)->index >= med && len --) 
+		if ((*stack_b)->n_cont >= med && len --) 
 			ft_pa(stack_a, stack_b);
 		else if (++pushed)
 			ft_rb(stack_b);

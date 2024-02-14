@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 12:03:05 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 18:39:37 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_stack(t_dlist *stack)
 	while (tmp)
 	{
 		content = tmp->content;
-        index = tmp->index;
+        index = tmp->n_cont;
 		printf("content: %d, index: %d\n", content, index);
 		tmp = tmp->next;
 	}

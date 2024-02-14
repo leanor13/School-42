@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/13 13:10:32 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 18:39:37 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_dlist	*ft_dlstnew(int content)
 	if (!res)
 		return (NULL);
 	res->content = content;
-	res->index = 0;
+	res->n_cont = 0;
 	res->next = NULL;
 	res->prev = NULL;
 	return (res);
@@ -102,31 +102,4 @@ int	ft_dlstlen(t_dlist *lst)
 	}
 	return (len);
 }
-int	ft_med_count(t_dlist *lst, int len)
-{
-	int	*indexes;
-	int	i;
-	int	high;
-	int	low;
-	int med;
 
-	indexes = ft_calloc(len, sizeof(int));
-	if (!indexes)
-		return (0);
-	high = lst->index;
-	low = lst->index;
-	i = 0;
-	while (i < len && lst)
-	{
-		indexes[i] = lst->index;
-		if (indexes[i] > high)
-			high = indexes[i];
-		if (indexes[i] < low)
-			low = indexes[i];
-		lst = lst->next;
-		i ++;
-	}
-	arr_qsort(indexes, low, high);
-	med = indexes[len / 2];
-	return (free(indexes), med);
-}
