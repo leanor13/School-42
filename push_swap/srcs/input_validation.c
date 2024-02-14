@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/11 12:32:02 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 09:58:32 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,16 @@ int	all_is_num(char **av, int ac)
 	return (1);
 }
 
-void	calculate_indexes(t_dlist **stack)
+void	calculate_indexes(t_dlist **stack, int len)
 {
 	int		i;
 	t_dlist *tmp;
 	t_dlist *inner;
+	int		count;
 
 	tmp = *stack;
-	while (tmp)
+	count = 0;
+	while (tmp && count < len)
 	{
 		i = 1;
 		inner = *stack;
@@ -126,5 +128,6 @@ void	calculate_indexes(t_dlist **stack)
 		}
 		tmp->index = i;
 		tmp = tmp->next;
+		count ++;
 	}
 }

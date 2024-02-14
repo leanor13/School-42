@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 19:39:28 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/11 12:33:14 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 09:59:28 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void test_calculate_indexes(void)
     ft_dlstadd_back(&stack1, ft_dlstnew(6));
 
     // Call the function to test
-    calculate_indexes(&stack1);
+    calculate_indexes(&stack1, ft_dlstlen(stack1));
 
     // Check the results
     t_dlist *tmp = stack1;

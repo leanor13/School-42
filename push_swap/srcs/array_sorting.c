@@ -1,7 +1,7 @@
 
 #include "../includes/push_swap.h"
 
-static void	ft_swap(int *a, int *b)
+static void	ft_pt_swap(int *a, int *b)
 {
     int	temp;
 
@@ -24,11 +24,11 @@ static int	partition(int *arr, int low, int high)
         if (arr[j] <= pivot)
         {
             i++;
-            ft_swap(&arr[i], &arr[j]);
+            ft_pt_swap(&arr[i], &arr[j]);
         }
         j++;
     }
-    ft_swap(&arr[i + 1], &arr[high]);
+    ft_pt_swap(&arr[i + 1], &arr[high]);
     return (i + 1);
 }
 

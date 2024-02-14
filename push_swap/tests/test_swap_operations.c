@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:49:08 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/31 13:53:22 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 10:32:25 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	test_swap_operations(void)
 	for (i = 0; i < 6; i++)
         ft_dlstadd_back(&stack_a, ft_dlstnew(values_a[i]));
 
-	ft_sa(&stack_a, &stack_b);
+	ft_sa(&stack_a);
 	ft_pb(&stack_a, &stack_b);
 	ft_pb(&stack_a, &stack_b);
 	ft_pb(&stack_a, &stack_b);
-	ft_ra(&stack_a, &stack_b);
-	ft_rb(&stack_a, &stack_b);
+	ft_ra(&stack_a);
+	ft_rb(&stack_b);
 	ft_rrr(&stack_a, &stack_b);
-	ft_sa(&stack_a, &stack_b);
+	ft_sa(&stack_a);
 	ft_pa(&stack_a, &stack_b);
 	ft_pa(&stack_a, &stack_b);
 	ft_pa(&stack_a, &stack_b);

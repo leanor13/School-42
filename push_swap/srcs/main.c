@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/11 11:00:13 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 10:00:16 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_dlist	*construct_input(int ac, char **av)
 	stack = read_input(ac, av);
 	if (!stack)
 		return (NULL);
-	calculate_indexes(&stack);
+	calculate_indexes(&stack, ft_dlstlen(stack));
 	return (stack);
 }
 

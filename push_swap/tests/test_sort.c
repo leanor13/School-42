@@ -17,8 +17,8 @@ void test_sort_3(void)
         ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][1]));
         ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][2]));
 
-		calculate_indexes(&stack_a);
-        sort_3(&stack_a, NULL);
+		calculate_indexes(&stack_a, 3);
+        sort_3(&stack_a, ASC);
 
         t_dlist *tmp = stack_a;
         assert(tmp->index == 1); tmp = tmp->next;
