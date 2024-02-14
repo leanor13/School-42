@@ -22,7 +22,10 @@ void	sort_2(t_dlist **stack, int order)
 {
 	if (sort_check(*stack, order, 2))
 		return ;
-	ft_sa(stack);
+	if (order == ASC)
+		ft_sa(stack);
+	else
+		ft_sb(stack);
 }
 void	sort_3(t_dlist **stack, int order)
 {
@@ -35,58 +38,115 @@ void	sort_3(t_dlist **stack, int order)
 	x = (*stack)->index;
 	y = (*stack)->next->index;
 	z = (*stack)->next->next->index;
-	if ((x < y && x < z) && y > z)
+	if (order == ASC)
 	{
-		ft_sa(stack);
-		ft_ra(stack);
+		if ((x < y && x < z) && y > z)
+		{
+			ft_sa(stack);
+			ft_ra(stack);
+		}
+		else if (x < y && x > z)
+				ft_rra(stack);
+		else if (x < z && x > y)
+				ft_sa(stack);
+		else if (x > y && x > z)
+		{
+			ft_ra(stack);
+			if (y > z)
+				ft_sa(stack);
+		}
 	}
-	else if (x < y && x > z)
-			ft_rra(stack);
-	else if (x < z && x > y)
-			ft_sa(stack);
-	else if (x > y && x > z)
+	else
 	{
-		ft_ra(stack);
-		if (y > z)
-			ft_sa(stack);
+		if ((x > y && x > z) && y < z)
+		{
+			ft_sb(stack);
+			ft_rb(stack);
+		}
+		else if (x > y && x < z)
+				ft_rrb(stack);
+		else if (x > z && x < y)
+				ft_sb(stack);
+		else if (x < y && x < z)
+		{
+			ft_rb(stack);
+			if (y < z)
+				ft_sb(stack);
+		}
 	}
 }
 
-void	quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len)
+int	quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len)
 {
 	int		med;
-	int		i;
+	int		count;
+	int		pushed;
 
-	i = 0;
+
+	if (sort_check(*stack_a, ASC, len))
+		return (1);
+	count = len;
+	if (len == 2)
+	{
+		sort_2(stack_a, ASC);
+		return (1);
+	}
+	if (len == 3)
+	{
+		sort_3(stack_a, ASC);
+		return (1);
+	}
+	pushed = 0;
 	med = ft_med_count(*stack_a, len);
-	while (i < len)
-	{
-		if ((*stack_a)->index < med)
+	if (!med)
+		return (0);
+	while (len != count / 2 + count % 2)
+		if ((*stack_a)->index < med && (len--))
 			ft_pb(stack_a, stack_b);
-		else
+		else if ((++pushed))
 			ft_ra(stack_a);
-		i ++;
-	}
-	//quick_sort_a(stack_a, stack_b, len/2);
-	//quick_sort_b(stack_a, stack_b, len/2);
+	while (count / 2 + count % 2 != ft_dlstlen(*stack_a) && pushed --)
+		ft_rra(stack_a);
+	return (quick_sort_a(stack_a, stack_b, count / 2 + count % 2) 
+			&& quick_sort_b(stack_a, stack_b, count / 2));
 }
-void	quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len)
+int	quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len)
 {
 	int		med;
-	int		i;
+	int		count;
+	int		pushed;
 
-	i = 0;
-	med = len/2;
-	while (i < len)
+	if (sort_check(*stack_b, DESC, len))
 	{
-		if ((*stack_b)->index > med)
+		while (len --)
 			ft_pa(stack_a, stack_b);
-		else
-			ft_rb(stack_b);
-		i ++;
 	}
-	//quick_sort_a(stack_a, stack_b, len/2);
-	//quick_sort_b(stack_a, stack_b, len/2);
+	if (len == 2)
+	{
+		sort_2(stack_b, DESC);
+		return (1);
+	}
+	if (len == 3)
+	{
+		sort_3(stack_b, DESC);
+		return (1);
+	}
+	pushed = 0;
+	med = ft_med_count(*stack_b, len);
+	if (!med)
+		return (0);
+	count = len;
+	while (len != count / 2)
+	{
+		if ((*stack_b)->index >= med && len --) 
+			ft_pa(stack_a, stack_b);
+		else if (++pushed)
+			ft_rb(stack_b);
+	}
+	while (count / 2 != ft_dlstlen(*stack_b) && pushed--)
+		ft_rrb(stack_b);
+	return (quick_sort_a(stack_a, stack_b, count / 2 + count % 2) 
+			&& quick_sort_b(stack_a, stack_b, count / 2));
 }
 
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b)
@@ -99,8 +159,10 @@ void	sort_stack(t_dlist **stack_a, t_dlist **stack_b)
 		sort_2(stack_a, ASC);
 	else if (size == 3)
 		sort_3(stack_a, ASC);
-	//else if (size == 5)
-		//quick_sort_a(stack_a, stack_b, ft_dlstlen(stack_a));
+	else if (size == 6)
+	{
+		quick_sort_a(stack_a, stack_b, ft_dlstlen(*stack_a));
+	}
 	else
 		ft_printf("Not supported length");
 }

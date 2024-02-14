@@ -27,5 +27,22 @@ void test_sort_3(void)
 
         ft_dlst_free(&stack_a);
     }
-	ft_printf("Sort 3 tests passed.\n");
+	ft_printf("Sort 3 ASC tests passed.\n");
+    for (int i = 0; i < 6; i++) {
+        t_dlist *stack_a = NULL;
+        ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][0]));
+        ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][1]));
+        ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][2]));
+
+		calculate_indexes(&stack_a, 3);
+        sort_3(&stack_a, DESC);
+
+        t_dlist *tmp = stack_a;
+        assert(tmp->index == 3); tmp = tmp->next;
+        assert(tmp->index == 2); tmp = tmp->next;
+        assert(tmp->index == 1); tmp = tmp->next;
+
+        ft_dlst_free(&stack_a);
+    }
+    ft_printf("Sort 3 DESC tests passed.\n");
 }
