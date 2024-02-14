@@ -6,14 +6,14 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 18:39:37 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 20:22:15 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 #include <stdio.h>
 
-static void	print_stack(t_dlist *stack)
+void	print_stack(t_dlist *stack)
 {
 	t_dlist	*tmp;
 	int		content;
@@ -56,13 +56,15 @@ int	main(int ac, char **av)
 		ft_dlst_free(&stack_b);
 		return (ft_printf(ERROR), 0);
 	}
-	ft_printf("Original stack:\n");
-	print_stack(stack_a);
+	//ft_printf("Original stack:\n");
+	//print_stack(stack_a);
 	sort_stack(&stack_a, &stack_b);
-	ft_printf("Stack b size: %d, Sorted stack a:\n", ft_dlstlen(stack_b));
-	print_stack(stack_a);
-	ft_printf("Sorted stack b:\n", ft_dlstlen(stack_b));
-	print_stack(stack_b);
+	//printf("Stack b size: %d, Sorted stack a (expected 1):%d\n", 
+	//			ft_dlstlen(stack_b),
+	//			sort_check(stack_a, ASC, ft_dlstlen(stack_a)));
+	//print_stack(stack_a);
+	//ft_printf("Sorted stack b:\n", ft_dlstlen(stack_b));
+	//print_stack(stack_b);
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 18:50:42 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/14 20:16:23 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	sort_2(t_dlist **stack, int order);
 void	sort_3(t_dlist **stack, int order);
 int		quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len);
 int		quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len);
-//void	arr_qsort(int *arr, int low, int high);
+int		sort_check(t_dlist *stack, int order, int len);
+void	print_stack(t_dlist *stack);
 
 #endif
