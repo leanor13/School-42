@@ -6,7 +6,7 @@ B =
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main input_validation list_tools swap_helper swap_operations ft_atoi_custom \
-	list_sorting array_sorting
+	list_sorting_up_to_5 array_sorting list_sorting_big
 
 COMPRESS = ar rcs
 RM = rm -f

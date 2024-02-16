@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 20:16:23 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/16 13:02:44 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
 # include <limits.h>
+# include <stdbool.h>
 
 # define ERROR "Error\n"
 
@@ -26,8 +27,13 @@ typedef struct d_list
 {
 	int				content;
 	int				n_cont;
+	int 			stack_position;
+	bool 			above_med;
+	bool 			candidate;
+	int				move_price;
 	struct d_list	*next;
 	struct d_list	*prev;
+	struct d_list	*target;
 }	t_dlist;
 
 t_dlist	*read_input(int ac, char **av);
@@ -70,5 +76,6 @@ int		quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len);
 int		quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len);
 int		sort_check(t_dlist *stack, int order, int len);
 void	print_stack(t_dlist *stack);
+void	big_sort(t_dlist **stack_a, t_dlist **stack_b);
 
 #endif

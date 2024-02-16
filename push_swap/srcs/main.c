@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/14 20:22:15 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/16 11:15:00 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ t_dlist	*construct_input(int ac, char **av)
 	t_dlist	*stack;
 
 	stack = NULL;
+	if (ac == 2)
+	{
+		av = ft_split(ft_strjoin("a ", av[1]), ' ');
+		ac = 0;
+		while (av[ac])
+			ac ++;
+	}
 	if (ac < 2 || !all_is_num(av, ac))
 		return (NULL);
 	stack = read_input(ac, av);
@@ -54,7 +61,7 @@ int	main(int ac, char **av)
 	{
 		ft_dlst_free(&stack_a);
 		ft_dlst_free(&stack_b);
-		return (ft_printf(ERROR), 0);
+		return (ft_putstr_fd(ERROR, 2), 0);
 	}
 	//ft_printf("Original stack:\n");
 	//print_stack(stack_a);
