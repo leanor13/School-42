@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/17 10:51:23 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/17 21:08:59 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_dlist	*ft_dlstnew(int content);
 void	ft_dlst_free(t_dlist **lst);
 int		ft_dlstlen(t_dlist *lst);
 int		ft_med_count(t_dlist *lst, int len);
-t_dlist	*ft_dlst_find_min(t_dlist *stack)
+t_dlist	*ft_dlst_find_min(t_dlist *stack);
 
 t_dlist	*ft_detach_node(t_dlist **stack, t_dlist *node);
 void	ft_swap(t_dlist **stack);
@@ -78,5 +78,13 @@ int		quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len);
 int		sort_check(t_dlist *stack, int order, int len);
 void	print_stack(t_dlist *stack);
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b);
+
+/*TODO: remove those that not needed*/
+void	set_mid(t_dlist *stack);
+void	set_target(t_dlist *stack_a, t_dlist *stack_b);
+void	calc_prices(t_dlist *stack_a, t_dlist *stack_b);
+t_dlist	*find_candidate(t_dlist *stack_b);
+void	move_candidate(t_dlist **stack_a, t_dlist **stack_b);
+t_dlist	*find_first(t_dlist *stack);
 
 #endif

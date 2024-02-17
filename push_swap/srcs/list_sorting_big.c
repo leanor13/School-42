@@ -29,7 +29,7 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 
 	while(stack_b)
 	{
-		match_ind = INT_MAX + 1;
+		match_ind = LONG_MAX;
 		curr_a = stack_a;
 		while (curr_a)
 		{
@@ -40,7 +40,7 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 			}
 			curr_a = curr_a->next;
 		}
-		if (match_ind == INT_MAX + 1)
+		if (match_ind == LONG_MAX)
 			stack_b->target = ft_dlst_find_min(stack_a);
 		else
 			stack_b->target = target;
@@ -102,26 +102,38 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 	if (candidate->first_half)
 	{
 		while (*stack_b != candidate)
-			rb(stack_b);
+			ft_rb(stack_b);
 	}
 	else
 	{
 		while (*stack_b != candidate)
-			rrb(stack_b);
+			ft_rrb(stack_b);
 	}
 	if (candidate->target->first_half)
 	{
 		while (*stack_a != candidate->target)
-			ra(stack_a);
+			ft_ra(stack_a);
 	}
 	else
 	{
 		while (*stack_a != candidate->target)
-			rra(stack_a);
+			ft_rra(stack_a);
 	}
 	ft_pa(stack_a, stack_b);
 }
-	
+
+t_dlist	*find_first(t_dlist *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack)
+	{
+		if(stack->n_cont == 0)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
+}	
 
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 {
@@ -131,20 +143,32 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	len_a = ft_dlstlen(*stack_a);
 	while (len_a > 3)
 	{
-		pb(stack_a, stack_b);
+		ft_pb(stack_a, stack_b);
+		len_a--;
 	}
 	sort_3(stack_a, ASC);
 	while (*stack_b)
 	{
+		set_mid(*stack_b);
+		set_mid(*stack_a);
+		set_target(*stack_a, *stack_b);
+		ft_putstr_fd("calc prices\n", 2);
 		calc_prices(*stack_a, *stack_b);
+		ft_putstr_fd("move cand\n", 2);
 		move_candidate(stack_a, stack_b);
 	}
-	set_mid(stack_a);
+	ft_putstr_fd("set mid\n", 2);
+	set_mid(*stack_a);
 	first_elem = find_first(*stack_a);
+	if (!first_elem)
+	{
+		ft_putstr_fd("No first elem\n", 2);
+		return ;
+	}
 	if (first_elem->first_half)
 		while (*stack_a != first_elem)
-			ra(stack_a);
+			ft_ra(stack_a);
 	else
 		while (*stack_a != first_elem)
-			rra(stack_a);
+			ft_rra(stack_a);
 }
