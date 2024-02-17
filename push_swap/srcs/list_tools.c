@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/16 13:02:15 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/17 10:51:23 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ t_dlist	*ft_dlstnew(int content)
 	res->n_cont = 0;
 	res->next = NULL;
 	res->prev = NULL;
-	res->stack_position = 0;
-	res->above_med = false;
+	res->target = NULL;
+	res->curr_pos = 0;
+	res->first_half = false;
 	res->candidate = false;
 	res->move_price = 0;
 	return (res);
@@ -106,4 +107,16 @@ int	ft_dlstlen(t_dlist *lst)
 	}
 	return (len);
 }
+t_dlist	*ft_dlst_find_min(t_dlist *stack)
+{
+	t_dlist	*min;
 
+	min = stack;
+	while (stack)
+	{
+		if (stack->n_cont < min->n_cont)
+			min = stack;
+		stack = stack->next;
+	}
+	return (min);
+}

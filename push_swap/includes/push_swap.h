@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/16 13:02:44 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/17 10:51:23 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct d_list
 {
 	int				content;
 	int				n_cont;
-	int 			stack_position;
-	bool 			above_med;
+	int 			curr_pos;
+	bool 			first_half;
 	bool 			candidate;
 	int				move_price;
 	struct d_list	*next;
@@ -50,6 +50,7 @@ t_dlist	*ft_dlstnew(int content);
 void	ft_dlst_free(t_dlist **lst);
 int		ft_dlstlen(t_dlist *lst);
 int		ft_med_count(t_dlist *lst, int len);
+t_dlist	*ft_dlst_find_min(t_dlist *stack)
 
 t_dlist	*ft_detach_node(t_dlist **stack, t_dlist *node);
 void	ft_swap(t_dlist **stack);
