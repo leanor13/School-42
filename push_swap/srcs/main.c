@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/17 21:37:59 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 11:59:39 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int	main(int ac, char **av)
 	//ft_printf("Original stack:\n");
 	//print_stack(stack_a);
 	sort_stack(&stack_a, &stack_b);
-	printf("Stack b size: %d, Sorted stack a (expected 1):%d\n", 
-				ft_dlstlen(stack_b),
-				sort_check(stack_a, ASC, ft_dlstlen(stack_a)));
-	print_stack(stack_a);
+	//printf("Stack b size: %d, Sorted stack a (expected 1):%d\n", 
+	//			ft_dlstlen(stack_b),
+	//			sort_check(stack_a, ASC, ft_dlstlen(stack_a)));
+	//print_stack(stack_a);
 	//ft_printf("Sorted stack b:\n", ft_dlstlen(stack_b));
 	//print_stack(stack_b);
 	ft_dlst_free(&stack_a);

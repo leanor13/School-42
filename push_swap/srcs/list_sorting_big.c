@@ -74,12 +74,13 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 }
 t_dlist	*find_candidate(t_dlist *stack_b)
 {
-	int	min_price;
+	int		min_price;
 	t_dlist *curr_candidate;
 
 	if (!stack_b)
 		return (NULL);
 	min_price = stack_b->move_price;
+	curr_candidate = stack_b;
 	while (stack_b)
 	{
 		if (stack_b->move_price < min_price)
@@ -101,24 +102,22 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 	candidate = find_candidate(*stack_b);
 	if (candidate->first_half)
 	{
-		while (*stack_b != candidate)
+		while ((*stack_b)->content != candidate->content)
 			ft_rb(stack_b);
 	}
 	else
 	{
-		while (*stack_b != candidate)
+		while ((*stack_b)->content != candidate->content)
 			ft_rrb(stack_b);
 	}
 	if (candidate->target->first_half)
 	{
-		while (*stack_a != candidate->target)
+		while ((*stack_a)->content != candidate->target->content)
 			ft_ra(stack_a);
 	}
 	else
-	{
-		while (*stack_a != candidate->target)
-			ft_rra(stack_a);
-	}
+		while ((*stack_a)->content != candidate->target->content)
+    		ft_rra(stack_a);
 	ft_pa(stack_a, stack_b);
 }
 
@@ -128,7 +127,7 @@ t_dlist	*find_first(t_dlist *stack)
 		return (NULL);
 	while (stack)
 	{
-		if(stack->n_cont == 0)
+		if(stack->n_cont == 1)
 			return (stack);
 		stack = stack->next;
 	}
@@ -152,23 +151,19 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 		set_mid(*stack_b);
 		set_mid(*stack_a);
 		set_target(*stack_a, *stack_b);
-		ft_putstr_fd("calc prices\n", 2);
 		calc_prices(*stack_a, *stack_b);
-		ft_putstr_fd("move cand\n", 2);
 		move_candidate(stack_a, stack_b);
 	}
-	ft_putstr_fd("set mid\n", 2);
 	set_mid(*stack_a);
 	first_elem = find_first(*stack_a);
 	if (!first_elem)
 	{
-		ft_putstr_fd("No first elem\n", 2);
 		return ;
 	}
 	if (first_elem->first_half)
-		while (*stack_a != first_elem)
+		while ((*stack_a)->content != first_elem->content)
 			ft_ra(stack_a);
 	else
-		while (*stack_a != first_elem)
+		while ((*stack_a)->content != first_elem->content)
 			ft_rra(stack_a);
 }

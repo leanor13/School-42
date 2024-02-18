@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:48:35 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/17 21:43:12 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 11:35:30 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,17 @@ void	ft_rotate(t_dlist **stack)
 
 void	ft_reverse_rotate(t_dlist **stack)
 {
-	t_dlist	*tmp;
+    t_dlist	*last;
+    t_dlist	*second_last;
 
-	if (!*stack || !(*stack)->next)
-		return ;
-	tmp = *stack;
-	*stack = ft_dlstlast(*stack);
-	(*stack)->next = tmp;
-	(*stack)->prev->next = NULL;
-	(*stack)->prev = NULL;
+    if (!*stack || !(*stack)->next)
+        return ;
+
+    last = ft_dlstlast(*stack);
+    second_last = last->prev;
+    second_last->next = NULL;
+    last->prev = NULL;
+    last->next = *stack;
+    (*stack)->prev = last;
+    *stack = last;
 }

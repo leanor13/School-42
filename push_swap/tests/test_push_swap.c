@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:15:06 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/11 12:01:52 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 11:05:33 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(void)
 	test_swap_operations();
 	test_calculate_indexes();
 	test_sort_3();
+	test_rev_rotate_operations();
 
 	ft_printf("All tests passed.\n");
 	return (0);

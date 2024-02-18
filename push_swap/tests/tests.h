@@ -23,6 +23,7 @@ void	test_ft_rotate(void);
 void	test_ft_reverse_rotate(void);
 
 void	test_swap_operations(void);
+void	test_rev_rotate_operations(void);
 void	test_sort_3(void);
 
 #endif
