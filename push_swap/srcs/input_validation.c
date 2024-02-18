@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/14 18:39:37 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 13:33:00 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_dlist	*read_input(int ac, char **av)
     int		i;
 
 	stack = NULL;
-    i = 1;
+    i = 0;
     while (i < ac)
     {
 		new_node = create_node(stack, av[i]);
@@ -60,7 +60,7 @@ int	ft_isnum(char *s)
 {
 	if (!s)
 		return (0);
-	if (*s == '-')
+	if (*s == '-' || *s == '+')
 		s ++;
 	if (!*s)
 		return (0);
@@ -70,8 +70,7 @@ int	ft_isnum(char *s)
 	{
 		if (!ft_isdigit(*s))
 			return (0);
-		else
-			s ++;
+		s ++;
 	}
 	return (1);
 }
@@ -98,7 +97,7 @@ int	has_duplicate(t_dlist *stack)
 
 int	all_is_num(char **av, int ac)
 {
-	while (ac >= 2)
+	while (ac >= 1)
 	{
 		if (!ft_isnum(av[ac - 1]))
 			return (0);

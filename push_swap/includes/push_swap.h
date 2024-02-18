@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/18 11:23:47 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 13:04:08 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ typedef struct d_list
 	int				n_cont;
 	int 			curr_pos;
 	bool 			first_half;
-	//bool 			candidate;
 	int				move_price;
 	struct d_list	*next;
 	struct d_list	*prev;

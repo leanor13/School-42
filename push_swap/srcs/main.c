@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/18 11:59:39 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/18 13:45:28 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,54 @@ void	print_stack(t_dlist *stack)
 t_dlist	*construct_input(int ac, char **av)
 {
 	t_dlist	*stack;
+	char	**split_av;
+	int		i;
 
+	split_av = NULL;
 	stack = NULL;
-	if (ac == 2)
+	//if (ac < 1 || !av)
+	//	return (NULL);
+	if (ac == 1)
 	{
-		av = ft_split(ft_strjoin("a ", av[1]), ' ');
-		ac = 0;
-		while (av[ac])
-			ac ++;
+		split_av = ft_split(av[0], ' ');
+        av = split_av;
+        ac = 0;
+        while (av[ac])
+            ac ++;
 	}
-	if (ac < 2 || !all_is_num(av, ac))
-		return (NULL);
+	if (!all_is_num(av, ac))
+	{
+		if (split_av)
+        {
+			i = 0;
+            while (split_av[i])
+			{
+                free(split_av[i]);
+				i++;
+			}
+            free(split_av);
+        }
+        return (NULL);
+	}
 	stack = read_input(ac, av);
 	if (!stack)
-		return (NULL);
-	calculate_indexes(&stack, ft_dlstlen(stack));
-	return (stack);
+    {
+        if (split_av)
+        {
+            for (int i = 0; split_av[i]; i++)
+                free(split_av[i]);
+            free(split_av);
+        }
+        return (NULL);
+    }
+    calculate_indexes(&stack, ft_dlstlen(stack));
+    if (split_av)
+    {
+        for (int i = 0; split_av[i]; i++)
+            free(split_av[i]);
+        free(split_av);
+    }
+    return (stack);
 }
 
 int	main(int ac, char **av)
@@ -55,7 +87,9 @@ int	main(int ac, char **av)
 	t_dlist	*stack_a;
 	t_dlist	*stack_b;
 
-	stack_a = construct_input(ac, av);
+	if (ac < 2 || (ac == 2 && *av[1] == '\0'))
+		return (0);
+	stack_a = construct_input(ac - 1, av + 1);
 	stack_b = NULL;
 	if (!stack_a)
 	{

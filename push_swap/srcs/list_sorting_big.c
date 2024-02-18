@@ -102,21 +102,21 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 	candidate = find_candidate(*stack_b);
 	if (candidate->first_half)
 	{
-		while ((*stack_b)->content != candidate->content)
+		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rb(stack_b);
 	}
 	else
 	{
-		while ((*stack_b)->content != candidate->content)
+		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rrb(stack_b);
 	}
 	if (candidate->target->first_half)
 	{
-		while ((*stack_a)->content != candidate->target->content)
+		while ((*stack_a)->n_cont != candidate->target->n_cont)
 			ft_ra(stack_a);
 	}
 	else
-		while ((*stack_a)->content != candidate->target->content)
+		while ((*stack_a)->n_cont != candidate->target->n_cont)
     		ft_rra(stack_a);
 	ft_pa(stack_a, stack_b);
 }
@@ -140,6 +140,8 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	int		len_a;
 
 	len_a = ft_dlstlen(*stack_a);
+	if (sort_check(*stack_a, ASC, len_a) || !(*stack_a))
+		return ;
 	while (len_a > 3)
 	{
 		ft_pb(stack_a, stack_b);
