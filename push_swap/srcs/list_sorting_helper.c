@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 12:30:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:48:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 	}
 }
 
+int max(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 /*
 TODO: maybe calc prices for both stacks.
 Then have a function to calc move price for b.
@@ -49,6 +55,8 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 {
 	int	len_a;
 	int	len_b;
+	int	price_a;
+	//int	price_b;
 
 	len_a = ft_dlstlen(stack_a);
 	len_b = ft_dlstlen(stack_b);
@@ -59,11 +67,13 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 		else
 			stack_b->move_price = len_b - stack_b->curr_pos;
 		if (stack_b->target->direct_rotate)
-			stack_b->move_price += stack_b->target->curr_pos;
+			price_a = stack_b->target->curr_pos;
 		else
-			stack_b->move_price += len_a - stack_b->target->curr_pos;
-		if (stack_b->direct_rotate == stack_b->target->direct_rotate)
-			stack_b->move_price -= 2;
+			price_a = len_a - stack_b->target->curr_pos;
+		if (stack_b->direct_rotate != stack_b->target->direct_rotate)
+			stack_b->move_price += price_a;
+		else
+			stack_b->move_price = max(stack_b->move_price, price_a);
 		stack_b = stack_b->next;
 	}
 }
