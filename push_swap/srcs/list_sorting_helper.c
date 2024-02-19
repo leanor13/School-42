@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 20:13:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 20:20:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,23 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 {
 	t_dlist	*curr_a;
 	t_dlist	*target;
-	long	match_ind;
+	long	match_cont;
 
-	set_rotation_dir(stack_b);
-	set_rotation_dir(stack_a);
 	while (stack_b)
 	{
-		match_ind = LONG_MAX;
+		match_cont = LONG_MAX;
 		curr_a = stack_a;
 		while (curr_a)
 		{
-			if (curr_a->content > stack_b->content && curr_a->content < match_ind)
+			if (curr_a->content > stack_b->content
+				&& curr_a->content < match_cont)
 			{
-				match_ind = curr_a->content;
+				match_cont = curr_a->content;
 				target = curr_a;
 			}
 			curr_a = curr_a->next;
 		}
-		if (match_ind == LONG_MAX)
+		if (match_cont == LONG_MAX)
 			stack_b->target = ft_dlst_find_min(stack_a);
 		else
 			stack_b->target = target;
@@ -58,6 +57,8 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 	int	len_b;
 	int	price_a;
 
+	set_rotation_dir(stack_b);
+	set_rotation_dir(stack_a);
 	len_a = ft_dlstlen(stack_a);
 	len_b = ft_dlstlen(stack_b);
 	while (stack_b)

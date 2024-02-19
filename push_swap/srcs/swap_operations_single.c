@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:40:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 16:56:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 20:15:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,3 @@ void	ft_rr(t_dlist **stack, int where, bool silent)
 	}
 	ft_reverse_rotate(stack);
 }
-
