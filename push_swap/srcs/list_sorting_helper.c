@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 13:46:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:40:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 	}
 }
 
-int	max(int a, int b)
+static int	max(int a, int b)
 {
 	if (a > b)
 		return (a);

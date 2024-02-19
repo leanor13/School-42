@@ -6,28 +6,12 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 12:09:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:43:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 #include <stdio.h>
-
-void	print_stack(t_dlist *stack)
-{
-	t_dlist	*tmp;
-	int		content;
-	int		index;
-
-	tmp = stack;
-	while (tmp)
-	{
-		content = tmp->content;
-		index = tmp->n_cont;
-		printf("content: %d, index: %d\n", content, index);
-		tmp = tmp->next;
-	}
-}
 
 void	free_split(char **split)
 {
@@ -67,6 +51,21 @@ t_dlist	*construct_input(int ac, char **av)
 	calculate_indexes(&stack, ft_dlstlen(stack));
 	free_split(split_av);
 	return (stack);
+}
+
+void	sort_stack(t_dlist **stack_a, t_dlist **stack_b)
+{
+	int	size;
+
+	if (!stack_a || !*stack_a || sort_check(*stack_a))
+		return ;
+	size = ft_dlstlen(*stack_a);
+	if (size == 2)
+		sort_2(stack_a);
+	else if (size == 3)
+		sort_3(stack_a);
+	else
+		big_sort(stack_a, stack_b);
 }
 
 int	main(int ac, char **av)

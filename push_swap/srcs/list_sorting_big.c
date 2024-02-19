@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:59:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 13:46:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:45:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
+void	move_node(t_dlist **stack_a, t_dlist **stack_b)
 {
 	t_dlist	*candidate;
 
@@ -56,16 +56,14 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	int		len_a;
 
 	len_a = ft_dlstlen(*stack_a);
-	if (sort_check(*stack_a, ASC, len_a) || !(*stack_a))
-		return ;
 	while (len_a > 3)
 	{
 		ft_pb(stack_a, stack_b);
 		len_a--;
 	}
-	sort_3(stack_a, ASC);
+	sort_3(stack_a);
 	while (*stack_b)
-		move_candidate(stack_a, stack_b);
+		move_node(stack_a, stack_b);
 	set_rotation_dir(*stack_a);
 	first_elem = ft_dlst_find_min(*stack_a);
 	if (first_elem->direct_rotate)

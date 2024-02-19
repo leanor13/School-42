@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 12:35:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:45:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <stdbool.h>
 
 # define ERROR "Error\n"
-
-# define ASC 1
-# define DESC 0
 
 typedef struct d_list
 {
@@ -48,7 +45,6 @@ t_dlist	*ft_dlstlast(t_dlist *lst);
 t_dlist	*ft_dlstnew(int content);
 void	ft_dlst_free(t_dlist **lst);
 int		ft_dlstlen(t_dlist *lst);
-int		ft_med_count(t_dlist *lst, int len);
 t_dlist	*ft_dlst_find_min(t_dlist *stack);
 t_dlist	*create_node(t_dlist *stack, char *av);
 
@@ -71,11 +67,9 @@ void	ft_rrb(t_dlist **stack_a);
 void	ft_rrr(t_dlist **stack_a, t_dlist **stack_b);
 
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);
-void	sort_2(t_dlist **stack, int order);
-void	sort_3(t_dlist **stack, int order);
-int		quick_sort_a(t_dlist **stack_a, t_dlist **stack_b, int len);
-int		quick_sort_b(t_dlist **stack_a, t_dlist **stack_b, int len);
-int		sort_check(t_dlist *stack, int order, int len);
+void	sort_2(t_dlist **stack);
+void	sort_3(t_dlist **stack);
+int		sort_check(t_dlist *stack);
 void	print_stack(t_dlist *stack);
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b);
 
@@ -84,7 +78,7 @@ void	set_rotation_dir(t_dlist *stack);
 void	set_target(t_dlist *stack_a, t_dlist *stack_b);
 void	calc_prices(t_dlist *stack_a, t_dlist *stack_b);
 t_dlist	*find_candidate(t_dlist *stack_b);
-void	move_candidate(t_dlist **stack_a, t_dlist **stack_b);
+void	move_node(t_dlist **stack_a, t_dlist **stack_b);
 void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b, t_dlist *candidate);
 
 #endif
