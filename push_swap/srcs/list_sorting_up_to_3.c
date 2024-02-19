@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_sorting_up_to_5.c                             :+:      :+:    :+:   */
+/*   list_sorting_up_to_3.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:48:30 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 15:43:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:52:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-int	sort_check(t_dlist *stack)
-{
-	while (stack->next)
-	{
-		if (stack->content > stack->next->content)
-			return (0);
-		stack = stack->next;
-	}
-	return (1);
-}
 
 void	sort_2(t_dlist **stack)
 {
@@ -29,6 +18,7 @@ void	sort_2(t_dlist **stack)
 		return ;
 	ft_sa(stack);
 }
+
 void	sort_3(t_dlist **stack)
 {
 	int	x;
@@ -56,4 +46,3 @@ void	sort_3(t_dlist **stack)
 			ft_sa(stack);
 	}
 }
-

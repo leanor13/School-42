@@ -6,12 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 15:43:59 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:53:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-#include <stdio.h>
 
 void	free_split(char **split)
 {
@@ -53,6 +52,17 @@ t_dlist	*construct_input(int ac, char **av)
 	return (stack);
 }
 
+int	sort_check(t_dlist *stack)
+{
+	while (stack->next)
+	{
+		if (stack->content > stack->next->content)
+			return (0);
+		stack = stack->next;
+	}
+	return (1);
+}
+
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b)
 {
 	int	size;
@@ -84,10 +94,6 @@ int	main(int ac, char **av)
 		return (ft_putstr_fd(ERROR, 2), 0);
 	}
 	sort_stack(&stack_a, &stack_b);
-	/*printf("Stack b size: %d, Sorted stack a (expected 1):%d\n",
-				ft_dlstlen(stack_b),
-				sort_check(stack_a, ASC, ft_dlstlen(stack_a)));
-	print_stack(stack_a); */
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
 	return (0);
