@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 15:54:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:05:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <stdbool.h>
 
 # define ERROR "Error\n"
+
+# define A 0
+# define B 1
+# define PRINT false
+# define SILENT true
 
 typedef struct d_list
 {
@@ -41,43 +46,34 @@ void				calculate_indexes(t_dlist **stack, int n);
 void				ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
 void				ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
 t_dlist				*ft_dlstlast(t_dlist *lst);
-t_dlist				*ft_dlstnew(int content);
 void				ft_dlst_free(t_dlist **lst);
 int					ft_dlstlen(t_dlist *lst);
 t_dlist				*ft_dlst_find_min(t_dlist *stack);
 t_dlist				*create_node(t_dlist *stack, char *av);
 
-t_dlist				*ft_detach_node(t_dlist **stack, t_dlist *node);
 void				ft_swap(t_dlist **stack);
 void				ft_push(t_dlist **stack_from, t_dlist **stack_to);
 void				ft_rotate(t_dlist **stack);
 void				ft_reverse_rotate(t_dlist **stack);
 
-void				ft_sa(t_dlist **stack_a);
-void				ft_sb(t_dlist **stack_a);
-void				ft_ss(t_dlist **stack_a, t_dlist **stack_b);
-void				ft_pa(t_dlist **stack_a, t_dlist **stack_b);
-void				ft_pb(t_dlist **stack_a, t_dlist **stack_b);
-void				ft_ra(t_dlist **stack_a);
-void				ft_rb(t_dlist **stack_a);
-void				ft_rr(t_dlist **stack_a, t_dlist **stack_b);
-void				ft_rra(t_dlist **stack_a);
-void				ft_rrb(t_dlist **stack_a);
-void				ft_rrr(t_dlist **stack_a, t_dlist **stack_b);
+void				ft_s(t_dlist **stack, int where, bool silent);
+void				ft_p(t_dlist **stack_a, t_dlist **stack_b, int where, bool silent);
+void				ft_r(t_dlist **stack, int where, bool silent);
+void				ft_rr(t_dlist **stack_a, int where, bool silent);
+void				ft_ss(t_dlist **stack_a, t_dlist **stack_b, bool silent);
+void				ft_rr_both(t_dlist **stack_a, t_dlist **stack_b, bool silent);
+void				ft_rrr(t_dlist **stack_a, t_dlist **stack_b, bool silent);
 
 void				sort_stack(t_dlist **stack_a, t_dlist **stack_b);
 void				sort_2(t_dlist **stack);
 void				sort_3(t_dlist **stack);
 int					sort_check(t_dlist *stack);
-void				print_stack(t_dlist *stack);
 void				big_sort(t_dlist **stack_a, t_dlist **stack_b);
 
-/*TODO: remove those that not needed*/
 void				set_rotation_dir(t_dlist *stack);
 void				set_target(t_dlist *stack_a, t_dlist *stack_b);
 void				calc_prices(t_dlist *stack_a, t_dlist *stack_b);
 t_dlist				*find_candidate(t_dlist *stack_b);
-void				move_node(t_dlist **stack_a, t_dlist **stack_b);
 void				finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
 						t_dlist *candidate);
 

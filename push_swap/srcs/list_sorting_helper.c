@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 15:40:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 16:58:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
 {
 	if (candidate->direct_rotate)
 		while (*stack_b != candidate)
-			ft_rb(stack_b);
+			ft_r(stack_b, B, PRINT);
 	else
 		while ((*stack_b) != candidate)
-			ft_rrb(stack_b);
+			ft_rr(stack_b, B, PRINT);
 	if (candidate->target->direct_rotate)
 		while (*stack_a != candidate->target)
-			ft_ra(stack_a);
+			ft_r(stack_a, A, PRINT);
 	else
 		while (*stack_a != candidate->target)
-			ft_rra(stack_a);
+			ft_rr(stack_a, A, PRINT);
 }

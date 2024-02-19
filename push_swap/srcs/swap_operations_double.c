@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap_operations_b.c                                :+:      :+:    :+:   */
+/*   swap_operations_ab.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/26 12:49:42 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 15:56:22 by yioffe           ###   ########.fr       */
+/*   Created: 2024/02/19 13:42:38 by yioffe            #+#    #+#             */
+/*   Updated: 2024/02/19 16:48:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	ft_sb(t_dlist **stack_b)
+void	ft_ss(t_dlist **stack_a, t_dlist **stack_b, bool silent)
 {
-	ft_putstr_fd("sb\n", 1);
+	ft_swap(stack_a);
 	ft_swap(stack_b);
+	if (!silent)
+		ft_putstr_fd("ss\n", 1);
 }
 
-void	ft_pb(t_dlist **stack_a, t_dlist **stack_b)
+void	ft_rr_both(t_dlist **stack_a, t_dlist **stack_b, bool silent)
 {
-	ft_putstr_fd("pb\n", 1);
-	ft_push(stack_a, stack_b);
-}
-
-void	ft_rb(t_dlist **stack_b)
-{
-	ft_putstr_fd("rb\n", 1);
+	ft_rotate(stack_a);
 	ft_rotate(stack_b);
+	if (!silent)
+		ft_putstr_fd("rr\n", 1);
 }
 
-void	ft_rrb(t_dlist **stack_b)
+void	ft_rrr(t_dlist **stack_a, t_dlist **stack_b, bool silent)
 {
-	ft_putstr_fd("rrb\n", 1);
+	ft_reverse_rotate(stack_a);
 	ft_reverse_rotate(stack_b);
+	if (!silent)
+		ft_putstr_fd("rrr\n", 1);
 }

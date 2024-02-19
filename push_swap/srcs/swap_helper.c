@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:48:35 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:01:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-t_dlist	*ft_detach_node(t_dlist **stack, t_dlist *node)
+static t_dlist	*ft_detach_node(t_dlist **stack, t_dlist *node)
 {
 	if (!*stack || !node)
 		return (NULL);
