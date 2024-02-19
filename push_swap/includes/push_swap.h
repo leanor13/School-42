@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 17:05:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:23:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 typedef struct d_list
 {
 	int				content;
-	int				n_cont;
 	int				curr_pos;
 	bool			direct_rotate;
 	int				move_price;

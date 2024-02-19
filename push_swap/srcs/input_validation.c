@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 12:15:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:24:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,27 +86,3 @@ int	all_is_num(char **av, int ac)
 	return (1);
 }
 
-void	calculate_indexes(t_dlist **stack, int len)
-{
-	int		i;
-	t_dlist	*tmp;
-	t_dlist	*inner;
-	int		count;
-
-	tmp = *stack;
-	count = 0;
-	while (tmp && count < len)
-	{
-		i = 1;
-		inner = *stack;
-		while (inner)
-		{
-			if (inner->content < tmp->content)
-				i++;
-			inner = inner->next;
-		}
-		tmp->n_cont = i;
-		tmp = tmp->next;
-		count++;
-	}
-}

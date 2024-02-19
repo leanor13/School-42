@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:17:47 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 13:46:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:23:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_dlist	*ft_dlst_find_min(t_dlist *stack)
 	min = stack;
 	while (stack)
 	{
-		if (stack->n_cont < min->n_cont)
+		if (stack->content < min->content)
 			min = stack;
 		stack = stack->next;
 	}

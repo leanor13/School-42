@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 16:58:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:22:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 		curr_a = stack_a;
 		while (curr_a)
 		{
-			if (curr_a->n_cont > stack_b->n_cont && curr_a->n_cont < match_ind)
+			if (curr_a->content > stack_b->content && curr_a->content < match_ind)
 			{
-				match_ind = curr_a->n_cont;
+				match_ind = curr_a->content;
 				target = curr_a;
 			}
 			curr_a = curr_a->next;

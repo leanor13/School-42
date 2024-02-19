@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:48:30 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 16:59:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:22:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	sort_3(t_dlist **stack)
 
 	if (sort_check(*stack))
 		return ;
-	x = (*stack)->n_cont;
-	y = (*stack)->next->n_cont;
-	z = (*stack)->next->next->n_cont;
+	x = (*stack)->content;
+	y = (*stack)->next->content;
+	z = (*stack)->next->next->content;
 	if ((x < y && x < z) && y > z)
 	{
 		ft_s(stack, A, PRINT);
