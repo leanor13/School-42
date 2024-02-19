@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 10:09:24 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 10:41:24 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,12 @@ void	print_stack(t_dlist *stack);
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b);
 
 /*TODO: remove those that not needed*/
-void	set_mid(t_dlist *stack);
+void	set_rotation_dir(t_dlist *stack);
 void	set_target(t_dlist *stack_a, t_dlist *stack_b);
 void	calc_prices(t_dlist *stack_a, t_dlist *stack_b);
 t_dlist	*find_candidate(t_dlist *stack_b);
 void	move_candidate(t_dlist **stack_a, t_dlist **stack_b);
 t_dlist	*find_first(t_dlist *stack);
+void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b, t_dlist *candidate);
 
 #endif

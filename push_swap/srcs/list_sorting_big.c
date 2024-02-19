@@ -1,7 +1,7 @@
 
 #include "../includes/push_swap.h"
 
-void	set_mid(t_dlist *stack)
+void	set_rotation_dir(t_dlist *stack)
 {
 	int	i;
 	int	mid;
@@ -100,25 +100,29 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 	t_dlist *candidate;
 
 	candidate = find_candidate(*stack_b);
+	if (candidate->direct_rotate && candidate->target->direct_rotate)
+		while ((*stack_b)->n_cont != candidate->n_cont && (*stack_a)->n_cont != candidate->target->n_cont)
+			ft_rr(stack_a, stack_b);
+	else if (!candidate->direct_rotate && !candidate->target->direct_rotate)
+		while ((*stack_b)->n_cont != candidate->n_cont && (*stack_a)->n_cont != candidate->target->n_cont)
+			ft_rrr(stack_a, stack_b);
+	finish_rotating(stack_a, stack_b, candidate);
+	ft_pa(stack_a, stack_b);
+}
+void finish_rotating(t_dlist **stack_a, t_dlist **stack_b, t_dlist *candidate)
+{
 	if (candidate->direct_rotate)
-	{
 		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rb(stack_b);
-	}
 	else
-	{
 		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rrb(stack_b);
-	}
 	if (candidate->target->direct_rotate)
-	{
 		while ((*stack_a)->n_cont != candidate->target->n_cont)
 			ft_ra(stack_a);
-	}
 	else
 		while ((*stack_a)->n_cont != candidate->target->n_cont)
     		ft_rra(stack_a);
-	ft_pa(stack_a, stack_b);
 }
 
 t_dlist	*find_first(t_dlist *stack)
@@ -150,13 +154,13 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	sort_3(stack_a, ASC);
 	while (*stack_b)
 	{
-		set_mid(*stack_b);
-		set_mid(*stack_a);
+		set_rotation_dir(*stack_b);
+		set_rotation_dir(*stack_a);
 		set_target(*stack_a, *stack_b);
 		calc_prices(*stack_a, *stack_b);
 		move_candidate(stack_a, stack_b);
 	}
-	set_mid(*stack_a);
+	set_rotation_dir(*stack_a);
 	first_elem = find_first(*stack_a);
 	if (!first_elem)
 	{
