@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_swap_operations.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:49:08 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/18 11:45:56 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:57:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 	tmp = stack;
 	while (tmp)
 	{
-		ft_printf("%d\n", tmp->content);
+		printf("%d\n", tmp->content);
 		tmp = tmp->next;
 	}
 } */

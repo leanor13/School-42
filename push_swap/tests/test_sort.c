@@ -27,7 +27,7 @@ void test_sort_3(void)
 
         ft_dlst_free(&stack_a);
     }
-	ft_printf("Sort 3 ASC tests passed.\n");
+	ft_putstr_fd("Sort 3 ASC tests passed.\n", 1);
     for (int i = 0; i < 6; i++) {
         t_dlist *stack_a = NULL;
         ft_dlstadd_back(&stack_a, ft_dlstnew(orders[i][0]));
@@ -44,5 +44,5 @@ void test_sort_3(void)
 
         ft_dlst_free(&stack_a);
     }
-    ft_printf("Sort 3 DESC tests passed.\n");
+    ft_putstr_fd("Sort 3 DESC tests passed.\n", 1);
 }

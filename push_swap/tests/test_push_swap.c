@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_push_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 20:15:06 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/18 11:05:33 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 15:56:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	main(void)
 	test_sort_3();
 	test_rev_rotate_operations();
 
-	ft_printf("All tests passed.\n");
+	ft_putstr_fd("All tests passed.\n", 1);
 	return (0);
 }

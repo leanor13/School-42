@@ -23,10 +23,7 @@ OBJS_DIR_BONUS = objs_bonus
 LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-PRINTF_DIR = ./includes/ft_printf
-PRINTF = $(PRINTF_DIR)/libftprintf.a
-
-LIBS = $(LIBFT) $(PRINTF)
+LIBS = $(LIBFT)
 
 TEST_SRC = $(addprefix tests/,$(addsuffix .c, $(T)))
 T = test_input_validation test_push_swap test_list_tools test_swap_helper \
@@ -58,9 +55,6 @@ $(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
-$(PRINTF):
-	@$(MAKE) -C $(PRINTF_DIR) --no-print-directory
-
 $(TEST_NAME): $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 	@$(CC) $(CFLAGS) -o $(TEST_NAME) $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 
@@ -72,14 +66,12 @@ clean:
 	@$(RM) -r $(OBJS_DIR_BONUS)
 	@$(RM) $(TEST_OBJ)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
-	@$(MAKE) -C $(PRINTF_DIR) clean --no-print-directory
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS_NAME)
 	@$(RM) $(TEST_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
-	@$(MAKE) -C $(PRINTF_DIR) fclean --no-print-directory
 
 run: all
 	./$(NAME) 
