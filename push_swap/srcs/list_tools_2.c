@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:17:47 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 12:35:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 13:46:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,3 @@ void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node)
 		*lst = new_node;
 	}
 }
-
