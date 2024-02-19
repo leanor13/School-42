@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 11:51:52 by leanor            #+#    #+#             */
-/*   Updated: 2024/01/29 13:36:59 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 11:46:07 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,22 @@ int	ft_atoi_custom(const char *str)
 	long	number;
 
 	while (is_space(*str))
-		str ++;
+		str++;
 	sign = 1;
 	if (is_sign(*str))
 	{
 		if (*str == '-')
 			sign = sign * (-1);
-		str ++;
+		str++;
 	}
 	number = 0;
 	while (ft_isdigit(*str))
 	{
 		number = 10 * number + (*str - '0');
-		if ((number > INT_MAX && sign == 1) || (number > (long)INT_MAX + 1 && sign == -1))
-            return (0);
-		str ++;
+		if ((number > INT_MAX && sign == 1) || (number > (long)INT_MAX + 1
+				&& sign == -1))
+			return (0);
+		str++;
 	}
 	return (sign * number);
 }

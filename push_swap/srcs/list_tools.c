@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 10:11:24 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 11:46:32 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_dlstlen(t_dlist *lst)
 	len = 0;
 	while (lst)
 	{
-		len ++;
+		len++;
 		lst = lst->next;
 	}
 	return (len);

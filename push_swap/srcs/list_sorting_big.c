@@ -27,7 +27,7 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 	t_dlist	*target;
 	long	match_ind;
 
-	while(stack_b)
+	while (stack_b)
 	{
 		match_ind = LONG_MAX;
 		curr_a = stack_a;
@@ -49,7 +49,7 @@ void	set_target(t_dlist *stack_a, t_dlist *stack_b)
 }
 
 /*
-TODO: maybe calc prices for both stacks. 
+TODO: maybe calc prices for both stacks.
 Then have a function to calc move price for b.
 */
 void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
@@ -69,13 +69,15 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 			stack_b->move_price += stack_b->target->curr_pos;
 		else
 			stack_b->move_price += len_a - stack_b->target->curr_pos;
+		if (stack_b->direct_rotate == stack_b->target->direct_rotate)
+			stack_b->move_price -= 2;
 		stack_b = stack_b->next;
 	}
 }
 t_dlist	*find_candidate(t_dlist *stack_b)
 {
 	int		min_price;
-	t_dlist *curr_candidate;
+	t_dlist	*curr_candidate;
 
 	if (!stack_b)
 		return (NULL);
@@ -83,7 +85,8 @@ t_dlist	*find_candidate(t_dlist *stack_b)
 	curr_candidate = stack_b;
 	while (stack_b)
 	{
-		if (stack_b->move_price < min_price)
+		if (stack_b->move_price < min_price || (stack_b->move_price <= min_price
+				&& stack_b->direct_rotate == stack_b->target->direct_rotate))
 		{
 			min_price = stack_b->move_price;
 			curr_candidate = stack_b;
@@ -92,37 +95,37 @@ t_dlist	*find_candidate(t_dlist *stack_b)
 	}
 	return (curr_candidate);
 }
-/*
-TODO: improve: rotate both or rr both
-*/
+
 void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 {
-	t_dlist *candidate;
+	t_dlist	*candidate;
 
 	candidate = find_candidate(*stack_b);
 	if (candidate->direct_rotate && candidate->target->direct_rotate)
-		while ((*stack_b)->n_cont != candidate->n_cont && (*stack_a)->n_cont != candidate->target->n_cont)
+		while (*stack_b != candidate && *stack_a != candidate->target)
 			ft_rr(stack_a, stack_b);
 	else if (!candidate->direct_rotate && !candidate->target->direct_rotate)
-		while ((*stack_b)->n_cont != candidate->n_cont && (*stack_a)->n_cont != candidate->target->n_cont)
+		while (*stack_b != candidate && *stack_a != candidate->target)
 			ft_rrr(stack_a, stack_b);
 	finish_rotating(stack_a, stack_b, candidate);
 	ft_pa(stack_a, stack_b);
 }
-void finish_rotating(t_dlist **stack_a, t_dlist **stack_b, t_dlist *candidate)
+
+void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
+		t_dlist *candidate)
 {
 	if (candidate->direct_rotate)
-		while ((*stack_b)->n_cont != candidate->n_cont)
+		while (*stack_b != candidate)
 			ft_rb(stack_b);
 	else
-		while ((*stack_b)->n_cont != candidate->n_cont)
+		while ((*stack_b) != candidate)
 			ft_rrb(stack_b);
 	if (candidate->target->direct_rotate)
-		while ((*stack_a)->n_cont != candidate->target->n_cont)
+		while (*stack_a != candidate->target)
 			ft_ra(stack_a);
 	else
-		while ((*stack_a)->n_cont != candidate->target->n_cont)
-    		ft_rra(stack_a);
+		while (*stack_a != candidate->target)
+			ft_rra(stack_a);
 }
 
 t_dlist	*find_first(t_dlist *stack)
@@ -131,12 +134,12 @@ t_dlist	*find_first(t_dlist *stack)
 		return (NULL);
 	while (stack)
 	{
-		if(stack->n_cont == 1)
+		if (stack->n_cont == 1)
 			return (stack);
 		stack = stack->next;
 	}
 	return (NULL);
-}	
+}
 
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 {

@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 11:48:35 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/18 12:42:57 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 11:46:43 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ void	ft_swap(t_dlist **stack)
 {
 	t_dlist	*tmp;
 
-    if (!*stack || !(*stack)->next)
-        return ;
-    tmp = *stack;
-    *stack = (*stack)->next;
-    tmp->next = (*stack)->next;
-    if (tmp->next)
-        tmp->next->prev = tmp;
-    (*stack)->next = tmp;
-    tmp->prev = *stack;
+	if (!*stack || !(*stack)->next)
+		return ;
+	tmp = *stack;
+	*stack = (*stack)->next;
+	tmp->next = (*stack)->next;
+	if (tmp->next)
+		tmp->next->prev = tmp;
+	(*stack)->next = tmp;
+	tmp->prev = *stack;
 }
 
 void	ft_push(t_dlist **stack_from, t_dlist **stack_to)
@@ -68,16 +68,16 @@ void	ft_rotate(t_dlist **stack)
 
 void	ft_reverse_rotate(t_dlist **stack)
 {
-    t_dlist	*last;
-    t_dlist	*second_last;
+	t_dlist	*last;
+	t_dlist	*second_last;
 
-    if (!*stack || !(*stack)->next)
-        return ;
-    last = ft_dlstlast(*stack);
-    second_last = last->prev;
-    second_last->next = NULL;
-    last->prev = NULL;
-    last->next = *stack;
-    (*stack)->prev = last;
-    *stack = last;
+	if (!*stack || !(*stack)->next)
+		return ;
+	last = ft_dlstlast(*stack);
+	second_last = last->prev;
+	second_last->next = NULL;
+	last->prev = NULL;
+	last->next = *stack;
+	(*stack)->prev = last;
+	*stack = last;
 }

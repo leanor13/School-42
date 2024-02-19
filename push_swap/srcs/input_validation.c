@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/18 13:33:00 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 11:46:15 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_dlist	*create_node(t_dlist *stack, char *av)
 {
-	int			num;
-	t_dlist		*new_node;
+	int		num;
+	t_dlist	*new_node;
 
 	num = ft_atoi_custom(av);
 	if (num == 0 && av[0] != '0')
@@ -34,26 +34,26 @@ t_dlist	*create_node(t_dlist *stack, char *av)
 
 t_dlist	*read_input(int ac, char **av)
 {
-    t_dlist	*stack;
-	t_dlist *new_node;
-    int		i;
+	t_dlist	*stack;
+	t_dlist	*new_node;
+	int		i;
 
 	stack = NULL;
-    i = 0;
-    while (i < ac)
-    {
+	i = 0;
+	while (i < ac)
+	{
 		new_node = create_node(stack, av[i]);
-        if (!new_node)
-            return (NULL);
-        ft_dlstadd_back(&stack, new_node);
-        i++;
-    }
-    if (has_duplicate(stack))
+		if (!new_node)
+			return (NULL);
+		ft_dlstadd_back(&stack, new_node);
+		i++;
+	}
+	if (has_duplicate(stack))
 	{
 		ft_dlst_free(&stack);
-        return (NULL);
+		return (NULL);
 	}
-    return (stack);
+	return (stack);
 }
 
 int	ft_isnum(char *s)
@@ -61,7 +61,7 @@ int	ft_isnum(char *s)
 	if (!s)
 		return (0);
 	if (*s == '-' || *s == '+')
-		s ++;
+		s++;
 	if (!*s)
 		return (0);
 	if (*s == '0' && *(s + 1) != '\0')
@@ -70,7 +70,7 @@ int	ft_isnum(char *s)
 	{
 		if (!ft_isdigit(*s))
 			return (0);
-		s ++;
+		s++;
 	}
 	return (1);
 }
@@ -101,7 +101,7 @@ int	all_is_num(char **av, int ac)
 	{
 		if (!ft_isnum(av[ac - 1]))
 			return (0);
-		ac --;
+		ac--;
 	}
 	return (1);
 }
@@ -109,8 +109,8 @@ int	all_is_num(char **av, int ac)
 void	calculate_indexes(t_dlist **stack, int len)
 {
 	int		i;
-	t_dlist *tmp;
-	t_dlist *inner;
+	t_dlist	*tmp;
+	t_dlist	*inner;
 	int		count;
 
 	tmp = *stack;
@@ -127,6 +127,6 @@ void	calculate_indexes(t_dlist **stack, int len)
 		}
 		tmp->n_cont = i;
 		tmp = tmp->next;
-		count ++;
+		count++;
 	}
 }
