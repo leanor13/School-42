@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:59:12 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:10:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	arr_qsort(int *arr, int len)
 	arr_qsort(arr, i);
 	arr_qsort(arr + i, len - i);
 }
+
 int	ft_med_count(t_dlist *lst, int len)
 {
 	int	*indexes;

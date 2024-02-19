@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:09:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,28 @@ void	print_stack(t_dlist *stack)
 	}
 }
 
+void	free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
 t_dlist	*construct_input(int ac, char **av)
 {
 	t_dlist	*stack;
 	char	**split_av;
-	int		i;
 
 	split_av = NULL;
 	stack = NULL;
-	// if (ac < 1 || !av)
-	//	return (NULL);
 	if (ac == 1)
 	{
 		split_av = ft_split(av[0], ' ');
@@ -48,37 +60,12 @@ t_dlist	*construct_input(int ac, char **av)
 			ac++;
 	}
 	if (!all_is_num(av, ac))
-	{
-		if (split_av)
-		{
-			i = 0;
-			while (split_av[i])
-			{
-				free(split_av[i]);
-				i++;
-			}
-			free(split_av);
-		}
-		return (NULL);
-	}
+		return (free_split(split_av), NULL);
 	stack = read_input(ac, av);
 	if (!stack)
-	{
-		if (split_av)
-		{
-			for (int i = 0; split_av[i]; i++)
-				free(split_av[i]);
-			free(split_av);
-		}
-		return (NULL);
-	}
+		return (free_split(split_av), NULL);
 	calculate_indexes(&stack, ft_dlstlen(stack));
-	if (split_av)
-	{
-		for (int i = 0; split_av[i]; i++)
-			free(split_av[i]);
-		free(split_av);
-	}
+	free_split(split_av);
 	return (stack);
 }
 
@@ -97,15 +84,11 @@ int	main(int ac, char **av)
 		ft_dlst_free(&stack_b);
 		return (ft_putstr_fd(ERROR, 2), 0);
 	}
-	// ft_printf("Original stack:\n");
-	// print_stack(stack_a);
 	sort_stack(&stack_a, &stack_b);
 	/*printf("Stack b size: %d, Sorted stack a (expected 1):%d\n",
 				ft_dlstlen(stack_b),
 				sort_check(stack_a, ASC, ft_dlstlen(stack_a)));
 	print_stack(stack_a); */
-	// ft_printf("Sorted stack b:\n", ft_dlstlen(stack_b));
-	// print_stack(stack_b);
 	ft_dlst_free(&stack_a);
 	ft_dlst_free(&stack_b);
 	return (0);

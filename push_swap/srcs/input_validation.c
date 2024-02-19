@@ -6,31 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:15:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
-
-t_dlist	*create_node(t_dlist *stack, char *av)
-{
-	int		num;
-	t_dlist	*new_node;
-
-	num = ft_atoi_custom(av);
-	if (num == 0 && av[0] != '0')
-	{
-		ft_dlst_free(&stack);
-		return (NULL);
-	}
-	new_node = ft_dlstnew(num);
-	if (!new_node)
-	{
-		ft_dlst_free(&stack);
-		return (NULL);
-	}
-	return (new_node);
-}
 
 t_dlist	*read_input(int ac, char **av)
 {

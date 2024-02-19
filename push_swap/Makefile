@@ -5,8 +5,8 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main input_validation list_tools swap_helper swap_operations ft_atoi_custom \
-	list_sorting_up_to_5 array_sorting list_sorting_big
+S = main input_validation list_tools_1 list_tools_2 swap_helper swap_operations \
+	ft_atoi_custom list_sorting_up_to_5 array_sorting list_sorting_big list_sorting_helper 
 
 COMPRESS = ar rcs
 RM = rm -f

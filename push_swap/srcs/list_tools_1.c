@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_tools.c                                       :+:      :+:    :+:   */
+/*   list_tools_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:20:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+t_dlist	*create_node(t_dlist *stack, char *av)
+{
+	int		num;
+	t_dlist	*new_node;
+
+	num = ft_atoi_custom(av);
+	if (num == 0 && av[0] != '0')
+	{
+		ft_dlst_free(&stack);
+		return (NULL);
+	}
+	new_node = ft_dlstnew(num);
+	if (!new_node)
+	{
+		ft_dlst_free(&stack);
+		return (NULL);
+	}
+	return (new_node);
+}
 
 void	ft_dlst_free(t_dlist **lst)
 {
@@ -57,65 +77,4 @@ t_dlist	*ft_dlstlast(t_dlist *lst)
 		curr = curr->next;
 	}
 	return (curr);
-}
-
-void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node)
-{
-	t_dlist	*last;
-
-	if (lst == NULL || new_node == NULL)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new_node;
-	}
-	else
-	{
-		last = ft_dlstlast(*lst);
-		last->next = new_node;
-		new_node->prev = last;
-	}
-}
-/*
-TODO: remove if not needed
-*/
-void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node)
-{
-	if (!lst || !new_node)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new_node;
-	}
-	else
-	{
-		new_node->next = *lst;
-		(*lst)->prev = new_node;
-		*lst = new_node;
-	}
-}
-int	ft_dlstlen(t_dlist *lst)
-{
-	int	len;
-
-	len = 0;
-	while (lst)
-	{
-		len++;
-		lst = lst->next;
-	}
-	return (len);
-}
-t_dlist	*ft_dlst_find_min(t_dlist *stack)
-{
-	t_dlist	*min;
-
-	min = stack;
-	while (stack)
-	{
-		if (stack->n_cont < min->n_cont)
-			min = stack;
-		stack = stack->next;
-	}
-	return (min);
 }

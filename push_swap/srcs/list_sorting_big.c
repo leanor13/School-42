@@ -6,11 +6,28 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:59:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 11:59:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 12:35:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
+{
+	t_dlist	*candidate;
+
+	set_target(*stack_a, *stack_b);
+	calc_prices(*stack_a, *stack_b);
+	candidate = find_candidate(*stack_b);
+	if (candidate->direct_rotate && candidate->target->direct_rotate)
+		while (*stack_b != candidate && *stack_a != candidate->target)
+			ft_rr(stack_a, stack_b);
+	else if (!candidate->direct_rotate && !candidate->target->direct_rotate)
+		while (*stack_b != candidate && *stack_a != candidate->target)
+			ft_rrr(stack_a, stack_b);
+	finish_rotating(stack_a, stack_b, candidate);
+	ft_pa(stack_a, stack_b);
+}
 
 void	set_rotation_dir(t_dlist *stack)
 {
@@ -32,125 +49,8 @@ void	set_rotation_dir(t_dlist *stack)
 		i++;
 	}
 }
-void	set_target(t_dlist *stack_a, t_dlist *stack_b)
-{
-	t_dlist	*curr_a;
-	t_dlist	*target;
-	long	match_ind;
 
-	while (stack_b)
-	{
-		match_ind = LONG_MAX;
-		curr_a = stack_a;
-		while (curr_a)
-		{
-			if (curr_a->n_cont > stack_b->n_cont && curr_a->n_cont < match_ind)
-			{
-				match_ind = curr_a->n_cont;
-				target = curr_a;
-			}
-			curr_a = curr_a->next;
-		}
-		if (match_ind == LONG_MAX)
-			stack_b->target = ft_dlst_find_min(stack_a);
-		else
-			stack_b->target = target;
-		stack_b = stack_b->next;
-	}
-}
 
-/*
-TODO: maybe calc prices for both stacks.
-Then have a function to calc move price for b.
-*/
-void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
-{
-	int	len_a;
-	int	len_b;
-
-	len_a = ft_dlstlen(stack_a);
-	len_b = ft_dlstlen(stack_b);
-	while (stack_b)
-	{
-		if (stack_b->direct_rotate)
-			stack_b->move_price = stack_b->curr_pos;
-		else
-			stack_b->move_price = len_b - stack_b->curr_pos;
-		if (stack_b->target->direct_rotate)
-			stack_b->move_price += stack_b->target->curr_pos;
-		else
-			stack_b->move_price += len_a - stack_b->target->curr_pos;
-		if (stack_b->direct_rotate == stack_b->target->direct_rotate)
-			stack_b->move_price -= 2;
-		stack_b = stack_b->next;
-	}
-}
-t_dlist	*find_candidate(t_dlist *stack_b)
-{
-	int		min_price;
-	t_dlist	*curr_candidate;
-
-	if (!stack_b)
-		return (NULL);
-	min_price = stack_b->move_price;
-	curr_candidate = stack_b;
-	while (stack_b)
-	{
-		if (stack_b->move_price < min_price || (stack_b->move_price <= min_price
-				&& stack_b->direct_rotate == stack_b->target->direct_rotate))
-		{
-			min_price = stack_b->move_price;
-			curr_candidate = stack_b;
-		}
-		stack_b = stack_b->next;
-	}
-	return (curr_candidate);
-}
-
-void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
-{
-	t_dlist	*candidate;
-
-	candidate = find_candidate(*stack_b);
-	if (candidate->direct_rotate && candidate->target->direct_rotate)
-		while (*stack_b != candidate && *stack_a != candidate->target)
-			ft_rr(stack_a, stack_b);
-	else if (!candidate->direct_rotate && !candidate->target->direct_rotate)
-		while (*stack_b != candidate && *stack_a != candidate->target)
-			ft_rrr(stack_a, stack_b);
-	finish_rotating(stack_a, stack_b, candidate);
-	ft_pa(stack_a, stack_b);
-}
-
-void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
-		t_dlist *candidate)
-{
-	if (candidate->direct_rotate)
-		while (*stack_b != candidate)
-			ft_rb(stack_b);
-	else
-		while ((*stack_b) != candidate)
-			ft_rrb(stack_b);
-	if (candidate->target->direct_rotate)
-		while (*stack_a != candidate->target)
-			ft_ra(stack_a);
-	else
-		while (*stack_a != candidate->target)
-			ft_rra(stack_a);
-}
-
-t_dlist	*find_first(t_dlist *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack)
-	{
-		if (stack->n_cont == 1)
-			return (stack);
-		stack = stack->next;
-	}
-	return (NULL);
-}
 
 void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 {
@@ -167,19 +67,9 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	}
 	sort_3(stack_a, ASC);
 	while (*stack_b)
-	{
-		set_rotation_dir(*stack_b);
-		set_rotation_dir(*stack_a);
-		set_target(*stack_a, *stack_b);
-		calc_prices(*stack_a, *stack_b);
 		move_candidate(stack_a, stack_b);
-	}
 	set_rotation_dir(*stack_a);
-	first_elem = find_first(*stack_a);
-	if (!first_elem)
-	{
-		return ;
-	}
+	first_elem = ft_dlst_find_min(*stack_a);
 	if (first_elem->direct_rotate)
 		while ((*stack_a)->content != first_elem->content)
 			ft_ra(stack_a);
