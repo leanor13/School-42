@@ -14,9 +14,9 @@ void	set_mid(t_dlist *stack)
 	{
 		stack->curr_pos = i;
 		if (i <= mid)
-			stack->first_half = false;
+			stack->direct_rotate = true;
 		else
-			stack->first_half = true;
+			stack->direct_rotate = false;
 		stack = stack->next;
 		i++;
 	}
@@ -61,11 +61,11 @@ void	calc_prices(t_dlist *stack_a, t_dlist *stack_b)
 	len_b = ft_dlstlen(stack_b);
 	while (stack_b)
 	{
-		if (stack_b->first_half)
+		if (stack_b->direct_rotate)
 			stack_b->move_price = stack_b->curr_pos;
 		else
 			stack_b->move_price = len_b - stack_b->curr_pos;
-		if (stack_b->target->first_half)
+		if (stack_b->target->direct_rotate)
 			stack_b->move_price += stack_b->target->curr_pos;
 		else
 			stack_b->move_price += len_a - stack_b->target->curr_pos;
@@ -100,7 +100,7 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 	t_dlist *candidate;
 
 	candidate = find_candidate(*stack_b);
-	if (candidate->first_half)
+	if (candidate->direct_rotate)
 	{
 		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rb(stack_b);
@@ -110,7 +110,7 @@ void	move_candidate(t_dlist **stack_a, t_dlist **stack_b)
 		while ((*stack_b)->n_cont != candidate->n_cont)
 			ft_rrb(stack_b);
 	}
-	if (candidate->target->first_half)
+	if (candidate->target->direct_rotate)
 	{
 		while ((*stack_a)->n_cont != candidate->target->n_cont)
 			ft_ra(stack_a);
@@ -162,7 +162,7 @@ void	big_sort(t_dlist **stack_a, t_dlist **stack_b)
 	{
 		return ;
 	}
-	if (first_elem->first_half)
+	if (first_elem->direct_rotate)
 		while ((*stack_a)->content != first_elem->content)
 			ft_ra(stack_a);
 	else

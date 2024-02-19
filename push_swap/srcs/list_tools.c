@@ -6,7 +6,7 @@
 /*   By: leanor <leanor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:54:43 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/18 11:24:22 by leanor           ###   ########.fr       */
+/*   Updated: 2024/02/19 10:11:24 by leanor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ t_dlist	*ft_dlstnew(int content)
 	res->prev = NULL;
 	res->target = NULL;
 	res->curr_pos = 0;
-	res->first_half = false;
-	//res->candidate = false;
+	res->direct_rotate = true;
 	res->move_price = 0;
 	return (res);
 }
