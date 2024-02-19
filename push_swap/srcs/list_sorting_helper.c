@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:28:30 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 17:22:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 20:13:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ t_dlist	*find_candidate(t_dlist *stack_b)
 	curr_candidate = stack_b;
 	while (stack_b)
 	{
-		if (stack_b->move_price < min_price || (stack_b->move_price <= min_price
-				&& stack_b->direct_rotate == stack_b->target->direct_rotate))
+		if (stack_b->move_price < min_price)
 		{
 			min_price = stack_b->move_price;
 			curr_candidate = stack_b;

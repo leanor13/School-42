@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 16:18:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 15:53:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/19 17:40:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_dlist	*construct_input(int ac, char **av)
 	stack = read_input(ac, av);
 	if (!stack)
 		return (free_split(split_av), NULL);
-	calculate_indexes(&stack, ft_dlstlen(stack));
 	free_split(split_av);
 	return (stack);
 }
