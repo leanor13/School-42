@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:52:19 by yioffe            #+#    #+#             */
-/*   Updated: 2024/01/23 11:40:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 12:41:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 typedef struct s_list
 {
