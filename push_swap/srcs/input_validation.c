@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 12:26:03 by leanor            #+#    #+#             */
-/*   Updated: 2024/02/19 20:20:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:09:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,30 @@ int	all_is_num(char **av, int ac)
 		ac--;
 	}
 	return (1);
+}
+
+int	ft_atoi_custom(const char *str)
+{
+	int		sign;
+	long	number;
+
+	while (*str == 32 || (*str > 8 && *str < 14))
+		str++;
+	sign = 1;
+	if (*str == 45 || *str == 43)
+	{
+		if (*str == '-')
+			sign = sign * (-1);
+		str++;
+	}
+	number = 0;
+	while (ft_isdigit(*str))
+	{
+		number = 10 * number + (*str - '0');
+		if ((number > INT_MAX && sign == 1) || (number > (long)INT_MAX + 1
+				&& sign == -1))
+			return (0);
+		str++;
+	}
+	return (sign * number);
 }

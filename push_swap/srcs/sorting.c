@@ -6,11 +6,46 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:59:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 19:55:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:11:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
+
+void	sort_2(t_dlist **stack)
+{
+	if (sort_check(*stack))
+		return ;
+	ft_s(stack, A, PRINT);
+}
+
+void	sort_3(t_dlist **stack)
+{
+	int	x;
+	int	y;
+	int	z;
+
+	if (sort_check(*stack))
+		return ;
+	x = (*stack)->content;
+	y = (*stack)->next->content;
+	z = (*stack)->next->next->content;
+	if ((x < y && x < z) && y > z)
+	{
+		ft_s(stack, A, PRINT);
+		ft_r(stack, A, PRINT);
+	}
+	else if (x < y && x > z)
+		ft_rr(stack, A, PRINT);
+	else if (x < z && x > y)
+		ft_s(stack, A, PRINT);
+	else if (x > y && x > z)
+	{
+		ft_r(stack, A, PRINT);
+		if (y > z)
+			ft_s(stack, A, PRINT);
+	}
+}
 
 static void	move_node(t_dlist **stack_a, t_dlist **stack_b)
 {
