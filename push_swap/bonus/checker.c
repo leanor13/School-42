@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:52:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 17:32:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:38:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,24 @@ int	main(int ac, char **av)
     t_dlist *stack_b = NULL;
     char *action;
 
-    if (ac >= 2 && av[1][0] != '\0') 
+    if (ac > 2 || (ac == 2 && av[1][0] != '\0')) 
 	{
         stack_a = construct_input(ac - 1, av + 1);
         if (!stack_a)
             return (error_return(&stack_a, &stack_b));
     }
-
-    while ((action = get_next_line(0)) != NULL && *action != '\0') 
+    while (true)
 	{
-        if (!p_s(action, &stack_a, &stack_b)) 
+		action = get_next_line(0);
+		if (action == NULL)
+			break ;
+		if (!p_s(action, &stack_a, &stack_b))
 		{
-            free(action);
-            return (error_return(&stack_a, &stack_b));
-        }
-        free(action);
-    }
-
+			free(action);
+			return (error_return(&stack_a, &stack_b));
+		}
+		free(action);
+	}
     if (sort_check(stack_a) && ft_dlstlen(stack_b) == 0)
         ft_putstr_fd("OK\n", 1);
     else

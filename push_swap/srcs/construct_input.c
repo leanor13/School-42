@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:14:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 16:08:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 20:06:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_dlist	*construct_input(int ac, char **av)
 
 int	sort_check(t_dlist *stack)
 {
+	if (!stack)
+		return (1);
 	while (stack->next)
 	{
 		if (stack->content > stack->next->content)

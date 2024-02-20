@@ -6,76 +6,100 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 17:13:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 19:47:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	ft_free(int *new_line, char *buffer)
+int	ft_linelen(char *str)
 {
-	int	i;
-	int	j;
+	int	ctd;
 
-	i = 0;
-	j = 0;
-	while (buffer[i])
-	{
-		if (!*new_line)
-			buffer[j++] = buffer[i];
-		if (buffer[i] == '\n')
-			*new_line = 0;
-		buffer[i++] = '\0';
-	}
+	ctd = 0;
+	while (str && str[ctd] && str[ctd] != '\n')
+		ctd++;
+	if (str && str[ctd] == '\n')
+		ctd++;
+	return (ctd);
 }
 
-static char	*ft_linejoin(char *s1, char *s2)
+char	*ft_join_line(char *s1, char *s2)
 {
-	int		i;
-	int		j;
-	int		len;
-	char	*res;
+	int		ctd;
+	int		ctd2;
+	char	*str;
 
-	i = 0;
-	j = 0;
-	len = ft_strlen(s1) + ft_strlen(s2);
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (free(s1), NULL);
-	while (s1 && s1[i])
+	ctd = 0;
+	str = (char *)malloc(ft_linelen(s1) + ft_linelen(s2) + 1);
+	if (!str)
+		return (NULL);
+	while (s1 && s1[ctd])
 	{
-		res[i] = s1[i];
-		i++;
+		str[ctd] = s1[ctd];
+		ctd++;
 	}
-	while (s2[j])
+	ctd2 = 0;
+	while (s2[ctd2] != '\n' && s2[ctd2])
 	{
-		res[i + j] = s2[j];
-		if (s2[j++] == '\n')
-			break ;
+		str[ctd + ctd2] = s2[ctd2];
+		ctd2++;
 	}
-	res[i + j] = '\0';
-	return (free(s1), res);
+	if (s2[ctd2] == '\n')
+		str[ctd + ctd2++] = '\n';
+	str[ctd + ctd2] = '\0';
+	if (s1)
+		free(s1);
+	return (str);
+}
+
+void	line_buffer_clean(char *str)
+{
+	int	ctd;
+	int	ctd2;
+
+	ctd = 0;
+	ctd2 = 0;
+	while (str[ctd] != '\n' && ctd < BUFFER_SIZE)
+	{
+		str[ctd] = '\0';
+		ctd++;
+	}
+	if (str[ctd] == '\n')
+	{
+		str[ctd] = '\0';
+		ctd++;
+		while (ctd < BUFFER_SIZE)
+		{
+			str[ctd2] = str[ctd];
+			str[ctd] = '\0';
+			ctd++;
+			ctd2++;
+		}
+	}
 }
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*line;
-	int			new_line;
+	static char		buffer [FOPEN_MAX][BUFFER_SIZE + 1];
+	char			*str;
+	int				ctd;
 
-	new_line = 1;
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	ctd = 0;
+	if (read(fd, 0, 0) < 0 || FOPEN_MAX <= fd || BUFFER_SIZE <= 0)
 	{
-		ft_bzero(buffer, BUFFER_SIZE + 1);
+		if (fd > 0 && FOPEN_MAX > fd)
+			while (buffer[fd][ctd])
+				buffer[fd][ctd++] = '\0';
 		return (NULL);
 	}
-	while (new_line && (buffer[0] || read(fd, buffer, BUFFER_SIZE)))
+	str = NULL;
+	while (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE) > 0)
 	{
-		line = ft_linejoin(line, buffer);
-		ft_free(&new_line, buffer);
-		if (line == NULL)
-			return (NULL);
+		str = ft_join_line(str, buffer[fd]);
+		line_buffer_clean(buffer[fd]);
+		if (str[ft_linelen(str) - 1] == '\n')
+			return (str);
 	}
-	return (line);
+	return (str);
 }
