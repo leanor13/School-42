@@ -2,7 +2,7 @@ NAME = push_swap
 BONUS_NAME = checker
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
-B = 
+B = checker
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main input_validation construct_input list_tools_1 list_tools_2 swap_helper \
@@ -49,7 +49,7 @@ $(NAME): $(OBJS) $(LIBS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
-	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory

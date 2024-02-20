@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:14:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 13:15:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:08:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-void	free_split(char **split)
+static void	free_split(char **split)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 13:43:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 16:08:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int		has_duplicate(t_dlist *stack);
 int		ft_isnum(char *s);
 int		ft_atoi_custom(const char *str);
 
-void	free_split(char **split);
 t_dlist	*construct_input(int ac, char **av);
 int	sort_check(t_dlist *stack);
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);

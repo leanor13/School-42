@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 13:19:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 17:13:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free(int *new_line, char *buffer)
+static void	ft_free(int *new_line, char *buffer)
 {
 	int	i;
 	int	j;
@@ -29,7 +29,7 @@ void	ft_free(int *new_line, char *buffer)
 	}
 }
 
-char	*ft_linejoin(char *s1, char *s2)
+static char	*ft_linejoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
