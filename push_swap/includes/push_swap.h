@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 16:08:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 21:21:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_isnum(char *s);
 int		ft_atoi_custom(const char *str);
 
 t_dlist	*construct_input(int ac, char **av);
-int	sort_check(t_dlist *stack);
+int		sort_check(t_dlist *stack);
 void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);
 
 void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
@@ -76,7 +76,7 @@ void	set_rotation_dir(t_dlist *stack);
 void	set_target(t_dlist *stack_a, t_dlist *stack_b);
 void	calc_prices(t_dlist *stack_a, t_dlist *stack_b);
 t_dlist	*find_candidate(t_dlist *stack_b);
-void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b, 
+void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
 			t_dlist *candidate);
 
 #endif

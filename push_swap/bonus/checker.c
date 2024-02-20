@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:52:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 20:26:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 21:18:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	error_return(t_dlist **stack_a, t_dlist **stack_b)
 	return (0);
 }
 
-int	p_s(const char *command, t_dlist **stack_a, t_dlist **stack_b) 
+int	p_s(const char *command, t_dlist **stack_a, t_dlist **stack_b)
 {
 	if (!ft_strcmp(command, "sa\n"))
 		ft_s(stack_a, A, SILENT);
@@ -49,37 +49,49 @@ int	p_s(const char *command, t_dlist **stack_a, t_dlist **stack_b)
 	return (1);
 }
 
-int	main(int ac, char **av)
+void	checker(t_dlist *stack_a, t_dlist *stack_b)
 {
-    t_dlist *stack_a = NULL;
-    t_dlist *stack_b = NULL;
-    char 	*action;
+	if (sort_check(stack_a) && ft_dlstlen(stack_b) == 0)
+		ft_putstr_fd("OK\n", 1);
+	else
+		ft_putstr_fd("KO\n", 1);
+}
 
-    if (ac > 2 || (ac == 2 && av[1][0] != '\0')) 
+int	process_input_and_actions(int ac, char **av,
+	t_dlist **stack_a, t_dlist **stack_b)
+{
+	char	*action;
+
+	if (ac > 2 || (ac == 2 && av[1][0] != '\0'))
 	{
-        stack_a = construct_input(ac - 1, av + 1);
-        if (!stack_a)
-            return (error_return(&stack_a, &stack_b));
-    }
-    while (true)
+		*stack_a = construct_input(ac - 1, av + 1);
+		if (!*stack_a)
+			return (1);
+	}
+	while (true)
 	{
 		action = get_next_line(0);
-		if (action == NULL)
+		if (!action)
 			break ;
-		if (!p_s(action, &stack_a, &stack_b))
+		if (!p_s(action, stack_a, stack_b))
 		{
 			free(action);
-			return (error_return(&stack_a, &stack_b));
+			return (1);
 		}
 		free(action);
 	}
-    if (sort_check(stack_a) && ft_dlstlen(stack_b) == 0)
-        ft_putstr_fd("OK\n", 1);
-    else
-        ft_putstr_fd("KO\n", 1);
+	return (0);
+}
 
-    ft_dlst_free(&stack_a);
-    ft_dlst_free(&stack_b);
+int	main(int ac, char **av)
+{
+	t_dlist	*stack_a;
+	t_dlist	*stack_b;
 
-    return 0;
+	stack_a = NULL;
+	stack_b = NULL;
+	if (process_input_and_actions(ac, av, &stack_a, &stack_b))
+		return (error_return(&stack_a, &stack_b));
+	checker(stack_a, stack_b);
+	return (ft_dlst_free(&stack_a), ft_dlst_free(&stack_b), 0);
 }

@@ -57,9 +57,6 @@ $(LIBFT):
 $(TEST_NAME): $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 	@$(CC) $(CFLAGS) -o $(TEST_NAME) $(TEST_OBJ) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 
-test: $(TEST_NAME)
-	./$(TEST_NAME)
-
 clean:
 	@$(RM) -r $(OBJS_DIR)
 	@$(RM) -r $(OBJS_DIR_BONUS)
