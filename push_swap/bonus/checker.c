@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:52:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 19:38:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 20:26:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 {
     t_dlist *stack_a = NULL;
     t_dlist *stack_b = NULL;
-    char *action;
+    char 	*action;
 
     if (ac > 2 || (ac == 2 && av[1][0] != '\0')) 
 	{
