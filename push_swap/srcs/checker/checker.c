@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:52:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 13:03:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:42:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		check_empty_stack();
+		check_sorted_stack();
 		return (0);
 	}
 	if (!stack_a)

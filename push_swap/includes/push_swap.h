@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/19 19:55:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:43:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,45 +35,49 @@ typedef struct d_list
 	struct d_list	*target;
 }					t_dlist;
 
-t_dlist				*read_input(int ac, char **av);
-int					all_is_num(char **av, int ac);
-int					has_duplicate(t_dlist *stack);
-int					ft_isnum(char *s);
-int					ft_atoi_custom(const char *str);
-void				calculate_indexes(t_dlist **stack, int n);
+t_dlist	*read_input(int ac, char **av);
+int		all_is_num(char **av, int ac);
+int		has_duplicate(t_dlist *stack);
+int		ft_isnum(char *s);
+int		ft_atoi_custom(const char *str);
 
-void				ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
-void				ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
-t_dlist				*ft_dlstlast(t_dlist *lst);
-void				ft_dlst_free(t_dlist **lst);
-int					ft_dlstlen(t_dlist *lst);
-t_dlist				*ft_dlst_find_min(t_dlist *stack);
-t_dlist				*create_node(t_dlist *stack, char *av);
+void	free_split(char **split);
+t_dlist	*construct_input(int ac, char **av);
+int	sort_check(t_dlist *stack);
+void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);
 
-void				ft_swap(t_dlist **stack);
-void				ft_push(t_dlist **stack_from, t_dlist **stack_to);
-void				ft_rotate(t_dlist **stack);
-void				ft_reverse_rotate(t_dlist **stack);
+void	ft_dlstadd_back(t_dlist **lst, t_dlist *new_node);
+void	ft_dlstadd_front(t_dlist **lst, t_dlist *new_node);
+t_dlist	*ft_dlstlast(t_dlist *lst);
+void	ft_dlst_free(t_dlist **lst);
+int		ft_dlstlen(t_dlist *lst);
+t_dlist	*ft_dlst_find_min(t_dlist *stack);
+t_dlist	*create_node(t_dlist *stack, char *av);
 
-void				ft_s(t_dlist **stack, int where, bool silent);
-void				ft_p(t_dlist **stack_a, t_dlist **stack_b, int where, bool silent);
-void				ft_r(t_dlist **stack, int where, bool silent);
-void				ft_rr(t_dlist **stack_a, int where, bool silent);
-void				ft_ss(t_dlist **stack_a, t_dlist **stack_b, bool silent);
-void				ft_rr_both(t_dlist **stack_a, t_dlist **stack_b, bool silent);
-void				ft_rrr(t_dlist **stack_a, t_dlist **stack_b, bool silent);
+void	ft_swap(t_dlist **stack);
+void	ft_push(t_dlist **stack_from, t_dlist **stack_to);
+void	ft_rotate(t_dlist **stack);
+void	ft_reverse_rotate(t_dlist **stack);
 
-void				sort_stack(t_dlist **stack_a, t_dlist **stack_b);
-void				sort_2(t_dlist **stack);
-void				sort_3(t_dlist **stack);
-int					sort_check(t_dlist *stack);
-void				big_sort(t_dlist **stack_a, t_dlist **stack_b);
+void	ft_s(t_dlist **stack, int where, bool silent);
+void	ft_p(t_dlist **stack_a, t_dlist **stack_b, int where, bool silent);
+void	ft_r(t_dlist **stack, int where, bool silent);
+void	ft_rr(t_dlist **stack_a, int where, bool silent);
+void	ft_ss(t_dlist **stack_a, t_dlist **stack_b, bool silent);
+void	ft_rr_both(t_dlist **stack_a, t_dlist **stack_b, bool silent);
+void	ft_rrr(t_dlist **stack_a, t_dlist **stack_b, bool silent);
 
-void				set_rotation_dir(t_dlist *stack);
-void				set_target(t_dlist *stack_a, t_dlist *stack_b);
-void				calc_prices(t_dlist *stack_a, t_dlist *stack_b);
-t_dlist				*find_candidate(t_dlist *stack_b);
-void				finish_rotating(t_dlist **stack_a, t_dlist **stack_b,
-						t_dlist *candidate);
+void	sort_stack(t_dlist **stack_a, t_dlist **stack_b);
+void	sort_2(t_dlist **stack);
+void	sort_3(t_dlist **stack);
+int		sort_check(t_dlist *stack);
+void	big_sort(t_dlist **stack_a, t_dlist **stack_b);
+
+void	set_rotation_dir(t_dlist *stack);
+void	set_target(t_dlist *stack_a, t_dlist *stack_b);
+void	calc_prices(t_dlist *stack_a, t_dlist *stack_b);
+t_dlist	*find_candidate(t_dlist *stack_b);
+void	finish_rotating(t_dlist **stack_a, t_dlist **stack_b, 
+			t_dlist *candidate);
 
 #endif
