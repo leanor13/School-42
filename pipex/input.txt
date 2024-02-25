@@ -1,0 +1,5 @@
+This is a sample input file.
+It contains some lines of text.
+Hello, how are you?
+I hope you're doing well.
+This file will be used for testing purposes.
