@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/26 15:54:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/26 16:05:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,21 @@ int main(int ac, char **av, char **envp)
 	int		fd_output;
 	int		pid1;
 	int		pid2;
-	char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
-	char 	*args2[] = {"grep", "round-trip", NULL};
+	//char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
+	//char 	*args2[] = {"grep", "round-trip", NULL};
 	char	*command_path1;
 	char	*command1;
 	char	*command_path2;
 	char	*command2;
+	char 	**args1;
+	char	**args2;
 	
-	(void)av;
-	(void)ac;
+	if (ac != 5)
+		return (2);
+	args1 = ft_split(av[2], ' ');
+	args2 = ft_split(av[3], ' ');
+	if (!args1 || !*args1 || !args2 || !*args2)
+		return (2);
 	fd_input = open(av[1], O_RDONLY);
     if (fd_input == -1) {
         perror("open");
@@ -125,7 +131,7 @@ int main(int ac, char **av, char **envp)
 		}
 	}
 	pid2 = fork();
-	if (pid1 < 0)
+	if (pid2 < 0)
 		return (2);
 	if (pid2 == 0)
 	{
@@ -151,5 +157,19 @@ int main(int ac, char **av, char **envp)
 	waitpid(pid2, NULL, 0);
 	free(command_path1);
 	free(command_path2);
+	char **temp_args1 = args1;
+	char **temp_args2 = args2;
+	while (*args1)
+	{
+		free(*args1);
+		args1 ++;
+	}
+	while (*args2)
+	{
+		free(*args2);
+		args2 ++;
+	}
+	free(temp_args1);
+	free(temp_args2);
 	return (0);
 }
