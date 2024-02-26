@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/26 12:38:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/26 13:09:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,42 +61,74 @@ char	*find_path(char *command, char **envp)
 
 int main(int ac, char **av, char **envp) 
 {
-	//int		fd[2];
-	//int		pid1;
-	//char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
-	char 	*args2[] = {"ls", "-l", NULL};
-	char	*command_path = NULL;
-	char	*command;
+	int		fd[2];
+	int		pid1;
+	int		pid2;
+	char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
+	char 	*args2[] = {"grep", "round-trip", NULL};
+	char	*command_path1;
+	char	*command1;
+	char	*command_path2;
+	char	*command2;
 	
 	(void)av;
 	(void)ac;
-	command = args2[0];
-	command_path = find_path(command, envp);
-	if (command_path == NULL) {
+	command1 = args1[0];
+	command_path1 = find_path(command1, envp);
+	command2 = args2[0];
+	command_path2 = find_path(command2, envp);
+	if (command_path1 == NULL || command_path2 == NULL) 
+	{
 		ft_putstr_fd("Error: ", 2);
-		ft_putstr_fd(command, 2);
+		if (command_path1 == NULL && command_path2 != NULL)
+			ft_putstr_fd(command1, 2);
+		else if (command_path2 == NULL)
+			ft_putstr_fd(command2, 2);
+		else
+			ft_putstr_fd("for both commands: ", 2);
 		ft_putstr_fd(" command not found in PATH\n", 2);
 		exit(1);
 	}
-
-	// Execute the command
-	if (execve(command_path, args2, envp) == -1) {
-		perror("execve");
-		free(command_path);
-		exit(1);
+	if (pipe(fd) == -1)
+	{
+		return (1);
 	}
-
-	free(command_path);
-	return 0;
-	/* if (pipe(fd) == -1)
-		return 2;
 	pid1 = fork();
 	if (pid1 < 0)
-		return 2;
+		return (2);
 	if (pid1 == 0)
 	{
-		execve
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		if (execve(command_path1, args1, envp) == -1) 
+		{
+			perror("execve");
+			free(command_path1);
+			exit(1);
+		}
 	}
- */
+	pid2 = fork();
+	if (pid1 < 0)
+		return (2);
+	if (pid2 == 0)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		close(fd[1]);
+		if (execve(command_path2, args2, envp) == -1) 
+		{
+			perror("execve");
+			free(command_path2);
+			exit(1);
+		}
+	}
+
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	free(command_path1);
+	free(command_path2);
 	return (0);
 }
