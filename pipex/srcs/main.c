@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/26 13:09:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/26 15:54:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ char	*find_path(char *command, char **envp)
 
 int main(int ac, char **av, char **envp) 
 {
-	int		fd[2];
+	int		fd_pipe[2];
+	int		fd_input;
+	int		fd_output;
 	int		pid1;
 	int		pid2;
 	char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
@@ -73,6 +75,18 @@ int main(int ac, char **av, char **envp)
 	
 	(void)av;
 	(void)ac;
+	fd_input = open(av[1], O_RDONLY);
+    if (fd_input == -1) {
+        perror("open");
+        exit(1);
+    }
+
+	fd_output = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd_output == -1) {
+        perror("open");
+        exit(1);
+    }
+
 	command1 = args1[0];
 	command_path1 = find_path(command1, envp);
 	command2 = args2[0];
@@ -89,7 +103,7 @@ int main(int ac, char **av, char **envp)
 		ft_putstr_fd(" command not found in PATH\n", 2);
 		exit(1);
 	}
-	if (pipe(fd) == -1)
+	if (pipe(fd_pipe) == -1)
 	{
 		return (1);
 	}
@@ -98,9 +112,11 @@ int main(int ac, char **av, char **envp)
 		return (2);
 	if (pid1 == 0)
 	{
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[0]);
-		close(fd[1]);
+		dup2(fd_input, STDIN_FILENO);
+        dup2(fd_pipe[1], STDOUT_FILENO);
+		close(fd_input);
+		close(fd_pipe[0]);
+		close(fd_pipe[1]);
 		if (execve(command_path1, args1, envp) == -1) 
 		{
 			perror("execve");
@@ -113,9 +129,12 @@ int main(int ac, char **av, char **envp)
 		return (2);
 	if (pid2 == 0)
 	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-		close(fd[1]);
+		dup2(fd_pipe[0], STDIN_FILENO);
+        dup2(fd_output, STDOUT_FILENO);
+		close(fd_pipe[0]);
+		close(fd_pipe[1]);
+		close(fd_input);
+		close(fd_output);
 		if (execve(command_path2, args2, envp) == -1) 
 		{
 			perror("execve");
@@ -124,8 +143,10 @@ int main(int ac, char **av, char **envp)
 		}
 	}
 
-	close(fd[0]);
-	close(fd[1]);
+	close(fd_input);
+	close(fd_output);
+	close(fd_pipe[0]);
+	close(fd_pipe[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
 	free(command_path1);
