@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/25 18:18:31 by yioffe           ###   ########.fr       */
+/*   Created: 2024/02/26 12:25:52 by yioffe            #+#    #+#             */
+/*   Updated: 2024/02/26 12:26:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <limits.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <string.h>
+size_t	ft_strcpy(char *dest, const char *src)
+{
+	size_t	i;
+	size_t	src_length;
 
-# define ERROR "Error\n"
-# define WRONG_ARG_NUM "Wrong number of arguments. Usage: ./pipex file1 cmd1 cmd2 file2\n"
-
-#endif
+	src_length = ft_strlen(src);
+	i = 0;
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i ++;
+	}
+	dest[i] = '\0';
+	return (src_length);
+}

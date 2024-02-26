@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/25 18:18:31 by yioffe           ###   ########.fr       */
+/*   Created: 2024/02/26 12:22:34 by yioffe            #+#    #+#             */
+/*   Updated: 2024/02/26 12:23:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <limits.h>
-# include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <string.h>
+size_t	ft_strcat(char *dest, const char *src)
+{
+	size_t	i;
+	size_t	j;
+	size_t	dest_l;
+	size_t	src_l;
 
-# define ERROR "Error\n"
-# define WRONG_ARG_NUM "Wrong number of arguments. Usage: ./pipex file1 cmd1 cmd2 file2\n"
-
-#endif
+	i = 0;
+	dest_l = ft_strlen(dest);
+	j = dest_l;
+	src_l = ft_strlen(src);
+	while (src[i] != '\0')
+	{
+		dest[j] = src[i];
+		i++;
+		j++;
+	}
+	dest[j] = '\0';
+	return (dest_l + src_l);
+}

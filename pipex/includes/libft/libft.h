@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:52:19 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 19:51:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/26 12:26:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int		ft_isprint(int c);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memset(void *ptr, int value, size_t num);
 char	*ft_strdup(const char *src);
+size_t	ft_strcat(char *dest, const char *src);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
+size_t	ft_strcpy(char *dest, const char *src);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
