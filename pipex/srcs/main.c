@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 09:53:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/27 13:01:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int main(int ac, char **av, char **envp)
 	int		pid1;
 	int		pid2;
 	//char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
-	//char 	*args2[] = {"grep", "round-trip", NULL};
+	//char 	*args2[] = {"awk", "{print NF}", NULL};
 	char	*command_path1;
 	char	*command1;
 	char	*command_path2;
@@ -82,8 +82,8 @@ int main(int ac, char **av, char **envp)
 	
 	if (ac != 5)
 		return (2);
-	args1 = ft_split(av[2], ' ');
-	args2 = ft_split(av[3], ' ');
+	args1 = ft_split_pipex(av[2], ' ');
+	args2 = ft_split_pipex(av[3], ' ');
 	if (!args1 || !*args1 || !args2 || !*args2)
 		return (2);
 	fd_input = open(av[1], O_RDONLY);
@@ -164,6 +164,7 @@ int main(int ac, char **av, char **envp)
 	free(command_path2);
 	char **temp_args1 = args1;
 	char **temp_args2 = args2;
+	(void)temp_args2;
 	while (*args1)
 	{
 		free(*args1);

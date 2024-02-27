@@ -1,8 +1,9 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
-            "name": "(lldb) Launch Main",
+            "name": "HOME (lldb) Launch Main",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
@@ -12,6 +13,20 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
+        },
+        {
+            "name": "SCHOOL (gdb) Launch Main",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/pipex",
+            "args": ["input.txt", "cat", "\"awk '{print NF}'\"", "output.txt"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb"
         }
 	]
 }
+
