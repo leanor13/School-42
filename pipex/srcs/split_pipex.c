@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 13:41:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/27 14:31:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	ft_count_words(char const *s, char c)
 		{
 			q = *s;
 			res ++;
+			s ++;
 			while (*s && *s != q)
 				s ++;
 		}
@@ -57,7 +58,6 @@ static char	*allocate_word(char const *s, char c)
 		s ++;
 		while (s[len] && s[len] != q)
 			len++;
-		len --;
 	}
 	else
 		while (s[len] && s[len] != c)
@@ -78,6 +78,7 @@ char	**ft_split_pipex(char const *s, char c)
 	char	**result;
 	int		count;
 	int		i;
+	char	q;
 
 	count = ft_count_words(s, c);
 	result = (char **)malloc((count + 1) * sizeof(char *));
@@ -94,8 +95,16 @@ char	**ft_split_pipex(char const *s, char c)
 			free_res(result, i);
 			return (NULL);
 		}
-		while (*s && *s != c)
-			s++;
+		if (is_quote(*s))
+		{
+			q = *s;
+			s ++;
+			while (*s && *s != q)
+				s ++;
+		}
+		else
+			while (*s && *s != c)
+				s ++;
 		i++;
 	}
 	result[i] = NULL;
