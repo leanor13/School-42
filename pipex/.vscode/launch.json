@@ -7,7 +7,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
-            "args": ["input.txt", "cat", "awk '{print NF}'", "output.txt"],
+            "args": ["input.txt", "cat", "\"awk '{print NF}'\"", "output.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
