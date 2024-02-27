@@ -1,13 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
         {
             "name": "HOME (lldb) Launch Main",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
-            "args": ["input.txt", "cat", "\"awk '{print NF}'\"", "output.txt"],
+            //"args": ["input.txt", "cat", "\"awk '{print NF}'\"", "output.txt"],
+            "args": ["input.txt", "cat", "wc -l", "output.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

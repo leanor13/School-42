@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 13:01:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/27 16:13:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,40 +64,47 @@ char	*find_path(char *command, char **envp)
 	return (command_path);
 }
 
-int main(int ac, char **av, char **envp) 
+int	main(int ac, char **av, char **envp)
 {
 	int		fd_pipe[2];
 	int		fd_input;
 	int		fd_output;
 	int		pid1;
 	int		pid2;
-	//char 	*args1[] = {"ping", "-c", "5", "google.com", NULL};
-	//char 	*args2[] = {"awk", "{print NF}", NULL};
 	char	*command_path1;
 	char	*command1;
 	char	*command_path2;
 	char	*command2;
-	char 	**args1;
+	char	**args1;
 	char	**args2;
+	char	**temp_args1;
+	char	**temp_args2;
 	
 	if (ac != 5)
-		return (2);
+	{
+		ft_putstr_fd("Usage: ./pipex <input_file> <cmd1> <cmd2> <output_file>\n",
+			2);
+		return (EXIT_FAILURE);
+	}
 	args1 = ft_split_pipex(av[2], ' ');
 	args2 = ft_split_pipex(av[3], ' ');
 	if (!args1 || !*args1 || !args2 || !*args2)
-		return (2);
+	{
+		perror("Error parsing arguments");
+		return (EXIT_FAILURE);
+	}
 	fd_input = open(av[1], O_RDONLY);
-    if (fd_input == -1) {
-        perror("open");
+	if (fd_input == -1)
+	{
+		perror("Error opening input file");
         exit(1);
     }
-
 	fd_output = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd_output == -1) {
-        perror("open");
+	if (fd_output == -1)
+	{
+		perror("Error opening output file");
         exit(1);
     }
-
 	command1 = args1[0];
 	command_path1 = find_path(command1, envp);
 	command2 = args2[0];
@@ -116,11 +123,15 @@ int main(int ac, char **av, char **envp)
 	}
 	if (pipe(fd_pipe) == -1)
 	{
-		return (1);
+		perror("Error creating pipe");
+		return (EXIT_FAILURE);
 	}
 	pid1 = fork();
 	if (pid1 < 0)
-		return (2);
+	{
+		perror("Error forking");
+		return (EXIT_FAILURE);
+	}
 	if (pid1 == 0)
 	{
 		dup2(fd_input, STDIN_FILENO);
@@ -132,12 +143,15 @@ int main(int ac, char **av, char **envp)
 		{
 			perror("execve");
 			free(command_path1);
-			exit(1);
+			return (EXIT_FAILURE);
 		}
 	}
 	pid2 = fork();
 	if (pid2 < 0)
-		return (2);
+	{
+		perror("Error forking");
+		return (EXIT_FAILURE);
+	}
 	if (pid2 == 0)
 	{
 		dup2(fd_pipe[0], STDIN_FILENO);
@@ -150,10 +164,9 @@ int main(int ac, char **av, char **envp)
 		{
 			perror("execve");
 			free(command_path2);
-			exit(1);
+			return (EXIT_FAILURE);
 		}
 	}
-
 	close(fd_input);
 	close(fd_output);
 	close(fd_pipe[0]);
@@ -162,20 +175,20 @@ int main(int ac, char **av, char **envp)
 	waitpid(pid2, NULL, 0);
 	free(command_path1);
 	free(command_path2);
-	char **temp_args1 = args1;
-	char **temp_args2 = args2;
+	temp_args1 = args1;
+	temp_args2 = args2;
 	(void)temp_args2;
 	while (*args1)
 	{
 		free(*args1);
-		args1 ++;
+		args1++;
 	}
 	while (*args2)
 	{
 		free(*args2);
-		args2 ++;
+		args2++;
 	}
 	free(temp_args1);
 	free(temp_args2);
-	return (0);
+	return (EXIT_SUCCESS);
 }
