@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/26 21:15:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/27 09:53:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int main(int ac, char **av, char **envp)
 	
 	if (ac != 5)
 		return (2);
-	args1 = split_pipex(av[2]);
-	args2 = split_pipex(av[3]);
+	args1 = ft_split(av[2], ' ');
+	args2 = ft_split(av[3], ' ');
 	if (!args1 || !*args1 || !args2 || !*args2)
 		return (2);
 	fd_input = open(av[1], O_RDONLY);

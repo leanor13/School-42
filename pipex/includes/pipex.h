@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/26 20:33:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/27 09:54:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@
 # define ERROR "Error\n"
 # define WRONG_ARG_NUM "Wrong number of arguments. Usage: ./pipex file1 cmd1 cmd2 file2\n"
 
-char	**split_pipex(char const *s);
+//char	**split_pipex(char const *s);
 
 #endif
