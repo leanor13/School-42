@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/29 17:55:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/29 18:03:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,17 @@ char	*find_path(char *command, char **envp)
 		if (ft_strncmp(*envp, "PATH=", 5) == 0) 
 		{
 			dir_start = *envp + 5;
-			while (ft_strchr(dir_start, ':') != NULL) 
+			while (ft_strchr(dir_start, ':') != NULL || *dir_start != '\0') 
 			{
-				dir_len = ft_strchr(dir_start, ':') - dir_start;
+				if (ft_strchr(dir_start, ':') != NULL)
+					dir_len = ft_strchr(dir_start, ':') - dir_start;
+				else
+					dir_len = ft_strlen(dir_start);
 				command_path_buf = make_path(command, dir_len, dir_start, false);
 				if (command_path_buf)
 					return (command_path_buf);
 				dir_start = ft_strchr(dir_start, ':') + 1;
 			}
-			if (*dir_start != '\0') 
-			{
-				dir_len = ft_strlen(dir_start);
-				command_path_buf = make_path(command, dir_len, dir_start, true);
-				if (command_path_buf)
-					return (command_path_buf);
-			}
-			break;
 		}
 		envp ++;
 	}
