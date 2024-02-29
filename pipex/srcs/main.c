@@ -6,67 +6,64 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/29 14:34:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/29 17:55:42 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-
+char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
+{
+	char	*path_buf;
+	int		buf_size;
+	
+	path_buf = ft_calloc((dir_len + ft_strlen(command) + 2), sizeof(char));
+	if (!path_buf)
+		return (NULL);
+	if (is_end)
+		buf_size = dir_len + ft_strlen(command) + 2;
+	else
+		buf_size = dir_len + 1;
+	ft_strlcpy(path_buf, dir_start, buf_size);
+	ft_strcat(path_buf, "/");
+	ft_strcat(path_buf, command);
+	if (access(path_buf, X_OK) == 0)
+		return (path_buf);
+	free(path_buf);
+	return (NULL);
+}
 
 char	*find_path(char *command, char **envp)
 {
-	int 	i;
-	char	*command_path;
 	char	*command_path_buf;
 	int		dir_len;
+	char 	*dir_start;
 
-	i = 0;
-	command_path = 0;
-	while (envp[i] != NULL) {
-		// Check if the environment variable starts with "PATH="
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0) 
+	while (*envp) 
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0) 
 		{
-			char *path_env = envp[i] + 5; // Skip "PATH="
-			char *dir_start = path_env;
-			char *dir_end;
-			while ((dir_end = ft_strchr(dir_start, ':')) != NULL) 
+			dir_start = *envp + 5;
+			while (ft_strchr(dir_start, ':') != NULL) 
 			{
-				// Construct the full path of the command
-				dir_len = dir_end - dir_start;
-				command_path_buf = ft_calloc((dir_len + strlen(command) + 2), sizeof(char));
-				ft_strlcpy(command_path_buf, dir_start, dir_len + 1);
-				//command_path_buf[dir_len] = '\0'; // Null-terminate the string
-				ft_strcat(command_path_buf, "/");
-				ft_strcat(command_path_buf, command);
-				// Check if the command exists and is executable
-				if (access(command_path_buf, X_OK) == 0) {
-					command_path = ft_strdup(command_path_buf); // Copy the path
-					free(command_path_buf);
-					break;
-				}
-				dir_start = dir_end + 1; // Move to the next directory in PATH
-				free(command_path_buf);
+				dir_len = ft_strchr(dir_start, ':') - dir_start;
+				command_path_buf = make_path(command, dir_len, dir_start, false);
+				if (command_path_buf)
+					return (command_path_buf);
+				dir_start = ft_strchr(dir_start, ':') + 1;
 			}
-			// Check the last directory in PATH (if it doesn't end with ':')
 			if (*dir_start != '\0') 
 			{
 				dir_len = ft_strlen(dir_start);
-				command_path_buf = ft_calloc((dir_len + strlen(command) + 2), sizeof(char));
-				ft_strcpy(command_path_buf, dir_start);
-				ft_strcat(command_path_buf, "/");
-				ft_strcat(command_path_buf, command);
-				if (access(command_path_buf, X_OK) == 0) {
-					free(command_path_buf);
-					command_path = ft_strdup(command_path_buf); // Copy the path
-				}
-				free(command_path_buf);
+				command_path_buf = make_path(command, dir_len, dir_start, true);
+				if (command_path_buf)
+					return (command_path_buf);
 			}
-			break; // Stop searching after finding the command in PATH
+			break;
 		}
-		i++; // Move to the next environment variable
+		envp ++;
 	}
-	return (command_path);
+	return (NULL);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -178,6 +175,8 @@ int	main(int ac, char **av, char **envp)
 	close(fd_pipe[1]);
 	waitpid(pid1, NULL, 0);
 	waitpid(pid2, NULL, 0);
+	ft_putstr_fd(command_path1, 1);
+	ft_putstr_fd(command_path2, 1);
 	free(command_path1);
 	free(command_path2);
 	temp_args1 = args1;
