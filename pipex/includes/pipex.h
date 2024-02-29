@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 15:49:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/29 12:56:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <fcntl.h>
 # include <string.h>
 
-# ifndef MAXIMUM_PATH
-# 	define MAXIMUM_PATH = 256
+# ifndef PATH_MAX
+# 	define PATH_MAX = 256
 # endif
 
 # define ERROR "Error\n"

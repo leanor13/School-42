@@ -6,56 +6,61 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 16:13:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/02/29 14:34:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-/*
-1. change split so it will take into account '' and "".
-2. validation for quotes in input if needed.
-*/
+
 
 char	*find_path(char *command, char **envp)
 {
 	int 	i;
 	char	*command_path;
+	char	*command_path_buf;
+	int		dir_len;
 
 	i = 0;
 	command_path = 0;
 	while (envp[i] != NULL) {
 		// Check if the environment variable starts with "PATH="
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0) {
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0) 
+		{
 			char *path_env = envp[i] + 5; // Skip "PATH="
 			char *dir_start = path_env;
 			char *dir_end;
 			while ((dir_end = ft_strchr(dir_start, ':')) != NULL) 
 			{
 				// Construct the full path of the command
-				char command_path_buf[PATH_MAX];
-				int dir_len = dir_end - dir_start;
-				ft_strcpy(command_path_buf, dir_start);
-				command_path_buf[dir_len] = '\0'; // Null-terminate the string
+				dir_len = dir_end - dir_start;
+				command_path_buf = ft_calloc((dir_len + strlen(command) + 2), sizeof(char));
+				ft_strlcpy(command_path_buf, dir_start, dir_len + 1);
+				//command_path_buf[dir_len] = '\0'; // Null-terminate the string
 				ft_strcat(command_path_buf, "/");
 				ft_strcat(command_path_buf, command);
 				// Check if the command exists and is executable
 				if (access(command_path_buf, X_OK) == 0) {
 					command_path = ft_strdup(command_path_buf); // Copy the path
+					free(command_path_buf);
 					break;
 				}
 				dir_start = dir_end + 1; // Move to the next directory in PATH
+				free(command_path_buf);
 			}
 			// Check the last directory in PATH (if it doesn't end with ':')
 			if (*dir_start != '\0') 
 			{
-				char command_path_buf[PATH_MAX];
+				dir_len = ft_strlen(dir_start);
+				command_path_buf = ft_calloc((dir_len + strlen(command) + 2), sizeof(char));
 				ft_strcpy(command_path_buf, dir_start);
 				ft_strcat(command_path_buf, "/");
 				ft_strcat(command_path_buf, command);
 				if (access(command_path_buf, X_OK) == 0) {
+					free(command_path_buf);
 					command_path = ft_strdup(command_path_buf); // Copy the path
 				}
+				free(command_path_buf);
 			}
 			break; // Stop searching after finding the command in PATH
 		}
