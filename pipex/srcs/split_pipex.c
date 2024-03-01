@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/27 16:05:46 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:46:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*skip_word(char *s, char c)
 static int	ft_count_words(char *s, char c)
 {
 	int		res;
-	//char	q;
 
 	res = 0;
 	while (*s)
@@ -75,6 +74,11 @@ static char	*allocate_word(char *s, char c)
 		while (s[len] && s[len] != c)
 			len++;
 	word = ft_substr(s, 0, len);
+	if (!word)
+	{
+		perror("Failed split word memory allocation");
+		return (NULL);
+	}
 	return (word);
 }
 
@@ -94,7 +98,10 @@ char	**ft_split_pipex(char *s, char c)
 	count = ft_count_words(s, c);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
+	{
+		perror("Failed split memory allocation");
 		return (NULL);
+	}
 	i = 0;
 	while (i < count)
 	{

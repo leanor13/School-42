@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/29 12:56:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:13:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,21 @@
 # include <string.h>
 
 # ifndef PATH_MAX
-# 	define PATH_MAX = 256
+#  define PATH_MAX 256
 # endif
 
 # define ERROR "Error\n"
-# define WRONG_ARG_NUM "Wrong number of arguments. Usage: ./pipex file1 cmd1 cmd2 file2\n"
+# define WRONG_ARG_NUM "Wrong number of arguments. \
+	Usage: ./pipex file1 cmd1 cmd2 file2\n"
+
+typedef struct command
+{
+	char			*command;
+	char			*command_path;
+	char			**args;
+	int				fd_input;
+	int				fd_output;
+}	t_command;
 
 char	**ft_split_pipex(char *s, char c);
 
