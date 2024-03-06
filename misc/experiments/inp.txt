@@ -1,0 +1,6 @@
+hello
+this is uc
+for grepccc
+this is line with no c in the end
+bye
+c
