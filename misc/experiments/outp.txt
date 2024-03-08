@@ -1,3 +1,5 @@
-this is uc
-for grepccc
-c
+a.out
+dup2.c
+inp.txt
+outp.txt
+/Users/leanor/Documents/Programming/School-42/misc/experiments

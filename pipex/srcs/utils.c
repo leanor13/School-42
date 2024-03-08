@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/02 10:05:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/08 00:49:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 	ft_strlcpy(path_buf, dir_start, buf_size);
 	ft_strcat(path_buf, "/");
 	ft_strcat(path_buf, command);
-	if (access(path_buf, X_OK) == 0)
-		return (path_buf);
-	free(path_buf);
-	perror("Failed to find path for command");
-	return (NULL);
+	return (path_buf);
 }
 
 char	*find_path(char *command, char **envp)
@@ -42,6 +38,7 @@ char	*find_path(char *command, char **envp)
 	char	*command_path_buf;
 	int		dir_len;
 	char	*dir_start;
+	bool	is_end;
 
 	while (*envp)
 	{
@@ -50,28 +47,32 @@ char	*find_path(char *command, char **envp)
 			dir_start = *envp + 5;
 			while (ft_strchr(dir_start, ':') != NULL || *dir_start != '\0')
 			{
+				is_end = false;
 				if (ft_strchr(dir_start, ':') != NULL)
 					dir_len = ft_strchr(dir_start, ':') - dir_start;
 				else
+				{
+					is_end = true;
 					dir_len = ft_strlen(dir_start);
-				command_path_buf = make_path(command, dir_len, dir_start,
-						false);
-				if (command_path_buf)
+				}
+				command_path_buf = make_path(command, dir_len, dir_start, is_end);
+				if (command_path_buf && access(command_path_buf, X_OK) == 0)
 					return (command_path_buf);
+				free(command_path_buf);
 				dir_start = ft_strchr(dir_start, ':') + 1;
 			}
 		}
 		envp++;
 	}
-	return (NULL);
+	return (perror("Failed to find path for command"), NULL);
 }
 
 void	new_command(t_command *command, char *av_curr, char **envp)
 {
-	command->command = av_curr[0];
 	command->args = ft_split_pipex(av_curr, ' ');
 	if (!command->args)
 		return ;
+	command->command = command->args[0];
 	command->path = find_path(command->command, envp);
 	if (!command->path)
 	{
@@ -87,7 +88,6 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 {
 	int			i;
 	t_command	*command_list;
-	t_command	*next_command;
 
 	if (ac < 5)
 		return (perror(WRONG_ARG_NUM), NULL);

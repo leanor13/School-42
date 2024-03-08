@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/02 10:04:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/07 23:15:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # ifndef PATH_MAX
 #  define PATH_MAX 256
 # endif
+
+# define CHILD_PID 0
+# define NEG_ERROR -1
+# define FD_IN 0
+# define FD_OUT 1
 
 # define ERROR "Error\n"
 # define WRONG_ARG_NUM "Wrong number of arguments. \
