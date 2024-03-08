@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/08 01:05:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/08 16:00:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 		return (perror("Error forking"), NEG_ERROR);
 	else if (pid == 0)
 	{
+		write(2, "I am child\n", 11);
 		if (fd_in != STDIN_FILENO)
         {
             dup2(fd_in, STDIN_FILENO);
