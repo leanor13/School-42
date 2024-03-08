@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/08 00:43:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/08 01:05:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ int main(int ac, char **av, char **envp)
     t_command *command_list;
 	int exec_pipe_result;
 
-	if (ac < 3)
-        return (perror("Not enough arguments"), EXIT_FAILURE);
     fd_in_out_files[FD_IN] = open(av[1], O_RDONLY);
     if (fd_in_out_files[FD_IN] == -1)
         return(perror("Failed opening input file"), EXIT_FAILURE);
