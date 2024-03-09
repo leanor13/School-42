@@ -6,16 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 16:52:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:01:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-static int	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
 
 char	*skip_word(char *s, char c)
 {
@@ -118,8 +113,6 @@ char	**ft_split_pipex(char *s, char c)
 		if (!result[i])
 			return(free_res(result, i), NULL);
 		s = skip_word(s, c);
-		if (s == (char *) NEG_ERROR)
-			return (free_res(result, i), NULL);
 		i++;
 	}
 	result[i] = NULL;

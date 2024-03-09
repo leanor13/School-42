@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main split_pipex utils
+S = main split_pipex split_util utils
 
 COMPRESS = ar rcs
 RM = rm -f
