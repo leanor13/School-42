@@ -32,7 +32,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
             //"args": ["input.txt", "cat", "\"awk '{print NF}'\"", "output.txt"],
-            "args": ["input.txt", "cak", "wc -l", "output.txt"],
+            "args": ["input.txt", "cat", "wc '-l", "output.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

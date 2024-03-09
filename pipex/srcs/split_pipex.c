@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 16:06:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:52:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*skip_word(char *s, char c)
 		if (*s == q)
 			s++;
 		else
-			return (perror("Syntax error: single quote"), (char *) NEG_ERROR);
+			return (perror("Syntax error: unpaired quote"), (char *) NEG_ERROR);
 	}
 	else
 		while (*s && *s != c)
@@ -57,6 +57,8 @@ static int	ft_count_words(char *s, char c)
 		{
 			res++;
 			s = skip_word(s, c);
+			if (s == (char *) NEG_ERROR)
+				return (NEG_ERROR);
 		}
 	}
 	return (res);
@@ -102,6 +104,8 @@ char	**ft_split_pipex(char *s, char c)
 	int		i;
 
 	count = ft_count_words(s, c);
+	if (count == NEG_ERROR)
+		return (NULL);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
 		return (perror("Failed split memory allocation"), NULL);
