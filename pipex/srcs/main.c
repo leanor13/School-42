@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/08 16:00:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 15:31:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 			perror("Execve error");
 			exit (NEG_ERROR);
 		}
+	}
+	else
+	{
+		close(fd_out);
+		//dup2(fd_in, STDIN_FILENO);
+		waitpid(pid, NULL, 0);
 	}
 	return (pid);
 	// make sure to free command_list in case -1 is returned.
@@ -90,8 +96,8 @@ int	exec_pipe(t_command *command_list, int fd_in_out_files[2], int comm_num, cha
 		i ++;
 	}
     i = 0;
-    while (i < comm_num)
-        waitpid(pids[i++], NULL, 0);
+    //while (i < comm_num)
+    //    waitpid(pids[i++], NULL, 0);
 	free (pids);
 	return (0);
 }
