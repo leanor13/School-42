@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/08 01:11:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:31:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ char	*find_path(char *command, char **envp)
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
 		{
 			dir_start = *envp + 5;
-			while (ft_strchr(dir_start, ':') != NULL || *dir_start != '\0')
+			is_end = false;
+			while (!is_end)
 			{
-				is_end = false;
 				if (ft_strchr(dir_start, ':') != NULL)
 					dir_len = ft_strchr(dir_start, ':') - dir_start;
 				else
@@ -59,7 +59,8 @@ char	*find_path(char *command, char **envp)
 				if (command_path_buf && access(command_path_buf, X_OK) == 0)
 					return (command_path_buf);
 				free(command_path_buf);
-				dir_start = ft_strchr(dir_start, ':') + 1;
+				if (!is_end)
+					dir_start = ft_strchr(dir_start, ':') + 1;
 			}
 		}
 		envp++;
@@ -80,8 +81,6 @@ void	new_command(t_command *command, char *av_curr, char **envp)
 		command->args = NULL;
 		return ;
 	}
-	command->fd_input = -1;
-	command->fd_output = -1;
 }
 
 t_command	*build_command_list(int ac, char **av, char **envp)

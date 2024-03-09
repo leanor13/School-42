@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/07 23:15:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:07:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ typedef struct command
 	char			*command;
 	char			*path;
 	char			**args;
-	int				fd_input;
-	int				fd_output;
 }	t_command;
 
 char		**ft_split_pipex(char *s, char c);
-char		*make_path(char *command, int dir_len, char *dir_start, bool is_end);
+char		*make_path(char *command, int len, char *dir_start, bool is_end);
 char		*find_path(char *command, char **envp);
 void		new_command(t_command *command, char *av_curr, char **envp);
 t_command	*build_command_list(int ac, char **av, char **envp);

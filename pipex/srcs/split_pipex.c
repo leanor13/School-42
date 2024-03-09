@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/01 17:46:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:06:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,15 @@ char	*skip_word(char *s, char c)
 		q = *s;
 		s++;
 		while (*s && *s != q)
-			s++;
+		{
+			if (is_quote(*s))
+				return (perror("Syntax error: nested quotes"), (char *) NEG_ERROR);
+			s ++;
+		}
 		if (*s == q)
 			s++;
+		else
+			return (perror("Syntax error: single quote"), (char *) NEG_ERROR);
 	}
 	else
 		while (*s && *s != c)
@@ -98,10 +104,7 @@ char	**ft_split_pipex(char *s, char c)
 	count = ft_count_words(s, c);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
-	{
-		perror("Failed split memory allocation");
-		return (NULL);
-	}
+		return (perror("Failed split memory allocation"), NULL);
 	i = 0;
 	while (i < count)
 	{
@@ -111,6 +114,8 @@ char	**ft_split_pipex(char *s, char c)
 		if (!result[i])
 			return(free_res(result, i), NULL);
 		s = skip_word(s, c);
+		if (s == (char *) NEG_ERROR)
+			return (free_res(result, i), NULL);
 		i++;
 	}
 	result[i] = NULL;
