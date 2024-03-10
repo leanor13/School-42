@@ -1,0 +1,28 @@
+# Ignore compiled files
+# *.o
+# *.out
+
+# Ignore editor and IDE files
+.vscode/
+.idea/
+
+# Ignore dependencies and build artifacts
+node_modules/
+build/
+dist/
+
+# Ignore sensitive or environment-specific files
+.env
+config.js
+venv/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore Dockerfile
+Dockerfile
