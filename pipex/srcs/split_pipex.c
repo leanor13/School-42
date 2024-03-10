@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:48:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 15:24:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ char	*skip_word(char *s, char c)
 		while (*s && *s != q)
 		{
 			if (is_quote(*s))
-				return (perror(ERR_NESTED_QUOTES), (char *) NEG_ERROR);
+				return (ft_putstr_fd(ERR_NESTED_QUOTES, STDERR_FILENO),
+					(char *) NEG_ERROR);
 			s ++;
 		}
 		if (*s == q)
 			s++;
 		else
-			return (perror(ERR_SINGLE_QUOTE), (char *) NEG_ERROR);
+			return (ft_putstr_fd(ERR_SINGLE_QUOTE, STDERR_FILENO),
+				(char *) NEG_ERROR);
 	}
 	else
 		while (*s && *s != c)

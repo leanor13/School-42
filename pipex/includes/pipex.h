@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:49:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 15:19:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define PRINT_PIPE_ERROR true
 
 # define WRONG_ARG_NUM "Wrong number of arguments. \
-	Usage: ./pipex file1 cmd1 cmd2 file2\n"
+Usage: ./pipex file1 cmd1 cmd2 file2\n"
 # define ERR_NESTED_QUOTES "Syntax error: nested quotes"
 # define ERR_SINGLE_QUOTE "Syntax error: single quote"
 

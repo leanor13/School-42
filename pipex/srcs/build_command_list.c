@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:42:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 15:24:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*find_path(char *command, char **envp)
 		if (!is_end)
 			dir_start = ft_strchr(dir_start, ':') + 1;
 	}
-	return (perror("Failed to find path for command"), NULL);
+	return (ft_putstr_fd("Failed to find command path", STDERR_FILENO), NULL);
 }
 
 static void	new_command(t_command *command, char *av_curr, char **envp)
@@ -101,8 +101,6 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 	int			i;
 	t_command	*command_list;
 
-	if (ac < 5)
-		return (perror(WRONG_ARG_NUM), NULL);
 	command_list = calloc((ac - 3), sizeof(t_command));
 	if (!command_list)
 		return (perror("Could not allocate command list"), NULL);

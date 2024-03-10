@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:45:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 15:18:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int	main(int ac, char **av, char **envp)
 	t_command	*command_list;
 	int			exec_pipe_result;
 
+	if (ac < 5)
+		return (ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO), EXIT_FAILURE);
 	fd_files[FD_IN] = open(av[1], O_RDONLY);
 	if (fd_files[FD_IN] == -1)
 		return (perror("Failed opening input file"), EXIT_FAILURE);
@@ -105,5 +107,5 @@ int	main(int ac, char **av, char **envp)
 	free_command_list(command_list, ac - 3);
 	if (exec_pipe_result == NEG_ERROR)
 		return (EXIT_FAILURE);
-	return (0);
+	return (EXIT_SUCCESS);
 }
