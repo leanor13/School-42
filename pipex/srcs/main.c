@@ -6,11 +6,20 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 12:11:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:27:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	dup_close(int fd, int reference)
+{
+	if (fd != reference)
+	{
+		dup2(fd, reference);
+		close(fd);
+	}
+}
 
 int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 {
@@ -21,16 +30,8 @@ int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 		return (perror("Error forking"), NEG_ERROR);
 	else if (pid == 0)
 	{
-		if (fd_in != STDIN_FILENO)
-		{
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
-		}
-		if (fd_out != STDOUT_FILENO)
-		{
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
+		dup_close(fd_in, STDIN_FILENO);
+		dup_close(fd_out, STDOUT_FILENO);
 		if (execve(command->path, command->args, envp) == -1)
 		{
 			perror("Execve error");
@@ -40,14 +41,15 @@ int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 	else
 	{
 		close(fd_out);
-		//dup2(fd_in, STDIN_FILENO);
 		waitpid(pid, NULL, 0);
 	}
 	return (pid);
 }
 
-static void	close_both_ends(int fd[2])
+static void	close_both_ends(int fd[2], bool pipe_error)
 {
+	if (pipe_error)
+		perror("Error creating pipe");
 	close(fd[FD_IN]);
 	close(fd[FD_OUT]);
 }
@@ -63,10 +65,7 @@ int	exec_pipe(t_command *comm_list, int fd_files[2], int comm_num, char **envp)
 	while (i <= comm_num - 1)
 	{
 		if (pipe(fd_pipe) == -1)
-		{
-			perror("Error creating pipe");
-			return (close_both_ends(fd), NEG_ERROR);
-		}
+			return (close_both_ends(fd, PRINT_PIPE_ERROR), NEG_ERROR);
 		if (i == comm_num - 1)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
@@ -75,7 +74,7 @@ int	exec_pipe(t_command *comm_list, int fd_files[2], int comm_num, char **envp)
 		{
 			if (i != comm_num - 1)
 				close(fd_files[FD_OUT]);
-			return (close_both_ends(fd), NEG_ERROR);
+			return (close_both_ends(fd, !PRINT_PIPE_ERROR), NEG_ERROR);
 		}
 		close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];
@@ -101,7 +100,7 @@ int	main(int ac, char **av, char **envp)
 	}
 	command_list = build_command_list(ac, av, envp);
 	if (!command_list)
-		return (close_both_ends(fd_files), EXIT_FAILURE);
+		return (close_both_ends(fd_files, !PRINT_PIPE_ERROR), EXIT_FAILURE);
 	exec_pipe_result = exec_pipe(command_list, fd_files, ac - 3, envp);
 	free_command_list(command_list, ac - 3);
 	if (exec_pipe_result == NEG_ERROR)

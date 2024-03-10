@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 17:02:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:25:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define NEG_ERROR -1
 # define FD_IN 0
 # define FD_OUT 1
+# define PRINT_PIPE_ERROR true
 
-# define ERROR "Error\n"
 # define WRONG_ARG_NUM "Wrong number of arguments. \
 	Usage: ./pipex file1 cmd1 cmd2 file2\n"
 
