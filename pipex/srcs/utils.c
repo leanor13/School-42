@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 16:31:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:18:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ char	*find_path(char *command, char **envp)
 
 void	new_command(t_command *command, char *av_curr, char **envp)
 {
+	int	i;
+	
 	command->args = ft_split_pipex(av_curr, ' ');
 	if (!command->args)
 		return ;
@@ -77,8 +79,15 @@ void	new_command(t_command *command, char *av_curr, char **envp)
 	command->path = find_path(command->command, envp);
 	if (!command->path)
 	{
+		i = 0;
+		while (command->args[i])
+		{
+			free(command->args[i]);
+			i++;
+		}
 		free(command->args);
 		command->args = NULL;
+		command->command = NULL;
 		return ;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 15:51:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:11:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 
 static void	close_both_ends(int fd[2])
 {
-	close(fd[0]);
-	close(fd[1]);
+	close(fd[FD_IN]);
+	close(fd[FD_OUT]);
 }
 
 int	exec_pipe(t_command *comm_list, int fd_files[2], int comm_num, char **envp)
