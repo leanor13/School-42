@@ -1,6 +1,6 @@
 # Ignore compiled files
-# *.o
-# *.out
+*.o
+*.out
 
 # Ignore editor and IDE files
 .vscode/
