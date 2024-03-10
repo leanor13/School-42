@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:27:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:45:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	dup_close(int fd, int reference)
+static void	dup_close(int fd, int reference)
 {
 	if (fd != reference)
 	{
@@ -21,7 +21,7 @@ void	dup_close(int fd, int reference)
 	}
 }
 
-int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
+static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 {
 	int	pid;
 
@@ -54,7 +54,7 @@ static void	close_both_ends(int fd[2], bool pipe_error)
 	close(fd[FD_OUT]);
 }
 
-int	exec_pipe(t_command *comm_list, int fd_files[2], int comm_num, char **envp)
+static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 {
 	int	fd_pipe[2];
 	int	fd[2];
@@ -62,17 +62,17 @@ int	exec_pipe(t_command *comm_list, int fd_files[2], int comm_num, char **envp)
 
 	i = 0;
 	fd[FD_IN] = fd_files[FD_IN];
-	while (i <= comm_num - 1)
+	while (i <= len - 1)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (close_both_ends(fd, PRINT_PIPE_ERROR), NEG_ERROR);
-		if (i == comm_num - 1)
+		if (i == len - 1)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
-		if (exec_command(&comm_list[i], fd[FD_IN], fd[FD_OUT], envp) < 0)
+		if (exec_command(&c_list[i], fd[FD_IN], fd[FD_OUT], envp) < 0)
 		{
-			if (i != comm_num - 1)
+			if (i != len - 1)
 				close(fd_files[FD_OUT]);
 			return (close_both_ends(fd, !PRINT_PIPE_ERROR), NEG_ERROR);
 		}

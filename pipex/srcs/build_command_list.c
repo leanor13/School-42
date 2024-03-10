@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   build_command_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 12:18:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:42:35 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
+static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 {
 	char	*path_buf;
 	int		buf_size;
@@ -33,45 +33,49 @@ char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 	return (path_buf);
 }
 
-char	*find_path(char *command, char **envp)
+static char	*envp_path(char **envp)
+{
+	while (*envp)
+	{
+		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+			return (*envp + 5);
+		envp ++;
+	}
+	return (NULL);
+}
+
+static char	*find_path(char *command, char **envp)
 {
 	char	*command_path_buf;
 	int		dir_len;
 	char	*dir_start;
 	bool	is_end;
 
-	while (*envp)
+	dir_start = envp_path(envp);
+	is_end = false;
+	while (!is_end)
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		if (ft_strchr(dir_start, ':') != NULL)
+			dir_len = ft_strchr(dir_start, ':') - dir_start;
+		else
 		{
-			dir_start = *envp + 5;
-			is_end = false;
-			while (!is_end)
-			{
-				if (ft_strchr(dir_start, ':') != NULL)
-					dir_len = ft_strchr(dir_start, ':') - dir_start;
-				else
-				{
-					is_end = true;
-					dir_len = ft_strlen(dir_start);
-				}
-				command_path_buf = make_path(command, dir_len, dir_start, is_end);
-				if (command_path_buf && access(command_path_buf, X_OK) == 0)
-					return (command_path_buf);
-				free(command_path_buf);
-				if (!is_end)
-					dir_start = ft_strchr(dir_start, ':') + 1;
-			}
+			is_end = true;
+			dir_len = ft_strlen(dir_start);
 		}
-		envp++;
+		command_path_buf = make_path(command, dir_len, dir_start, is_end);
+		if (command_path_buf && access(command_path_buf, X_OK) == 0)
+			return (command_path_buf);
+		free(command_path_buf);
+		if (!is_end)
+			dir_start = ft_strchr(dir_start, ':') + 1;
 	}
 	return (perror("Failed to find path for command"), NULL);
 }
 
-void	new_command(t_command *command, char *av_curr, char **envp)
+static void	new_command(t_command *command, char *av_curr, char **envp)
 {
 	int	i;
-	
+
 	command->args = ft_split_pipex(av_curr, ' ');
 	if (!command->args)
 		return ;
@@ -114,29 +118,4 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 		i++;
 	}
 	return (command_list);
-}
-
-void	free_command_list(t_command *command_list, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = 0;
-		while (command_list[i].args[j])
-		{
-			free(command_list[i].args[j]);
-			command_list[i].args[j] = NULL;
-			j++;
-		}
-		free(command_list[i].args);
-		command_list[i].args = NULL;
-		free(command_list[i].path);
-		command_list[i].path = NULL;
-		i++;
-	}
-	free(command_list);
-	command_list = NULL;
 }

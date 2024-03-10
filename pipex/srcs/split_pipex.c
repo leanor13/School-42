@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/09 17:01:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/10 13:48:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ char	*skip_word(char *s, char c)
 		while (*s && *s != q)
 		{
 			if (is_quote(*s))
-				return (perror("Syntax error: nested quotes"), (char *) NEG_ERROR);
+				return (perror(ERR_NESTED_QUOTES), (char *) NEG_ERROR);
 			s ++;
 		}
 		if (*s == q)
 			s++;
 		else
-			return (perror("Syntax error: unpaired quote"), (char *) NEG_ERROR);
+			return (perror(ERR_SINGLE_QUOTE), (char *) NEG_ERROR);
 	}
 	else
 		while (*s && *s != c)
@@ -111,7 +111,7 @@ char	**ft_split_pipex(char *s, char c)
 			s++;
 		result[i] = allocate_word(s, c);
 		if (!result[i])
-			return(free_res(result, i), NULL);
+			return (free_res(result, i), NULL);
 		s = skip_word(s, c);
 		i++;
 	}
