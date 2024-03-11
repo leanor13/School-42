@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 12:42:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:37:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 	if (!command_list)
 		return (perror("Could not allocate command list"), NULL);
 	i = 2;
+	if (ft_strcmp(av[1], "here_doc") == 0)
+		i ++;
 	while (i < ac - 1)
 	{
 		if (av[i] && av[i][0])

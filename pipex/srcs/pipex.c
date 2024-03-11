@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 11:48:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/11 18:44:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,100 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 	return (0);
 }
 
+void	here_doc(char *limiter, int argc)
+{
+	int		pid;
+	int		fd[2];
+	char	*line;
+
+	if (argc < 6)
+	{
+		ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO);
+		exit (EXIT_FAILURE);
+	}
+	if (pipe(fd) == -1)
+	{
+		perror("Error creating pipe");
+		exit(EXIT_FAILURE);
+	}
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("Error forking");
+		exit (EXIT_FAILURE);
+	}
+	else if (pid == 0)
+	{
+		close(fd[0]);
+		while (true)
+        {
+            line = get_next_line(STDIN_FILENO);
+            if (line == NULL)
+            {
+                perror("Error reading from standard input");
+                exit(EXIT_FAILURE);
+            }
+            if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+            {
+                free(line);
+                break; // Exit the loop if limiter is found
+            }
+            write(fd[1], line, ft_strlen(line));
+            free(line);
+		}
+		close(fd[1]);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		wait(NULL);
+	}
+}
+
+int	open_file(int ac, char **av, int type)
+{
+	int	fd;
+
+	fd = 0;
+	if (type == HERE_DOC)
+		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == OUTPUT_FILE)
+		fd = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (type == INPUT_FILE)
+		fd = open(av[1], O_RDONLY);
+	if (fd < 0)
+	{
+		if (type == INPUT_FILE)
+			perror("Failed opening input file");
+		else
+			perror("Failed opening output file");
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	int			fd_files[2];
 	t_command	*command_list;
 	int			exec_pipe_result;
 
-	if (ac < 5)
+	if (ac < 5 || !av || !av[1])
 		return (ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO), EXIT_FAILURE);
-	fd_files[FD_IN] = open(av[1], O_RDONLY);
-	if (fd_files[FD_IN] == -1)
-		return (perror("Failed opening input file"), EXIT_FAILURE);
-	fd_files[FD_OUT] = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd_files[FD_OUT] == -1)
+	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
-		close(fd_files[FD_IN]);
-		return (perror("Failed opening output file"), EXIT_FAILURE);
+		fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
+		here_doc(av[2], ac);
+		fd_files[FD_IN] = STDIN_FILENO;
+		ac --;
+		av ++;
+	}
+	else
+	{
+		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
+		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
 	}
 	command_list = build_command_list(ac, av, envp);
 	if (!command_list)
