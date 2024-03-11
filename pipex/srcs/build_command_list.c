@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 11:58:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/11 12:42:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char	*make_path(char *command, int dir_len, char *dir_start, bool is_end)
 
 static char	*envp_path(char **envp)
 {
+	if (!envp)
+		return (NULL);
 	while (*envp)
 	{
 		if (ft_strncmp(*envp, "PATH=", 5) == 0)
@@ -56,9 +58,11 @@ static char	*find_path(char *command, char **envp)
 		if (access(command, X_OK) == 0)
 			return (command);
 		else
-			return (ft_putstr_fd("Wrong command path", STDERR_FILENO), NULL);
+			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
 	}
 	dir_start = envp_path(envp);
+	if (!dir_start)
+		return (ft_putstr_fd("No PATH in envp, provide full path\n", STDERR_FILENO), NULL);
 	is_end = false;
 	while (!is_end)
 	{
