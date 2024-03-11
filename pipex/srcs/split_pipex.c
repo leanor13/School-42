@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 13:33:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/11 13:59:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ char	**ft_split_pipex(char *s, char c)
 		while (*s == c)
 			s++;
 		result[i] = allocate_word(s, c);
-		printf("my args: %s\n", result[i]);
 		if (!result[i])
 			return (free_res(result, i), NULL);
 		s = skip_word(s, c);
