@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 15:24:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/11 11:58:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ static char	*find_path(char *command, char **envp)
 	char	*dir_start;
 	bool	is_end;
 
+	if (*command == '/')
+	{
+		if (access(command, X_OK) == 0)
+			return (command);
+		else
+			return (ft_putstr_fd("Wrong command path", STDERR_FILENO), NULL);
+	}
 	dir_start = envp_path(envp);
 	is_end = false;
 	while (!is_end)
@@ -107,7 +114,10 @@ t_command	*build_command_list(int ac, char **av, char **envp)
 	i = 2;
 	while (i < ac - 1)
 	{
-		new_command(&command_list[i - 2], av[i], envp);
+		if (av[i] && av[i][0])
+			new_command(&command_list[i - 2], av[i], envp);
+		else
+			ft_putstr_fd("Syntax error: empty command\n", STDERR_FILENO);
 		if (!command_list[i - 2].args || !command_list[i - 2].path)
 		{
 			free_command_list(command_list, i - 2);

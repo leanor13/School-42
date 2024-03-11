@@ -15,6 +15,7 @@ dist/
 .env
 config.js
 venv/
+**/venv/
 
 # Ignore logs and temporary files
 *.log
