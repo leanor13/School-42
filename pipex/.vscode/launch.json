@@ -45,7 +45,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
-            "args": ["input.txt", "cat", "\"awk '{print $1}'\"", "output.txt"],
+            "args": ["test/envp.txt", "/usr/bin/cat", "wc -l", "test/output.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

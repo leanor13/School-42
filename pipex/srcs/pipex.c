@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 18:44:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/12 14:24:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 	}
 	else
 	{
-		close(fd_out);
-		waitpid(pid, NULL, 0);
+		close(fd_in);
+        close(fd_out);
+		//waitpid(pid, NULL, 0);
 	}
 	return (pid);
 }
@@ -59,8 +60,10 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 	int	fd_pipe[2];
 	int	fd[2];
 	int	i;
+	pid_t *pids;
 
 	i = 0;
+	pids = malloc(sizeof(pid_t)*len);
 	fd[FD_IN] = fd_files[FD_IN];
 	while (i <= len - 1)
 	{
@@ -70,11 +73,13 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
-		if (exec_command(&c_list[i], fd[FD_IN], fd[FD_OUT], envp) < 0)
+		pids[i] = exec_command(&c_list[i], fd[FD_IN], fd[FD_OUT], envp);
+		if (pids[i] < 0)
 		{
 			if (i != len - 1)
 				close(fd_files[FD_OUT]);
 			close_both_ends(fd_pipe, !PRINT_PIPE_ERROR);
+			free(pids);
 			return (close_both_ends(fd, !PRINT_PIPE_ERROR), NEG_ERROR);
 		}
 		close(fd[FD_IN]);
@@ -83,6 +88,14 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 		i ++;
 	}
 	close(fd_pipe[FD_IN]);
+	close(fd[FD_OUT]);
+	i = 0;
+	while (i <= len -1)
+	{
+		waitpid(pids[i], NULL, 0);
+		i ++;
+	}
+	free(pids);
 	return (0);
 }
 
@@ -122,7 +135,7 @@ void	here_doc(char *limiter, int argc)
             if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
             {
                 free(line);
-                break; // Exit the loop if limiter is found
+                break;
             }
             write(fd[1], line, ft_strlen(line));
             free(line);
@@ -134,6 +147,7 @@ void	here_doc(char *limiter, int argc)
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
 		wait(NULL);
 	}
 }
@@ -155,7 +169,7 @@ int	open_file(int ac, char **av, int type)
 			perror("Failed opening input file");
 		else
 			perror("Failed opening output file");
-		exit(EXIT_FAILURE);
+		return(NEG_ERROR);
 	}
 	return (fd);
 }
@@ -181,11 +195,17 @@ int	main(int ac, char **av, char **envp)
 		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
 		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
 	}
+	if (fd_files[FD_OUT] < 0)
+		return (EXIT_FAILURE);
+	if (fd_files[FD_IN] < 0)
+		fd_files[FD_IN] = open("/dev/null", O_RDONLY);
 	command_list = build_command_list(ac, av, envp);
 	if (!command_list)
 		return (close_both_ends(fd_files, !PRINT_PIPE_ERROR), EXIT_FAILURE);
 	exec_pipe_result = exec_pipe(command_list, fd_files, ac - 3, envp);
 	free_command_list(command_list, ac - 3);
+	close(fd_files[FD_OUT]);
+    close(fd_files[FD_IN]);
 	if (exec_pipe_result == NEG_ERROR)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/10 13:44:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/12 12:48:54 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_command_list(t_command *command_list, int size)
 	while (i < size)
 	{
 		j = 0;
+		// make function ft_free
 		while (command_list[i].args[j])
 		{
 			free(command_list[i].args[j]);
