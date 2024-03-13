@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 00:49:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/13 13:59:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ int	*handle_input(int ac, char **av)
 	int	*fd_files;
 
 	fd_files = malloc(sizeof(int) * 2);
+	if (!fd_files)
+	{
+		perror("Failed allocate memory for fd_files");
+		exit (EXIT_FAILURE);
+	}
 	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
 		fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
@@ -117,25 +122,22 @@ int	main(int ac, char **av, char **envp)
 	t_command	*command_list;
 	int			exec_pipe_result;
 
-	if (ac < 5 || !av || !av[1] ||
-		(ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
+	if (ac < 5 || !av || !av[1]
+		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
 	{
 		ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO);
 		exit (EXIT_FAILURE);
 	}
 	fd_files = handle_input(ac, av);
-	if (ft_strcmp(av[1], "here_doc") == 0)
-	{
-		ac --;
+	if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 		av ++;
-	}
 	command_list = build_command_list(ac, av, envp);
 	if (!command_list)
 		return (close_both_ends(fd_files, !PRINT_PIPE_ERROR), EXIT_FAILURE);
 	exec_pipe_result = exec_pipe(command_list, fd_files, ac - 3, envp);
 	free_command_list(command_list, ac - 3);
-	free(fd_files);
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);
+	free(fd_files);
 	if (exec_pipe_result == NEG_ERROR)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

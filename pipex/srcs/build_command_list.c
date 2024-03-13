@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 00:49:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/13 14:28:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,15 @@ static char	*find_path(char *command, char **envp)
 	char	*dir_start;
 	bool	is_end;
 
-	if (*command == '/')
-	{
-		if (access(command, X_OK) == 0)
-			return (ft_strdup(command));
-		else
-			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
-	}
+	if (absolute_path(command))
+		return (command);
 	dir_start = envp_path(envp);
 	if (!dir_start)
 		return (ft_putstr_fd(EMPTY_ENV, STDERR_FILENO), NULL);
 	is_end = false;
 	while (!is_end)
 	{
-		if (ft_strchr(dir_start, ':') != NULL)
-			dir_len = ft_strchr(dir_start, ':') - dir_start;
-		else
-		{
-			is_end = true;
-			dir_len = ft_strlen(dir_start);
-		}
+		dir_len = dir_len_count(dir_start, is_end);
 		command_path_buf = make_path(command, dir_len, dir_start, is_end);
 		if (command_path_buf && access(command_path_buf, X_OK) == 0)
 			return (command_path_buf);
