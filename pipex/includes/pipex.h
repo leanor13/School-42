@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 14:29:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/13 19:20:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct command
 char		**ft_split_pipex(char *s, char c);
 int			is_quote(char c);
 t_command	*build_command_list(int ac, char **av, char **envp);
-int			dir_len_count(char *dir_start, bool is_end);
+int			dir_len_count(char *dir_start);
 char		*absolute_path(char *command);
 void		here_doc(char *limiter);
 

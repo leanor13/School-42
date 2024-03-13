@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 10:02:33 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 14:28:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/13 19:19:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char	*find_path(char *command, char **envp)
 	is_end = false;
 	while (!is_end)
 	{
-		dir_len = dir_len_count(dir_start, is_end);
+		dir_len = dir_len_count(dir_start);
 		command_path_buf = make_path(command, dir_len, dir_start, is_end);
 		if (command_path_buf && access(command_path_buf, X_OK) == 0)
 			return (command_path_buf);
