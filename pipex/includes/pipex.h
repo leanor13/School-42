@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/12 11:30:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/13 00:49:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ Usage: ./pipex file1 cmd1 cmd2 file2 or \
 ./pipex here_doc LIMITER cmd cmd1 file \n"
 # define ERR_NESTED_QUOTES "Syntax error: nested quotes"
 # define ERR_SINGLE_QUOTE "Syntax error: single quote"
+# define EMPTY_ENV "No PATH in envp, provide full path\n"
 
 typedef struct command
 {
@@ -53,6 +54,11 @@ typedef struct command
 char		**ft_split_pipex(char *s, char c);
 int			is_quote(char c);
 t_command	*build_command_list(int ac, char **av, char **envp);
+void		here_doc(char *limiter);
+
 void		free_command_list(t_command *command_list, int size);
+void		close_both_ends(int fd[2], bool pipe_error);
+void		close_3_fds(int fd_files[2], int fd[2], int fd_pipe[2]);
+void		dup_close(int fd, int reference);
 
 #endif

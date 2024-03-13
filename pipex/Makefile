@@ -1,11 +1,7 @@
 NAME = pipex
-BONUS_NAME = 
-
-BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
-B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = pipex split_pipex build_command_list misc_utils 
+S = pipex split_pipex build_command_list misc_utils here_doc
 
 COMPRESS = ar rcs
 RM = rm -f
@@ -16,7 +12,6 @@ OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
 
 BONUS_OBJS = $(addprefix $(OBJS_DIR_BONUS)/,$(BONUS:bonus/%.c=%.o))
 OBJS_DIR = objs
-OBJS_DIR_BONUS = objs_bonus
 
 LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -24,13 +19,9 @@ LIBFT = $(LIBFT_DIR)/libft.a
 LIBS = $(LIBFT)
 
 all: $(NAME) 
-bonus: $(BONUS_NAME)
+bonus: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJS_DIR_BONUS)/%.o: bonus/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -49,12 +40,10 @@ $(LIBFT):
 
 clean:
 	@$(RM) -r $(OBJS_DIR)
-	@$(RM) -r $(OBJS_DIR_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
 
 fclean: clean
 	@$(RM) $(NAME)
-	@$(RM) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 
 run: all
@@ -62,4 +51,4 @@ run: all
 
 re: fclean all
 
-.PHONY: all fclean clean re bonus
+.PHONY: all fclean clean re
