@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 14:32:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:16:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void	ft_close(int fd)
 {
 	if (fd != STDERR_FILENO && fd != STDIN_FILENO && fd != STDOUT_FILENO)
 		close(fd);
+}
+
+void ft_free(void **elem) 
+{
+	free(*elem);
+	*elem = NULL;
 }

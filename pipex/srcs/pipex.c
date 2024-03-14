@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 16:49:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:03:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,6 @@ int	main(int ac, char **av, char **envp)
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 	free(fd_files);
 	if (exec_pipe_result == NEG_ERROR)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+		exit (EXIT_FAILURE);
+	exit (EXIT_SUCCESS);
 }
