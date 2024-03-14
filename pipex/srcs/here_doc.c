@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 17:09:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 20:55:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	here_doc(char *limiter)
 {
 	pid_t	pid;
 	int		fd[2];
+	int		status;
 
 	if (pipe(fd) == -1)
 	{
@@ -60,5 +61,8 @@ void	here_doc(char *limiter)
 	}
 	dup2(fd[0], STDIN_FILENO);
 	close_both_ends(fd, !PRINT_PIPE_ERROR);
-	wait(NULL);
+	wait(&status);
+    if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+        exit(EXIT_FAILURE);
 }
+

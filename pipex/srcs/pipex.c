@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 17:59:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 21:05:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 	int	fd_pipe[2];
 	int	fd[2];
 	int	i;
+	int	status;
 
 	i = 0;
 	fd[FD_IN] = fd_files[FD_IN];
@@ -62,8 +63,8 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 	}
 	ft_close(fd_pipe[FD_IN]);
 	ft_close(fd[FD_OUT]);
-	waitpid(-1, NULL, 0);
-	return (EXIT_SUCCESS);
+	waitpid(-1, &status, 0);
+	return (status);
 }
 
 int	open_file(int ac, char **av, int type)
@@ -106,6 +107,7 @@ int	*handle_input(int ac, char **av)
 	}
 	else
 	{
+		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
 		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
 		if (fd_files[FD_IN] < 0)
 			fd_files[FD_IN] = open("/dev/null", O_RDONLY);
@@ -122,7 +124,7 @@ int	main(int ac, char **av, char **envp)
 {
 	int			*fd_files;
 	t_command	*command_list;
-	int			exec_pipe_result;
+	int			exec_pipe_status;
 
 	if (ac < 5 || !av || !av[1]
 		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
@@ -139,11 +141,11 @@ int	main(int ac, char **av, char **envp)
 		close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 		return (free(fd_files), EXIT_FAILURE);
 	}
-	exec_pipe_result = exec_pipe(command_list, fd_files, ac - 3, envp);
-	free_command_list(command_list, ac - 3);
+	exec_pipe_status = exec_pipe(command_list, fd_files, ac - 3, envp);
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 	free(fd_files);
-	if (exec_pipe_result == NEG_ERROR)
-		exit (EXIT_FAILURE);
+	free_command_list(command_list, ac - 3);
+	if (WIFEXITED(exec_pipe_status) && WEXITSTATUS(exec_pipe_status) == EXIT_FAILURE)
+        exit (EXIT_FAILURE);
 	exit (EXIT_SUCCESS);
 }
