@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 00:46:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 14:32:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	read_input(int fd[2], char *limiter)
 			perror("Error reading from standard input");
 			exit(EXIT_FAILURE);
 		}
-		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+		if (strncmp(line, limiter, strlen(limiter)) == 0
+			&& strlen(line) == strlen(limiter) + 1)
 		{
 			free(line);
 			break ;

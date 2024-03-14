@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 14:04:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 14:32:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ char	*absolute_path(char *command)
 			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
 	}
 	return (NULL);
+}
+
+void	ft_close(int fd)
+{
+	if (fd != STDERR_FILENO && fd != STDIN_FILENO && fd != STDOUT_FILENO)
+		close(fd);
 }

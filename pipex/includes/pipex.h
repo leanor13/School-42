@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 19:20:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 14:32:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void		free_command_list(t_command *command_list, int size);
 void		close_both_ends(int fd[2], bool pipe_error);
 void		close_3_fds(int fd_files[2], int fd[2], int fd_pipe[2]);
 void		dup_close(int fd, int reference);
+void		ft_close(int fd);
 
 #endif
