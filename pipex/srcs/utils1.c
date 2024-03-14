@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 14:31:54 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 14:37:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,8 @@ void	close_both_ends(int fd[2], bool pipe_error)
 {
 	if (pipe_error)
 		perror("Error creating pipe");
-	if (fd[FD_IN] != STDIN_FILENO)
-		close(fd[FD_IN]);
-	if (fd[FD_OUT] != STDOUT_FILENO)
-		close(fd[FD_OUT]);
+	ft_close(fd[FD_IN]);
+	ft_close(fd[FD_OUT]);
 }
 
 void	close_3_fds(int fd_files[2], int fd[2], int fd_pipe[2])
@@ -64,6 +62,6 @@ void	dup_close(int fd, int reference)
 	if (fd != reference)
 	{
 		dup2(fd, reference);
-		close(fd);
+		ft_close(fd);
 	}
 }

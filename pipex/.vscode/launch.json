@@ -31,14 +31,14 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/pipex",
-            "args": ["input.txt", "cat", "\"awk '{print $1}'\"", "output.txt"],
+            "args": ["here_doc", "aaa", "cat", "cat", "output.txt"],
             //"args": ["input.txt", "cat", "wc '-l", "output.txt"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "lldb",
-            "autoAttachChildProcess": true
+            //"autoAttachChildProcess": true
         },
         {
             "name": "SCHOOL (gdb) Launch Main",

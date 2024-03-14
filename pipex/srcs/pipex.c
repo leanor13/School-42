@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/13 19:24:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 16:49:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 	}
 	else
 	{
-		close(fd_in);
-		close(fd_out);
+		ft_close(fd_in);
+		ft_close(fd_out);
 	}
 	return (pid);
 }
@@ -55,13 +55,13 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 			fd[FD_OUT] = fd_pipe[FD_OUT];
 		if (exec_command(&c_list[i], fd[FD_IN], fd[FD_OUT], envp) < 0)
 			return (close_3_fds(fd_files, fd_pipe, fd), NEG_ERROR);
-		close(fd[FD_IN]);
+		ft_close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];
-		close(fd_pipe[FD_OUT]);
+		ft_close(fd_pipe[FD_OUT]);
 		i ++;
 	}
-	close(fd_pipe[FD_IN]);
-	close(fd[FD_OUT]);
+	ft_close(fd_pipe[FD_IN]);
+	ft_close(fd[FD_OUT]);
 	waitpid(-1, NULL, 0);
 	return (EXIT_SUCCESS);
 }
@@ -112,7 +112,10 @@ int	*handle_input(int ac, char **av)
 			fd_files[FD_IN] = open("/dev/null", O_RDONLY);
 	}
 	if (fd_files[FD_OUT] < 0)
+	{
+		free(fd_files);
 		exit (EXIT_FAILURE);
+	}
 	return (fd_files);
 }
 
@@ -133,7 +136,10 @@ int	main(int ac, char **av, char **envp)
 		av ++;
 	command_list = build_command_list(ac, av, envp);
 	if (!command_list)
-		return (close_both_ends(fd_files, !PRINT_PIPE_ERROR), EXIT_FAILURE);
+	{
+		close_both_ends(fd_files, !PRINT_PIPE_ERROR);
+		return (free(fd_files), EXIT_FAILURE);
+	}
 	exec_pipe_result = exec_pipe(command_list, fd_files, ac - 3, envp);
 	free_command_list(command_list, ac - 3);
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);

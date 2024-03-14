@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 14:32:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:05:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	read_input(int fd[2], char *limiter)
 {
 	char	*line;
 
-	close(fd[0]);
+	ft_close(fd[0]);
 	while (true)
 	{
 		line = get_next_line(STDIN_FILENO);
@@ -34,7 +34,7 @@ static void	read_input(int fd[2], char *limiter)
 		write(fd[1], line, ft_strlen(line));
 		free(line);
 	}
-	close(fd[1]);
+	ft_close(fd[1]);
 }
 
 void	here_doc(char *limiter)
