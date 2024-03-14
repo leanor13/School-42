@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 17:16:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:45:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*absolute_path(char *command)
 	if (*command == '/')
 	{
 		if (access(command, X_OK) == 0)
-			return (ft_strdup(command));
+			return (command);
 		else
 			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 17:03:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:59:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	*handle_input(int ac, char **av)
 	else
 	{
 		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
-		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
 		if (fd_files[FD_IN] < 0)
 			fd_files[FD_IN] = open("/dev/null", O_RDONLY);
 	}

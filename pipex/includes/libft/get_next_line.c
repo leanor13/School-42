@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 10:25:34 by yioffe            #+#    #+#             */
-/*   Updated: 2024/02/20 20:41:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/14 17:26:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_linelen(char *str)
+static int	ft_linelen(char *str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ int	ft_linelen(char *str)
 	return (i);
 }
 
-char	*ft_linejoin(char *s1, char *s2)
+static char	*ft_linejoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
@@ -53,7 +53,7 @@ char	*ft_linejoin(char *s1, char *s2)
 	return (str);
 }
 
-void	ft_free(char *str)
+static void	ft_free_gnl(char *str)
 {
 	int	i;
 	int	j;
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	while (buffer[fd][0] || read(fd, buffer[fd], BUFFER_SIZE) > 0)
 	{
 		str = ft_linejoin(str, buffer[fd]);
-		ft_free(buffer[fd]);
+		ft_free_gnl(buffer[fd]);
 		if (str[ft_linelen(str) - 1] == '\n')
 			return (str);
 	}
