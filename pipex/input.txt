@@ -16,3 +16,8 @@ All tests:
 6. valgrind --track-fds=yes ./pipex "/dev/random" "cat" "head" /dev/stdout // dev random is unlimited file must be cutted after 10 lines of the file.
 7. ./pipex infile cat wc outfile (if no infile, shouldn't create outfile)
 
+void ft_free(void *i)
+{
+	free(i);
+	*i = NULL;
+}
