@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 21:05:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 14:44:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
+static int	exec_command(t_command *command, int *fd, char **envp)
 {
 	pid_t	pid;
 
@@ -21,8 +21,8 @@ static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 		return (perror("Error forking"), NEG_ERROR);
 	else if (pid == 0)
 	{
-		dup_close(fd_in, STDIN_FILENO);
-		dup_close(fd_out, STDOUT_FILENO);
+		dup_close(fd[FD_IN], STDIN_FILENO);
+		dup_close(fd[FD_OUT], STDOUT_FILENO);
 		if (execve(command->path, command->args, envp) == -1)
 		{
 			perror("Execve error");
@@ -30,10 +30,7 @@ static int	exec_command(t_command *command, int fd_in, int fd_out, char **envp)
 		}
 	}
 	else
-	{
-		ft_close(fd_in);
-		ft_close(fd_out);
-	}
+		close_both_ends(fd, !PRINT_PIPE_ERROR);
 	return (pid);
 }
 
@@ -46,20 +43,19 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 
 	i = 0;
 	fd[FD_IN] = fd_files[FD_IN];
-	while (i <= len - 1)
+	while (i ++ <= len - 1)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (close_both_ends(fd, PRINT_PIPE_ERROR), NEG_ERROR);
-		if (i == len - 1)
+		if (i == len)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
-		if (exec_command(&c_list[i], fd[FD_IN], fd[FD_OUT], envp) < 0)
+		if (exec_command(&c_list[i], fd, envp) < 0)
 			return (close_3_fds(fd_files, fd_pipe, fd), NEG_ERROR);
 		ft_close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];
 		ft_close(fd_pipe[FD_OUT]);
-		i ++;
 	}
 	ft_close(fd_pipe[FD_IN]);
 	ft_close(fd[FD_OUT]);
@@ -96,24 +92,23 @@ int	*handle_input(int ac, char **av)
 	fd_files = malloc(sizeof(int) * 2);
 	if (!fd_files)
 	{
-		perror("Failed allocate memory for fd_files");
+		perror("Failed to allocate memory for fd_files");
 		exit (EXIT_FAILURE);
 	}
 	if (ft_strcmp(av[1], "here_doc") == 0)
 	{
 		fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
-		here_doc(av[2]);
+		here_doc(av[2], fd_files);
 		fd_files[FD_IN] = STDIN_FILENO;
 	}
 	else
 	{
 		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
 		fd_files[FD_OUT] = open_file(ac, av, OUTPUT_FILE);
-		if (fd_files[FD_IN] < 0)
-			fd_files[FD_IN] = open("/dev/null", O_RDONLY);
 	}
-	if (fd_files[FD_OUT] < 0)
+	if (fd_files[FD_OUT] < 0 || fd_files[FD_IN] < 0)
 	{
+		close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 		free(fd_files);
 		exit (EXIT_FAILURE);
 	}
@@ -124,7 +119,7 @@ int	main(int ac, char **av, char **envp)
 {
 	int			*fd_files;
 	t_command	*command_list;
-	int			exec_pipe_status;
+	int			status;
 
 	if (ac < 5 || !av || !av[1]
 		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
@@ -141,11 +136,11 @@ int	main(int ac, char **av, char **envp)
 		close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 		return (free(fd_files), EXIT_FAILURE);
 	}
-	exec_pipe_status = exec_pipe(command_list, fd_files, ac - 3, envp);
+	status = exec_pipe(command_list, fd_files, ac - 3, envp);
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 	free(fd_files);
 	free_command_list(command_list, ac - 3);
-	if (WIFEXITED(exec_pipe_status) && WEXITSTATUS(exec_pipe_status) == EXIT_FAILURE)
-        exit (EXIT_FAILURE);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+		exit (EXIT_FAILURE);
 	exit (EXIT_SUCCESS);
 }

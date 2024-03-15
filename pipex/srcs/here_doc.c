@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/14 20:55:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 14:38:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	read_input(int fd[2], char *limiter)
 	ft_close(fd[1]);
 }
 
-void	here_doc(char *limiter)
+void	here_doc(char *limiter, int *fd_files)
 {
 	pid_t	pid;
 	int		fd[2];
@@ -57,12 +57,12 @@ void	here_doc(char *limiter)
 	else if (pid == 0)
 	{
 		read_input(fd, limiter);
+		free(fd_files);
 		exit(EXIT_SUCCESS);
 	}
 	dup2(fd[0], STDIN_FILENO);
 	close_both_ends(fd, !PRINT_PIPE_ERROR);
 	wait(&status);
-    if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
-        exit(EXIT_FAILURE);
+	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
+		exit(EXIT_FAILURE);
 }
-
