@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 14:38:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:34:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,7 @@ void	here_doc(char *limiter, int *fd_files)
 	int		fd[2];
 	int		status;
 
-	if (pipe(fd) == -1)
-	{
-		perror("Error creating pipe");
-		exit(EXIT_FAILURE);
-	}
+	exit_pipe_error(fd);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -65,4 +61,11 @@ void	here_doc(char *limiter, int *fd_files)
 	wait(&status);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
+}
+
+void	open_files_here_doc(int ac, char **av, int *fd_files)
+{
+	fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
+	here_doc(av[2], fd_files);
+	fd_files[FD_IN] = STDIN_FILENO;
 }

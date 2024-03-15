@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 14:38:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:19:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,21 @@ void	ft_close(int fd)
 		close(fd);
 }
 
-void	ft_free(void **elem)
+void	validate_params(int ac, char **av)
 {
-	free(*elem);
-	*elem = NULL;
+	if (ac < 5 || !av || !av[1]
+		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
+	{
+		ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO);
+		exit (EXIT_FAILURE);
+	}
+}
+
+void	exit_pipe_error(int fd[2])
+{
+	if (pipe(fd) < 0)
+	{
+		perror("Error creating pipe");
+		exit(EXIT_FAILURE);
+	}
 }

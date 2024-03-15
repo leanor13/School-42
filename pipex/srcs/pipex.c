@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 14:44:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:34:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 
 	i = 0;
 	fd[FD_IN] = fd_files[FD_IN];
-	while (i ++ <= len - 1)
+	while (i <= len - 1)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (close_both_ends(fd, PRINT_PIPE_ERROR), NEG_ERROR);
-		if (i == len)
+		if (i == len - 1)
 			fd[FD_OUT] = fd_files[FD_OUT];
 		else
 			fd[FD_OUT] = fd_pipe[FD_OUT];
@@ -56,6 +56,7 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 		ft_close(fd[FD_IN]);
 		fd[FD_IN] = fd_pipe[FD_IN];
 		ft_close(fd_pipe[FD_OUT]);
+		i ++;
 	}
 	ft_close(fd_pipe[FD_IN]);
 	ft_close(fd[FD_OUT]);
@@ -96,11 +97,7 @@ int	*handle_input(int ac, char **av)
 		exit (EXIT_FAILURE);
 	}
 	if (ft_strcmp(av[1], "here_doc") == 0)
-	{
-		fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
-		here_doc(av[2], fd_files);
-		fd_files[FD_IN] = STDIN_FILENO;
-	}
+		open_files_here_doc(ac, av, fd_files);
 	else
 	{
 		fd_files[FD_IN] = open_file(ac, av, INPUT_FILE);
@@ -121,12 +118,7 @@ int	main(int ac, char **av, char **envp)
 	t_command	*command_list;
 	int			status;
 
-	if (ac < 5 || !av || !av[1]
-		|| (ft_strcmp(av[1], "here_doc") == 0 && ac < 6))
-	{
-		ft_putstr_fd(WRONG_ARG_NUM, STDERR_FILENO);
-		exit (EXIT_FAILURE);
-	}
+	validate_params(ac, av);
 	fd_files = handle_input(ac, av);
 	if ((ft_strcmp(av[1], "here_doc") == 0) && (ac--))
 		av ++;

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 13:38:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:35:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ t_command	*build_command_list(int ac, char **av, char **envp);
 int			dir_len_count(char *dir_start);
 char		*absolute_path(char *command);
 void		here_doc(char *limiter, int *fd_files);
+int			open_file(int ac, char **av, int type);
+void		open_files_here_doc(int ac, char **av, int fd_files[2]);
 
 void		free_command_list(t_command *command_list, int size);
 void		close_both_ends(int fd[2], bool pipe_error);
 void		close_3_fds(int fd_files[2], int fd[2], int fd_pipe[2]);
 void		dup_close(int fd, int reference);
 void		ft_close(int fd);
+void		validate_params(int ac, char **av);
+void		exit_pipe_error(int fd[2]);
 
 #endif
