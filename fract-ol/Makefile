@@ -1,15 +1,16 @@
 NAME = fractol
-BONUS_NAME = 
+BONUS_NAME =
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
-B = 
+B =
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = 
+S = main
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3 -I/usr/include -Imlx_linux -O3 -c
+CFLAGS = -Wall -Wextra -Werror -g3
+LDflags = -I/usr/include -Imlx_linux -O3
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
@@ -22,33 +23,32 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 MLX_DIR = ./includes/minilibx-linux
-MLX = $(MLX_DIR)/libmlx_Linux.a -lXext -lX11 -lm -lz
+MLX = $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 
 LIBS = $(LIBFT)
 
-all: $(NAME) $(MLX)
-bonus: $(BONUS_NAME) $(MLX)
+all: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LDflags) -c $< -o $@
 
 $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(LDflags) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS)
+$(NAME): $(OBJS) $(LIBS) $(MLX)
+	@$(CC) $(LDflags) -o $(NAME) $(OBJS) $(LIBS) $(MLX)
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
-	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
+	@$(CC) $(CFLAGS) $(LDflags) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
 $(MLX):
-    @$(MAKE) -C $(MLX_DIR) --no-print-directory
-    @echo $(MLX) compiled and ready!
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory
+	@echo $(MLX) compiled and ready!
 
 clean:
 	@$(RM) -r $(OBJS_DIR)
@@ -61,7 +61,7 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 
 run: all
-	./$(NAME) 
+	./$(NAME)
 
 re: fclean all
 
