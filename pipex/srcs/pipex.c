@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 11:59:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:34:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:46:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ static int	exec_pipe(t_command *c_list, int fd_files[2], int len, char **envp)
 		ft_close(fd_pipe[FD_OUT]);
 		i ++;
 	}
-	ft_close(fd_pipe[FD_IN]);
-	ft_close(fd[FD_OUT]);
+	close_2_fds(fd_pipe[FD_IN], fd[FD_OUT]);
 	waitpid(-1, &status, 0);
 	return (status);
 }

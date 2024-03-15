@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:34:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:45:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,10 @@ void	open_files_here_doc(int ac, char **av, int *fd_files)
 	fd_files[FD_OUT] = open_file(ac, av, HERE_DOC);
 	here_doc(av[2], fd_files);
 	fd_files[FD_IN] = STDIN_FILENO;
+}
+
+void	close_2_fds(int fd1, int fd2)
+{
+	ft_close(fd1);
+	ft_close(fd2);
 }
