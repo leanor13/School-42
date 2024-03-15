@@ -6,11 +6,16 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:23:48 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:19:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/15 15:51:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+int	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
+}
 
 int	dir_len_count(char *dir_start)
 {
@@ -35,12 +40,6 @@ char	*absolute_path(char *command)
 			return (ft_putstr_fd("Wrong command path\n", STDERR_FILENO), NULL);
 	}
 	return (NULL);
-}
-
-void	ft_close(int fd)
-{
-	if (fd != STDERR_FILENO && fd != STDIN_FILENO && fd != STDOUT_FILENO)
-		close(fd);
 }
 
 void	validate_params(int ac, char **av)
