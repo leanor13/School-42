@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/16 21:52:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/16 22:07:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	my_mlx_pixel_put(t_data *data, t_point point, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	my_mlx_horizontal_line_put(t_data data, t_point start, int len, int color)
+void	my_mlx_horizontal_line_put(t_data *data, t_point start, int len, int color)
 {
 	int	i;
 
@@ -28,12 +28,12 @@ void	my_mlx_horizontal_line_put(t_data data, t_point start, int len, int color)
 	while (i < len)
 	{
 		start.x ++;
-		my_mlx_pixel_put(&data, start, color);
+		my_mlx_pixel_put(data, start, color);
 		i ++;
 	}
 }
 
-void	my_mlx_vertical_line_put(t_data data, t_point start, int len, int color)
+void	my_mlx_vertical_line_put(t_data *data, t_point start, int len, int color)
 {
 	int	i;
 
@@ -41,12 +41,12 @@ void	my_mlx_vertical_line_put(t_data data, t_point start, int len, int color)
 	while (i < len)
 	{
 		start.y ++;
-		my_mlx_pixel_put(&data, start, color);
+		my_mlx_pixel_put(data, start, color);
 		i ++;
 	}
 }
 
-void	my_mlx_rectangle(t_data data, t_point start, int width, int height, int color)
+void	my_mlx_rectangle(t_data *data, t_point start, int width, int height, int color)
 {
 	t_point	curr_start;
 
@@ -58,6 +58,36 @@ void	my_mlx_rectangle(t_data data, t_point start, int width, int height, int col
 	curr_start.y = start.y;
 	curr_start.x += width;
 	my_mlx_vertical_line_put(data, curr_start, height, color);
+}
+
+void my_mlx_circle(t_data *data, t_point center, int radius, int color)
+{
+    int x = radius;
+    int y = 0;
+    int err = 0;
+
+    while (x >= y)
+    {
+        my_mlx_pixel_put(data, (t_point){center.x + x, center.y + y}, color);
+        my_mlx_pixel_put(data, (t_point){center.x + y, center.y + x}, color);
+        my_mlx_pixel_put(data, (t_point){center.x - y, center.y + x}, color);
+        my_mlx_pixel_put(data, (t_point){center.x - x, center.y + y}, color);
+        my_mlx_pixel_put(data, (t_point){center.x - x, center.y - y}, color);
+        my_mlx_pixel_put(data, (t_point){center.x - y, center.y - x}, color);
+        my_mlx_pixel_put(data, (t_point){center.x + y, center.y - x}, color);
+        my_mlx_pixel_put(data, (t_point){center.x + x, center.y - y}, color);
+
+        if (err <= 0)
+        {
+            y += 1;
+            err += 2 * y + 1;
+        }
+        if (err > 0)
+        {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
+    }
 }
 
 int	main(void)
@@ -79,7 +109,8 @@ int	main(void)
 	//my_mlx_pixel_put(&img, point1, color);
 	//my_mlx_horizontal_line_put(img, point2, 299, color);
 	//my_mlx_vertical_line_put(img, point3, 100, color + 1000);
-	my_mlx_rectangle(img, point3, 100, 200, color);
+	my_mlx_rectangle(&img, point3, 100, 200, color);
+	my_mlx_circle(&img, point3, 100, color);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
