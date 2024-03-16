@@ -9,8 +9,7 @@ S = main
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g3
-LDflags = -I/usr/include -Imlx_linux -O3
+CFLAGS = -Wall -Wextra -Werror -g
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
@@ -22,8 +21,16 @@ OBJS_DIR_BONUS = objs_bonus
 LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = ./includes/minilibx-linux
-MLX = $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
+ifdef MACOS_CONFIG
+    MLX_DIR = ./includes/minilibx-mac
+    LDflags += -I$(MLX_DIR)
+    LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+else
+    MLX_DIR = ./includes/minilibx-linux
+    LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+endif
+
+MLX = $(MLX_DIR)/libmlx.a
 
 LIBS = $(LIBFT)
 
@@ -31,17 +38,17 @@ all: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(LDflags) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(LDflags) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBS) $(MLX)
-	@$(CC) $(LDflags) -o $(NAME) $(OBJS) $(LIBS) $(MLX)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDflags)
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
-	@$(CC) $(CFLAGS) $(LDflags) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS)
+	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS) $(LDflags)
 
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
