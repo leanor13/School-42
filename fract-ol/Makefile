@@ -1,8 +1,8 @@
 NAME = fractol
-BONUS_NAME =
+BONUS_NAME = 
 
 BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
-B =
+B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
 S = main
@@ -22,12 +22,12 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 ifdef MACOS_CONFIG
-    MLX_DIR = ./includes/minilibx-mac
-    LDflags += -I$(MLX_DIR)
-    LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	MLX_DIR = ./includes/minilibx-mac
+	LDflags += -I$(MLX_DIR)
+	LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 else
-    MLX_DIR = ./includes/minilibx-linux
-    LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+	MLX_DIR = ./includes/minilibx-linux
+	LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 endif
 
 MLX = $(MLX_DIR)/libmlx.a
@@ -68,7 +68,7 @@ fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 
 run: all
-	./$(NAME)
+	./$(NAME) 
 
 re: fclean all
 
