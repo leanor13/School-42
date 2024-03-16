@@ -22,7 +22,7 @@ OBJS_DIR_BONUS = objs_bonus
 LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-MLX_DIR = ./includes/minilibx-linux
+MLX_DIR = ./includes/Minilibx
 MLX = $(MLX_DIR)/libmlx.a -lXext -lX11 -lm
 
 LIBS = $(LIBFT)

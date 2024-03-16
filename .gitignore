@@ -27,3 +27,6 @@ Thumbs.db
 
 # Ignore Dockerfile
 Dockerfile
+
+# Ignore Minilibx
+#**/Minilibx/
