@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 12:40:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:54:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ void	color_all_pixels(t_data *img, t_point min_bound, t_point max_bound,
 		}
 		p.x ++;
 	}
+}
+
+void print_mapped_complex_numbers(t_point min_bound, t_point max_bound, t_pixel pix_max) {
+    t_pixel pixel;
+    t_complex mapped_complex;
+
+    for (pixel.x = 0; pixel.x < pix_max.x; pixel.x++) {
+        for (pixel.y = 0; pixel.y < pix_max.y; pixel.y++) {
+            mapped_complex = my_map_pixel(pixel, min_bound, max_bound, pix_max);
+            printf("Pixel (%d, %d) maps to complex number (%f, %f)\n", pixel.x, pixel.y, mapped_complex.real, mapped_complex.imaginary);
+        }
+    }
 }
 
 int	main(void)
