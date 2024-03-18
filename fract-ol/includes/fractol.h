@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 22:27:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:57:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,32 @@
 
 #ifdef __APPLE__
 # include "minilibx-mac/mlx.h"
+# define ESC 53
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+# define UP 126
+# define LEFT 123
+# define RIGHT 124
+# define DOWN 125
+
 #else
 # include "minilibx-linux/mlx.h"
+# define ESC 65307
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define UP 65362
+# define LEFT 65361
+# define RIGHT 65363
+# define DOWN 65364
 #endif
 
 #define NUM_RAINBOW_COLORS 7
 
-/* int rainbow_colors[NUM_RAINBOW_COLORS] = {
-    0xFF0000, // Red
-    0xFF7F00, // Orange
-    0xFFFF00, // Yellow
-    0x00FF00, // Green
-    0x0000FF, // Blue
-    0x4B0082, // Indigo
-    0x9400D3  // Violet
-}; */
+extern int my_rainbow_colors[NUM_RAINBOW_COLORS];
 
 enum {
 	ON_KEYDOWN = 2,
@@ -70,6 +81,11 @@ typedef struct complex
 	double	real;
 	double	imaginary;
 }	t_complex;
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
 
 /* Mandelbrot fractal */
 t_complex	mandelbrot_iter(t_complex c, t_complex c_0);

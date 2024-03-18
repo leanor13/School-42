@@ -64,7 +64,7 @@ void	my_mlx_rectangle(t_data *data, t_pixel start, int width, int height, int co
 	my_mlx_vertical_line_put(data, curr_start, height, color);
 }
 
-/* void	my_mlx_filled_rectangle(t_data *data, t_pixel start, int width, int height, int color)
+void	my_mlx_filled_rectangle(t_data *data, t_pixel start, int width, int height, int color)
 {
 	int	i = 0;
 	int strip_height = height/NUM_RAINBOW_COLORS;
@@ -75,7 +75,7 @@ void	my_mlx_rectangle(t_data *data, t_pixel start, int width, int height, int co
 	(void)color;
 	while (i < height)
 	{
-		curr_color = rainbow_colors[color_index];
+		curr_color = my_rainbow_colors[color_index];
 		my_mlx_horizontal_line_put(data, (t_pixel){start.x, start.y + i}, width, curr_color);
 		strip_count ++;
 		if (strip_count >= strip_height)
@@ -85,7 +85,7 @@ void	my_mlx_rectangle(t_data *data, t_pixel start, int width, int height, int co
 		}
 		i ++;
 	}
-} */
+}
 
 void my_mlx_circle(t_data *data, t_pixel center, int radius, int color)
 {

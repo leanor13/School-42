@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coloring_schemas.c                                 :+:      :+:    :+:   */
+/*   coloring.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 22:15:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:52:41 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
+
+int my_rainbow_colors[NUM_RAINBOW_COLORS] = 
+{
+    0xFF0000, // Red
+    0xFF7F00, // Orange
+    0xFFFF00, // Yellow
+    0x00FF00, // Green
+    0x0000FF, // Blue
+    0x4B0082, // Indigo
+    0x9400D3  // Violet
+};
 
 int map_color_general(int iter) 
 {
