@@ -6,130 +6,82 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/16 22:46:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 12:40:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	my_mlx_pixel_put(t_data *data, t_point point, int color)
+void	my_mlx_pixel_put(t_data *data, t_pixel pixel, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (point.y * data->line_length + point.x * (data->bits_per_pixel / 8));
+	dst = data->addr + (pixel.y * data->line_length + pixel.x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-void	my_mlx_horizontal_line_put(t_data *data, t_point start, int len, int color)
+t_complex	iteration_fractal(t_complex c)
 {
-	int	i;
+	t_complex	next;
+
+	next.real = c.real * c.real - c.imaginary * c.imaginary + c.real;
+	next.imaginary = 2 * c.real * c.imaginary + c.imaginary;
+	return (next);
+}
+
+t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max)
+{
+	t_complex	result;
+	double		x_range;
+	double		y_range;
+	
+	x_range = (max_bound.x - min_bound.x) / pix_max.x;
+	y_range = (max_bound.y - min_bound.y) / pix_max.y;
+	result.real = pixel.x * x_range + min_bound.x;
+	result.imaginary = pixel.y * y_range + min_bound.y;
+	return (result);
+}
+
+void	color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
+	t_pixel pix_max, t_pixel pixel, int iter)
+{
+	int			i;
+	t_complex	curr;
+	//t_complex	c_pixel;
 
 	i = 0;
-	while (i < len)
+	curr = my_map_pixel(pixel, min_bound, max_bound, pix_max);
+	while (i < iter)
 	{
-		start.x ++;
-		my_mlx_pixel_put(data, start, color);
+		curr = iteration_fractal(curr);
+		if ((curr.imaginary * curr.imaginary + curr.real * curr.real > 4))
+			break ;
 		i ++;
 	}
+	if (i < iter/3)
+		my_mlx_pixel_put(img, pixel, 0x00FF00);
+	else if (i < (2 * iter / 3))
+		my_mlx_pixel_put(img, pixel, 0xFF7F00);
+	else if (i < iter)
+		my_mlx_pixel_put(img, pixel, 0x0000FF);
 }
 
-void	my_mlx_vertical_line_put(t_data *data, t_point start, int len, int color)
+void	color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
+	t_pixel pix_max, int iter)
 {
-	int	i;
+	t_pixel	p;
 
-	i = 0;
-	while (i < len)
+	p = (t_pixel){0, 0};
+	while (p.x < pix_max.x)
 	{
-		start.y ++;
-		my_mlx_pixel_put(data, start, color);
-		i ++;
-	}
-}
-
-void	my_mlx_rectangle(t_data *data, t_point start, int width, int height, int color)
-{
-	t_point	curr_start;
-
-	curr_start = start;
-	my_mlx_horizontal_line_put(data, curr_start, width, color);
-	my_mlx_vertical_line_put(data, curr_start, height, color);
-	curr_start.y += height;
-	my_mlx_horizontal_line_put(data, curr_start, width, color);
-	curr_start.y = start.y;
-	curr_start.x += width;
-	my_mlx_vertical_line_put(data, curr_start, height, color);
-}
-
-void	my_mlx_filled_rectangle(t_data *data, t_point start, int width, int height, int color)
-{
-	int	i = 0;
-	int strip_height = height/NUM_RAINBOW_COLORS;
-	int	color_index = 0;
-	int strip_count = 0;
-	int	curr_color;
-
-	(void)color;
-	while (i < height)
-	{
-		curr_color = rainbow_colors[color_index];
-		my_mlx_horizontal_line_put(data, (t_point){start.x, start.y + i}, width, curr_color);
-		strip_count ++;
-		if (strip_count >= strip_height)
+		p.y = 0;
+		while (p.y < pix_max.y)
 		{
-			strip_count = 0;
-			color_index ++;
+			color_pixel(img, min_bound, max_bound, pix_max, p, iter);
+			p.y ++;
 		}
-		i ++;
+		p.x ++;
 	}
-}
-
-void my_mlx_circle(t_data *data, t_point center, int radius, int color)
-{
-    int x = radius;
-    int y = 0;
-    int err = 0;
-
-    while (x >= y)
-    {
-        my_mlx_pixel_put(data, (t_point){center.x + x, center.y + y}, color);
-        my_mlx_pixel_put(data, (t_point){center.x + y, center.y + x}, color);
-        my_mlx_pixel_put(data, (t_point){center.x - y, center.y + x}, color);
-        my_mlx_pixel_put(data, (t_point){center.x - x, center.y + y}, color);
-        my_mlx_pixel_put(data, (t_point){center.x - x, center.y - y}, color);
-        my_mlx_pixel_put(data, (t_point){center.x - y, center.y - x}, color);
-        my_mlx_pixel_put(data, (t_point){center.x + y, center.y - x}, color);
-        my_mlx_pixel_put(data, (t_point){center.x + x, center.y - y}, color);
-		color += 5000;
-        if (err <= 0)
-        {
-            y += 1;
-            err += 2 * y + 1;
-        }
-        if (err > 0)
-        {
-            x -= 1;
-            err -= 2 * x + 1;
-        }
-    }
-}
-
-void draw_circle_filled(t_data *data, t_point center, int radius, int color)
-{
-    int x, y;
-
-    for (y = -radius; y <= radius; y++)
-    {
-        for (x = -radius; x <= radius; x++)
-        {
-            if (x * x + y * y <= radius * radius)
-            {
-                my_mlx_pixel_put(data, (t_point){center.x + x, center.y + y}, color);
-				color += 1000;
-            }
-			color += 1000;
-        }
-		color += 1000;
-    }
 }
 
 int	main(void)
@@ -138,22 +90,19 @@ int	main(void)
 	void	*mlx_win;
 	t_data	img;
 	int		color;
-	//t_point	point1 = {5, 5};
-	//t_point	point2 = {175, 473};
-	t_point	point3 = {200, 200};
+	int		img_height = 500;
+	int		img_width = 500;
+	t_pixel	pix_max = { img_height, img_width };
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-	img.img = mlx_new_image(mlx, 500, 500);
+	mlx_win = mlx_new_window(mlx, pix_max.x, pix_max.y, "Hello world!");
+	img.img = mlx_new_image(mlx, pix_max.x, pix_max.y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	color =  0x00FF0000;
-	//my_mlx_pixel_put(&img, point1, color);
-	//my_mlx_horizontal_line_put(img, point2, 299, color);
-	//my_mlx_vertical_line_put(img, point3, 100, color + 1000);
-	my_mlx_filled_rectangle(&img, point3, 100, 200, color);
-	//my_mlx_circle(&img, point3, 100, color);
-	//draw_circle_filled(&img, point3, 100, color);
+	my_mlx_horizontal_line_put(&img, (t_pixel){10, img_height / 2}, img_width - 20, color);
+	my_mlx_vertical_line_put(&img, (t_pixel){img_width / 2, 10}, img_height - 20, color);
+	color_all_pixels(&img, (t_point){-2.0, -2.0}, (t_point){2.0, 2.0}, pix_max, 100);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }

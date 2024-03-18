@@ -1,0 +1,114 @@
+
+#include "../includes/fractol.h"
+
+void	my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		start.x ++;
+		my_mlx_pixel_put(data, start, color);
+		i ++;
+	}
+}
+
+void	my_mlx_vertical_line_put(t_data *data, t_pixel start, int len, int color)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		start.y ++;
+		my_mlx_pixel_put(data, start, color);
+		i ++;
+	}
+}
+
+void	my_mlx_rectangle(t_data *data, t_pixel start, int width, int height, int color)
+{
+	t_pixel	curr_start;
+
+	curr_start = start;
+	my_mlx_horizontal_line_put(data, curr_start, width, color);
+	my_mlx_vertical_line_put(data, curr_start, height, color);
+	curr_start.y += height;
+	my_mlx_horizontal_line_put(data, curr_start, width, color);
+	curr_start.y = start.y;
+	curr_start.x += width;
+	my_mlx_vertical_line_put(data, curr_start, height, color);
+}
+
+/* void	my_mlx_filled_rectangle(t_data *data, t_pixel start, int width, int height, int color)
+{
+	int	i = 0;
+	int strip_height = height/NUM_RAINBOW_COLORS;
+	int	color_index = 0;
+	int strip_count = 0;
+	int	curr_color;
+
+	(void)color;
+	while (i < height)
+	{
+		curr_color = rainbow_colors[color_index];
+		my_mlx_horizontal_line_put(data, (t_pixel){start.x, start.y + i}, width, curr_color);
+		strip_count ++;
+		if (strip_count >= strip_height)
+		{
+			strip_count = 0;
+			color_index ++;
+		}
+		i ++;
+	}
+} */
+
+void my_mlx_circle(t_data *data, t_pixel center, int radius, int color)
+{
+    int x = radius;
+    int y = 0;
+    int err = 0;
+
+    while (x >= y)
+    {
+        my_mlx_pixel_put(data, (t_pixel){center.x + x, center.y + y}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x + y, center.y + x}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x - y, center.y + x}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x - x, center.y + y}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x - x, center.y - y}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x - y, center.y - x}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x + y, center.y - x}, color);
+        my_mlx_pixel_put(data, (t_pixel){center.x + x, center.y - y}, color);
+		color += 5000;
+        if (err <= 0)
+        {
+            y += 1;
+            err += 2 * y + 1;
+        }
+        if (err > 0)
+        {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
+    }
+}
+
+void draw_circle_filled(t_data *data, t_pixel center, int radius, int color)
+{
+    int x, y;
+
+    for (y = -radius; y <= radius; y++)
+    {
+        for (x = -radius; x <= radius; x++)
+        {
+            if (x * x + y * y <= radius * radius)
+            {
+                my_mlx_pixel_put(data, (t_pixel){center.x + x, center.y + y}, color);
+				color += 1000;
+            }
+			color += 1000;
+        }
+		color += 1000;
+    }
+}
