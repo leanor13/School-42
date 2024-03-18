@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 16:12:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 22:27:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,29 @@ typedef struct complex
 	double	imaginary;
 }	t_complex;
 
-void	my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
+/* Mandelbrot fractal */
+t_complex	mandelbrot_iter(t_complex c, t_complex c_0);
 
-// temp
-void	my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color);
-void	my_mlx_vertical_line_put(t_data *data, t_pixel start, int len, int color);
-t_pixel map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max);
+/* basic img functions */
+void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
+t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max);
+
+/* build fractal */
+void		color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
+	t_pixel pix_max, t_pixel pixel, int max_iter);
+void		color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
+	t_pixel pix_max, int max_iter);
+
+/* coloring schemas */
+int 		map_color_general(int iter);
+int 		map_color_maxiter(int iter, int max_iter);
+int 		map_color_maxiter2(int iter, int max_iter);
+
+// temp and test
+void		my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color);
+void		my_mlx_vertical_line_put(t_data *data, t_pixel start, int len, int color);
+t_pixel 	map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max);
+void		print_mapped_complex_numbers(t_point min_bound, t_point max_bound, t_pixel pix_max);
+t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max);
 
 #endif

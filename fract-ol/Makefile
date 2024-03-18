@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main temp
+S = main fractal temp coloring 
 
 COMPRESS = ar rcs
 RM = rm -f

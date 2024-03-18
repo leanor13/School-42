@@ -1,6 +1,20 @@
 
 #include "../includes/fractol.h"
 
+void print_mapped_complex_numbers(t_point min_bound, t_point max_bound, t_pixel pix_max) 
+{
+    t_pixel pixel;
+    t_complex mapped_complex;
+
+    for (pixel.x = 0; pixel.x < pix_max.x; pixel.x++) {
+        for (pixel.y = 0; pixel.y < pix_max.y; pixel.y++) 
+		{
+            mapped_complex = my_map_pixel(pixel, min_bound, max_bound, pix_max);
+            printf("Pixel (%d, %d) maps to complex number (%f, %f)\n", pixel.x, pixel.y, mapped_complex.real, mapped_complex.imaginary);
+        }
+    }
+}
+
 t_pixel map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max) 
 {
     double x_range = (max_bound.x - min_bound.x) / pix_max.x;
