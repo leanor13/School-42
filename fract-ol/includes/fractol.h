@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 12:23:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 16:12:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <math.h>
+# include <stdio.h>
 
 #ifdef __APPLE__
 # include "minilibx-mac/mlx.h"
@@ -71,7 +72,10 @@ typedef struct complex
 }	t_complex;
 
 void	my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
+
+// temp
 void	my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color);
 void	my_mlx_vertical_line_put(t_data *data, t_pixel start, int len, int color);
+t_pixel map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max);
 
 #endif

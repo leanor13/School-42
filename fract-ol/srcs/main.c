@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 12:54:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/18 17:04:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	my_mlx_pixel_put(t_data *data, t_pixel pixel, int color)
 	*(unsigned int*)dst = color;
 }
 
-t_complex	iteration_fractal(t_complex c)
+t_complex	iteration_fractal(t_complex c, t_complex c_0)
 {
 	t_complex	next;
 
-	next.real = c.real * c.real - c.imaginary * c.imaginary + c.real;
-	next.imaginary = 2 * c.real * c.imaginary + c.imaginary;
+	next.real = c.real * c.real - c.imaginary * c.imaginary + c_0.real;
+	next.imaginary = 2 * c.real * c.imaginary + c_0.imaginary;
+	//printf("real x: %f, imaginary y: %f\n", c.real, c.imaginary);
 	return (next);
 }
 
@@ -47,23 +48,26 @@ void	color_pixel(t_data *img, t_point min_bound, t_point max_bound,
 {
 	int			i;
 	t_complex	curr;
-	//t_complex	c_pixel;
+	t_complex	c_0;
 
 	i = 0;
 	curr = my_map_pixel(pixel, min_bound, max_bound, pix_max);
+	c_0 = curr;
 	while (i < iter)
 	{
-		curr = iteration_fractal(curr);
-		if ((curr.imaginary * curr.imaginary + curr.real * curr.real > 4))
+		if ((curr.imaginary * curr.imaginary + curr.real * curr.real >= 4))
 			break ;
+		curr = iteration_fractal(curr, c_0);
 		i ++;
 	}
-	if (i < iter/3)
-		my_mlx_pixel_put(img, pixel, 0x00FF00);
-	else if (i < (2 * iter / 3))
-		my_mlx_pixel_put(img, pixel, 0xFF7F00);
-	else if (i < iter)
-		my_mlx_pixel_put(img, pixel, 0x0000FF);
+	//if (i < iter / 3)
+	//	my_mlx_pixel_put(img, pixel, 0x00FF00);
+	//else if (i < 2 * iter / 3)
+	//	my_mlx_pixel_put(img, pixel, 0xFF0000);
+	//else if (i < iter)
+	//	my_mlx_pixel_put(img, pixel, 0x0000FF);
+	if (i == iter)
+		my_mlx_pixel_put(img, pixel, 0x9400D3);
 }
 
 void	color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
@@ -105,7 +109,14 @@ int	main(void)
 	int		img_height = 500;
 	int		img_width = 500;
 	t_pixel	pix_max = { img_height, img_width };
+	t_point	min_bound = {-2.0, -2.0};
+	t_point	max_bound = {2.0, 2.0};
+	//t_pixel	check_pix = {275, 250};
+	//t_complex	c_test = {0.25, 0};
+	//t_pixel	check_pix;
 
+	//check_pix = map_coordinate_to_pixel(c_test, min_bound, max_bound, pix_max);
+	//printf("point x: %d, point y: %d\n", check_pix.x, check_pix.y);
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, pix_max.x, pix_max.y, "Hello world!");
 	img.img = mlx_new_image(mlx, pix_max.x, pix_max.y);
@@ -114,7 +125,8 @@ int	main(void)
 	color =  0x00FF0000;
 	my_mlx_horizontal_line_put(&img, (t_pixel){10, img_height / 2}, img_width - 20, color);
 	my_mlx_vertical_line_put(&img, (t_pixel){img_width / 2, 10}, img_height - 20, color);
-	color_all_pixels(&img, (t_point){-2.0, -2.0}, (t_point){2.0, 2.0}, pix_max, 100);
+	color_all_pixels(&img, min_bound, max_bound, pix_max, 100);
+	//color_pixel(&img, min_bound, max_bound, pix_max, check_pix, 100);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }

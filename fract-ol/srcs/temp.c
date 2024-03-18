@@ -1,6 +1,15 @@
 
 #include "../includes/fractol.h"
 
+t_pixel map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max) 
+{
+    double x_range = (max_bound.x - min_bound.x) / pix_max.x;
+    double y_range = (max_bound.y - min_bound.y) / pix_max.y;
+    int x = (coord.real - min_bound.x) / x_range;
+    int y = (coord.imaginary - min_bound.y) / y_range;
+    return (t_pixel){x, y};
+}
+
 void	my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color)
 {
 	int	i;
