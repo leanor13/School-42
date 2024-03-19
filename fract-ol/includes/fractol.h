@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 22:57:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 10:28:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <math.h>
 # include <stdio.h>
+# include <stdbool.h>
 
 #ifdef __APPLE__
 # include "minilibx-mac/mlx.h"

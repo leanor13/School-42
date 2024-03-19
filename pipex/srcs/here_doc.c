@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:11:40 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:45:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 15:10:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	here_doc(char *limiter, int *fd_files)
 	else if (pid == 0)
 	{
 		read_input(fd, limiter);
+		close(fd_files[1]);
 		free(fd_files);
 		exit(EXIT_SUCCESS);
 	}

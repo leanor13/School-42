@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 23:05:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 10:31:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,21 @@ t_complex	mandelbrot_iter(t_complex c, t_complex c_0)
 int	close_win(int keycode, t_vars *vars)
 {
 	if (keycode == ESC)
+	{
 		mlx_destroy_window(vars->mlx, vars->win);
+		exit (1);
+	}
 	return (0);
 }
 
 int	main(void)
 {
-	//void	*mlx;
-	//void	*mlx_win;
 	t_data	img;
 	int		img_height = 500;
 	int		img_width = 500;
 	t_pixel	pix_max = { img_height, img_width };
-	t_point	min_bound = {0.3, 0.3};
-	t_point	max_bound = {0.5, 0.5};
+	t_point	min_bound = {-2, -2};
+	t_point	max_bound = {2, 2};
 	int		max_iter = 100;
 	t_vars	vars;
 
@@ -50,4 +51,10 @@ int	main(void)
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_hook(vars.win, 2, 1L<<0, close_win, &vars);
 	mlx_loop(vars.mlx);
+	
+	mlx_destroy_window(vars.mlx, vars.win);
+	mlx_destroy_display(vars.mlx);
+	free(vars.mlx);
+
+	return (0);
 }
