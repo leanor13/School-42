@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils_free_close.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:51:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 15:13:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_close(int fd)
 {
-	if (fd != STDERR_FILENO && fd != STDIN_FILENO && fd != STDOUT_FILENO)
+	if (fd != -1 && fd != STDERR_FILENO 
+		&& fd != STDIN_FILENO && fd != STDOUT_FILENO)
 		close(fd);
 }
 
