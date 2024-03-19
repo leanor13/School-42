@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/18 22:52:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 16:26:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int map_color_maxiter(int iter, int max_iter)
 
     int r = (int)(255 * logIter);  // Red component
     int g = (int)(255 * pow(logIter, 2));  // Green component
-    int b = (int)(255 * fabs(tan(logIter * M_PI)));  // Blue component
+    int b = (int)(255 * fabs(cos(logIter * M_PI)));  // Blue component
     int color = (r << 16) | (g << 8) | b;
 
     return color;

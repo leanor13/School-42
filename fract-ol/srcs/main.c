@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/19 10:31:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 16:30:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,32 @@ int	close_win(int keycode, t_vars *vars)
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
-		exit (1);
+		exit (EXIT_SUCCESS);
+	}
+	return (0);
+}
+
+int	close_win2(int keycode, t_vars *vars)
+{
+	(void)keycode;
+	if (!vars || !vars->mlx || !vars->win)
+		return (0);
+	else
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		exit (EXIT_SUCCESS);
+	}
+	return (0);
+}
+
+int	my_zoom(int button, int x, int y, void *param)
+{
+	(void)x;
+	(void)y;
+	(void)param;
+	if (button == 4)
+	{
+		printf("Here\n");
 	}
 	return (0);
 }
@@ -49,12 +74,14 @@ int	main(void)
 								&img.endian);
 	color_all_pixels(&img, min_bound, max_bound, pix_max, max_iter);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	//int (*f)(int button, int x, int y, void *param)
+	mlx_mouse_hook(vars.win, my_zoom, &vars);
+	mlx_hook(vars.win, 17, 1, close_win2, &vars);
 	mlx_hook(vars.win, 2, 1L<<0, close_win, &vars);
+	//mlx_hook(vars.win, 17, 0, close_win2, &vars);
 	mlx_loop(vars.mlx);
-	
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
+	//mlx_destroy_window(vars.mlx, vars.win);
+	//mlx_destroy_display(vars.mlx);
 	free(vars.mlx);
-
 	return (0);
 }
