@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/11 13:59:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/19 15:11:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**ft_split_pipex(char *s, char c)
 	int		i;
 
 	count = ft_count_words(s, c);
-	if (count == NEG_ERROR)
+	if (count <= 0)
 		return (NULL);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
