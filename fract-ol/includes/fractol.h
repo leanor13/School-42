@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/19 10:28:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/20 21:59:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ enum {
 	ON_DESTROY = 17
 };
 
+#define ZOOM_IN 1.1
+#define ZOOM_OUT 0.9
+
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -88,6 +91,18 @@ typedef struct	s_vars {
 	void	*win;
 }				t_vars;
 
+typedef struct fractal
+{
+	t_data	img;
+	t_vars	vars;
+	t_pixel	pix_max;
+	t_point	min_bound;
+	t_point	max_bound;
+	int		iter;
+	
+}	t_fractal;
+
+
 /* Mandelbrot fractal */
 t_complex	mandelbrot_iter(t_complex c, t_complex c_0);
 
@@ -96,6 +111,8 @@ void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
 t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max);
 
 /* build fractal */
+t_fractal	*init_fractal(t_pixel pix_max,  t_point min_bound, t_point max_bound, int iter);
+void		draw_fractal(t_fractal *f);
 void		color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
 	t_pixel pix_max, t_pixel pixel, int max_iter);
 void		color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
