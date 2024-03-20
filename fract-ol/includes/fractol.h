@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/20 21:59:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/20 22:23:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@
 #endif
 
 #define NUM_RAINBOW_COLORS 7
-
 extern int my_rainbow_colors[NUM_RAINBOW_COLORS];
 
-enum {
+enum 
+{
 	ON_KEYDOWN = 2,
 	ON_KEYUP = 3,
 	ON_MOUSEDOWN = 4,
@@ -57,8 +57,11 @@ enum {
 	ON_DESTROY = 17
 };
 
+/* movement constants*/
 #define ZOOM_IN 1.1
 #define ZOOM_OUT 0.9
+#define MOVE_STEP 0.1
+
 
 typedef struct	s_data {
 	void	*img;

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/20 22:07:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/20 22:38:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,21 @@ int	close_win2(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	my_zoom(int button, int x, int y, void *param)
+int	my_zoom(int button, int x, int y, t_fractal *f)
 {
-	t_fractal	*f;
-	double		coeff;
+	double	coeff;
+	double	scale_factor;
+	double	range_avg;
 
+	range_avg = (f->max_bound.x - f->min_bound.x) + (f->max_bound.y - f->min_bound.y)/2.0;
 	(void)x;
 	(void)y;
+	scale_factor = pow(ZOOM_IN, log10(range_avg + 1) + 1);
 	coeff = 0.0;
-	f = param;
 	if (button == ON_MOUSEDOWN)
-		coeff = 1.1;
+		coeff = scale_factor;
 	else if (button == ON_MOUSEUP)
-		coeff = 0.9;
+		coeff = 1.0 / scale_factor;
 	if (coeff != 0.0)
 	{	
 		f->min_bound.x *= coeff;
@@ -71,16 +73,19 @@ int	my_zoom(int button, int x, int y, void *param)
 int	my_move(int keycode, t_fractal *f)
 {
 	t_point	move_point;
+	double	scale_factor;
+	double	range_avg;
 
-	move_point = (t_point){0.0, 0.0};
+	range_avg = (f->max_bound.x - f->min_bound.x + f->max_bound.y - f->min_bound.y) / 2.0;
+	scale_factor = log10(range_avg + 1) + 1;
 	if (keycode == UP)
-		move_point = (t_point){0.0, 0.1};
+		move_point = (t_point){0.0, scale_factor * MOVE_STEP};
 	else if (keycode == DOWN)
-		move_point = (t_point){0.0, -0.1};
+		move_point = (t_point){0.0, -scale_factor * MOVE_STEP};
 	else if (keycode == RIGHT)
-		move_point = (t_point){0.1, 0.0};
+		move_point = (t_point){scale_factor * MOVE_STEP, 0.0};
 	else if (keycode == LEFT)
-		move_point = (t_point){-0.1, 0.0};
+		move_point = (t_point){-scale_factor * MOVE_STEP, 0.0};
 	if (move_point.x != 0.0 || move_point.y != 0.0)
 	{
 		f->min_bound.x += move_point.x;
