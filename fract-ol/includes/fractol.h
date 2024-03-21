@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/20 22:23:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:13:31 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,19 @@ void		color_pixel(t_data *img, t_point min_bound, t_point max_bound,
 	t_pixel pix_max, t_pixel pixel, int max_iter);
 void		color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
 	t_pixel pix_max, int max_iter);
+void		f_free(t_fractal *f);
 
 /* coloring schemas */
 int 		map_color_general(int iter);
 int 		map_color_maxiter(int iter, int max_iter);
 int 		map_color_maxiter2(int iter, int max_iter);
+
+/* hooks */
+int	close_win(int keycode, t_fractal *f);
+int	close_win2(int keycode, t_fractal *f);
+int	my_zoom(int button, int x, int y, t_fractal *f);
+int	my_move(int keycode, t_fractal *f);
+
 
 // temp and test
 void		my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color);
