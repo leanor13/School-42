@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:13:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:42:01 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ typedef struct	s_vars {
 
 typedef struct fractal
 {
-	t_data	img;
-	t_vars	vars;
+	t_data	*img;
+	void	*mlx;
+	void	*win;
 	t_pixel	pix_max;
 	t_point	min_bound;
 	t_point	max_bound;
@@ -120,7 +121,7 @@ void		color_pixel(t_data *img, t_point min_bound, t_point max_bound,
 	t_pixel pix_max, t_pixel pixel, int max_iter);
 void		color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
 	t_pixel pix_max, int max_iter);
-void		f_free(t_fractal *f);
+void		f_free(t_fractal **f);
 
 /* coloring schemas */
 int 		map_color_general(int iter);

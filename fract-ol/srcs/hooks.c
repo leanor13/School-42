@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:16:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:53:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	close_win(int keycode, t_fractal *f)
 {
 	if (keycode == ESC)
 	{
-		mlx_destroy_window(f->vars.mlx, f->vars.win);
-		f_free(f);
+		f_free(&f);
 		exit (EXIT_SUCCESS);
 	}
 	return (0);
@@ -26,8 +25,7 @@ int	close_win(int keycode, t_fractal *f)
 int	close_win2(int keycode, t_fractal *f)
 {
 	(void)keycode;
-	mlx_destroy_window(f->vars.mlx, f->vars.win);
-	f_free(f);
+	f_free(&f);
 	exit (EXIT_SUCCESS);
 }
 

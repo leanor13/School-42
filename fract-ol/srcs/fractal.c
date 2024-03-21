@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:16:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 15:55:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,61 @@ t_complex	mandelbrot_iter(t_complex c, t_complex c_0)
 
 t_fractal	*init_fractal(t_pixel pix_max,  t_point min_bound, t_point max_bound, int iter)
 {
-	t_data		img;
-	t_vars		vars;
-	t_fractal	*result;
+	t_fractal	*f;
 
-	result = malloc(sizeof(t_fractal));
-	if (!result)
+	f = malloc(sizeof(t_fractal));
+	if (!f)
 	{
 		perror("Error allocating memory for fractal");
 		exit(EXIT_FAILURE);
 	}
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, pix_max.x, pix_max.y, "Fract-ol!");
-	img.img = mlx_new_image(vars.mlx, pix_max.x, pix_max.y);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	result->min_bound = min_bound;
-	result->max_bound = max_bound;
-	result->pix_max = pix_max;
-	result->iter = iter;
-	result->img = img;
-	result->vars = vars;
-	return (result);
+	f->mlx = mlx_init();
+	if (!f->mlx)
+	{
+		perror("Error initializing graphics");
+		f_free(&f);
+		exit(EXIT_FAILURE);
+	}
+	f->win = mlx_new_window(f->mlx, pix_max.x, pix_max.y, "Fract-ol!");
+	if (!f->win)
+	{
+		perror("Error initializing window");
+		f_free(&f);
+		exit(EXIT_FAILURE);
+	}
+	f->img = malloc(sizeof(t_data));
+	if (!f->img) 
+	{
+		perror("Error allocating memory for t_data");
+		f_free(&f);
+		exit(EXIT_FAILURE);
+	}
+	f->img->img = mlx_new_image(f->mlx, pix_max.x, pix_max.y);
+	if (!f->img->img)
+	{
+		perror("Error creating image");
+		f_free(&f);
+		exit(EXIT_FAILURE);
+	}
+	f->img->addr = mlx_get_data_addr(f->img->img, &f->img->bits_per_pixel, 
+		&f->img->line_length, &f->img->endian);
+	if (!f->img->addr)
+	{
+		perror("Error getting image address");
+		f_free(&f);
+		exit(EXIT_FAILURE);
+	}
+	f->min_bound = min_bound;
+	f->max_bound = max_bound;
+	f->pix_max = pix_max;
+	f->iter = iter;
+	return (f);
 }
 
 void	draw_fractal(t_fractal *f)
 {
-	color_all_pixels(&f->img, f->min_bound, f->max_bound, f->pix_max, f->iter);
-	mlx_put_image_to_window(f->vars.mlx, f->vars.win, f->img.img, 0, 0);
+	color_all_pixels(f->img, f->min_bound, f->max_bound, f->pix_max, f->iter);
+	mlx_put_image_to_window(f->mlx, f->win, f->img->img, 0, 0);
 }
 
 void	color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
@@ -71,7 +98,6 @@ void	color_pixel(t_data *img, t_point min_bound, t_point max_bound,
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	//color = map_color_general(i);
 	color = map_color_maxiter(i, max_iter);
 	my_mlx_pixel_put(img, pixel, color);
 }
