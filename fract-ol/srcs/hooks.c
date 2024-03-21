@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 17:22:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 21:39:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 	double	scale_factor;
 	double	range_avg;
 
-	range_avg = (f->max_bound.x - f->min_bound.x) + (f->max_bound.y - f->min_bound.y)/2.0;
+	range_avg = (f->max_bound.x - f->min_bound.x)
+		+ (f->max_bound.y - f->min_bound.y) / 2.0;
 	(void)x;
 	(void)y;
 	scale_factor = pow(ZOOM_IN, log10(range_avg + 1) + 1);
@@ -42,7 +43,7 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 	else if (button == ON_MOUSEUP)
 		coeff = 1.0 / scale_factor;
 	if (coeff != 0.0)
-	{	
+	{
 		f->min_bound.x *= coeff;
 		f->min_bound.y *= coeff;
 		f->max_bound.x *= coeff;
@@ -58,7 +59,8 @@ int	my_move(int keycode, t_fractal *f)
 	double	scale_factor;
 	double	range_avg;
 
-	range_avg = (f->max_bound.x - f->min_bound.x + f->max_bound.y - f->min_bound.y) / 2.0;
+	range_avg = (f->max_bound.x - f->min_bound.x
+			+ f->max_bound.y - f->min_bound.y) / 2.0;
 	scale_factor = log10(range_avg + 1) + 1;
 	if (keycode == UP)
 		move_point = (t_point){0.0, -scale_factor * MOVE_STEP};
