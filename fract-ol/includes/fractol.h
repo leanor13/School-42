@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:42:01 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:55:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FRACTOL_H
 
 # include "libft/libft.h"
+# include "error_handling.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -43,9 +44,6 @@
 # define DOWN 65364
 #endif
 
-#define NUM_RAINBOW_COLORS 7
-extern int my_rainbow_colors[NUM_RAINBOW_COLORS];
-
 enum 
 {
 	ON_KEYDOWN = 2,
@@ -61,7 +59,6 @@ enum
 #define ZOOM_IN 1.1
 #define ZOOM_OUT 0.9
 #define MOVE_STEP 0.1
-
 
 typedef struct	s_data {
 	void	*img;
@@ -106,6 +103,11 @@ typedef struct fractal
 	
 }	t_fractal;
 
+/* fract constants */
+#define MIN_BOUND	(t_point){-2, -2}
+#define MAX_BOUND	(t_point){2, 2}
+#define MAX_PIX		(t_pixel){500, 500}
+#define MAX_ITER	100
 
 /* Mandelbrot fractal */
 t_complex	mandelbrot_iter(t_complex c, t_complex c_0);
@@ -115,17 +117,18 @@ void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
 t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max);
 
 /* build fractal */
-t_fractal	*init_fractal(t_pixel pix_max,  t_point min_bound, t_point max_bound, int iter);
+t_fractal	*init_fractal(void);
+void		add_const_to_fract(t_fractal **f);
 void		draw_fractal(t_fractal *f);
 void		color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
 	t_pixel pix_max, t_pixel pixel, int max_iter);
 void		color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
 	t_pixel pix_max, int max_iter);
-void		f_free(t_fractal **f);
+void		f_free(t_fractal **f, int perr_msg);
 
 /* coloring schemas */
 int 		map_color_general(int iter);
-int 		map_color_maxiter(int iter, int max_iter);
+int 		map_color_maxiter(int iter, int max_iter, t_point min_bound);
 int 		map_color_maxiter2(int iter, int max_iter);
 
 /* hooks */
@@ -133,13 +136,5 @@ int	close_win(int keycode, t_fractal *f);
 int	close_win2(int keycode, t_fractal *f);
 int	my_zoom(int button, int x, int y, t_fractal *f);
 int	my_move(int keycode, t_fractal *f);
-
-
-// temp and test
-void		my_mlx_horizontal_line_put(t_data *data, t_pixel start, int len, int color);
-void		my_mlx_vertical_line_put(t_data *data, t_pixel start, int len, int color);
-t_pixel 	map_coordinate_to_pixel(t_complex coord, t_point min_bound, t_point max_bound, t_pixel pix_max);
-void		print_mapped_complex_numbers(t_point min_bound, t_point max_bound, t_pixel pix_max);
-t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pixel pix_max);
 
 #endif

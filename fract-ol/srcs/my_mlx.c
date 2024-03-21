@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:14:39 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:36:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:59:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,31 @@ t_complex	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound, t_pi
 	return (result);
 }
 
-void	f_free(t_fractal **f_ptr)
+void	f_free(t_fractal **f_ptr, int perr_msg)
 {
 	t_fractal	*f;
 
+	if (perr_msg > 0)
+		perror(ERR_MSG[perr_msg]);
 	if (f_ptr == NULL || *f_ptr == NULL)
-		return ;
+	{
+		if (perr_msg >= 0)
+			exit(EXIT_FAILURE);
+		else
+			exit(EXIT_SUCCESS);
+	}
 	f = *f_ptr;
 	if (f->img != NULL) 
 	{
-        mlx_destroy_image(f->mlx, f->img->img);
+		mlx_destroy_image(f->mlx, f->img->img);
         free(f->img);
     }
     if (f->win != NULL) 
         mlx_destroy_window(f->mlx, f->win);
     free(f);
 	*f_ptr = NULL;
+	if (perr_msg >= 0)
+		exit(EXIT_FAILURE);
+	else
+		exit(EXIT_SUCCESS);
 }

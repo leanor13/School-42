@@ -6,22 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 15:16:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 17:54:22 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
-
-int my_rainbow_colors[NUM_RAINBOW_COLORS] = 
-{
-	0xFF0000, // Red
-	0xFF7F00, // Orange
-	0xFFFF00, // Yellow
-	0x00FF00, // Green
-	0x0000FF, // Blue
-	0x4B0082, // Indigo
-	0x9400D3  // Violet
-};
 
 int map_color_general(int iter) 
 {
@@ -32,16 +21,17 @@ int map_color_general(int iter)
 	return (r << 16) + (g << 8) + b;  // Combine RGB components
 }
 
-int map_color_maxiter(int iter, int max_iter) 
+int map_color_maxiter(int iter, int max_iter, t_point min_bound) 
 {
-	double logIter = log(iter + 1) / log(max_iter + 1);
-
-	int r = (int)(255 * logIter);  // Red component
-	int g = (int)(255 * pow(logIter, 2));  // Green component
-	int b = (int)(255 * fabs(cos(logIter * M_PI)));  // Blue component
-	int color = (r << 16) | (g << 8) | b;
-
-	return color;
+    double log_iter;
+    int r, g, b, color;
+    
+    log_iter = log(iter + 1) / log(max_iter * (pow(fabs(1 / min_bound.x), 2) + 1));
+    r = (int)(255 * log_iter);  // Red component
+    g = (int)(255 * pow(log_iter, 2));  // Green component
+    b = (int)(255 * fabs(sin(log_iter * M_PI)));  // Blue component
+    color = (r << 16) | (g << 8) | b;
+    return color;
 }
 
 int map_color_maxiter2(int iter, int max_iter) 

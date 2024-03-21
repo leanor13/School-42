@@ -5,7 +5,7 @@ BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main fractal temp coloring hooks my_mlx
+S = main fractal coloring hooks my_mlx
 
 COMPRESS = ar rcs
 RM = rm -f
