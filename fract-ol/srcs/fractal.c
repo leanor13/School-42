@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 17:27:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 21:35:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ t_fractal	*init_fractal(void)
 	f->img->img = mlx_new_image(f->mlx, MAX_PIX.x, MAX_PIX.y);
 	if (!f->img->img)
 		f_free(&f, NEW_IMG);
-	f->img->addr = mlx_get_data_addr(f->img->img, &f->img->bits_per_pixel, 
-		&f->img->line_length, &f->img->endian);
+	f->img->addr = mlx_get_data_addr(f->img->img, &f->img->bits_per_pixel,
+			&f->img->line_length, &f->img->endian);
 	if (!f->img->addr)
 		f_free(&f, IMG_ADDR);
 	add_const_to_fract(&f);
@@ -58,12 +58,11 @@ void	add_const_to_fract(t_fractal **f)
 
 void	draw_fractal(t_fractal *f)
 {
-	color_all_pixels(f->img, f->min_bound, f->max_bound, f->pix_max, f->iter);
+	color_all_pixels(*f);
 	mlx_put_image_to_window(f->mlx, f->win, f->img->img, 0, 0);
 }
 
-void	color_pixel(t_data *img, t_point min_bound, t_point max_bound, 
-	t_pixel pix_max, t_pixel pixel, int max_iter)
+void	color_pixel(t_fractal f, t_pixel pixel)
 {
 	int			i;
 	t_complex	curr;
@@ -71,34 +70,32 @@ void	color_pixel(t_data *img, t_point min_bound, t_point max_bound,
 	int			color;
 
 	i = 0;
-	curr = my_map_pixel(pixel, min_bound, max_bound, pix_max);
+	curr = my_map_pixel(pixel, f.min_bound, f.max_bound, f.pix_max);
 	c_0 = curr;
-	while (i < max_iter)
+	while (i < MAX_ITER)
 	{
 		if ((curr.imaginary * curr.imaginary + curr.real * curr.real >= 4))
 			break ;
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	color = map_color_maxiter(i, max_iter, min_bound);
-	my_mlx_pixel_put(img, pixel, color);
+	color = map_color_maxiter(i, MAX_ITER, f.min_bound);
+	my_mlx_pixel_put(f.img, pixel, color);
 }
 
-void	color_all_pixels(t_data *img, t_point min_bound, t_point max_bound, 
-	t_pixel pix_max, int max_iter)
+void	color_all_pixels(t_fractal f)
 {
 	t_pixel	p;
 
 	p = (t_pixel){0, 0};
-	while (p.x < pix_max.x)
+	while (p.x < f.pix_max.x)
 	{
 		p.y = 0;
-		while (p.y < pix_max.y)
+		while (p.y < f.pix_max.y)
 		{
-			color_pixel(img, min_bound, max_bound, pix_max, p, max_iter);
+			color_pixel(f, p);
 			p.y ++;
 		}
 		p.x ++;
 	}
 }
-
