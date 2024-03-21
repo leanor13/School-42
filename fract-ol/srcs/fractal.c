@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 21:35:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 22:16:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	add_const_to_fract(t_fractal **f)
 
 void	draw_fractal(t_fractal *f)
 {
-	color_all_pixels(*f);
+	color_all_pixels(f);
 	mlx_put_image_to_window(f->mlx, f->win, f->img->img, 0, 0);
 }
 
-void	color_pixel(t_fractal f, t_pixel pixel)
+int	color_pixel(t_fractal *f, t_pixel pixel)
 {
 	int			i;
 	t_complex	curr;
@@ -70,7 +70,7 @@ void	color_pixel(t_fractal f, t_pixel pixel)
 	int			color;
 
 	i = 0;
-	curr = my_map_pixel(pixel, f.min_bound, f.max_bound, f.pix_max);
+	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
 	c_0 = curr;
 	while (i < MAX_ITER)
 	{
@@ -79,23 +79,25 @@ void	color_pixel(t_fractal f, t_pixel pixel)
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	color = map_color_maxiter(i, MAX_ITER, f.min_bound);
-	my_mlx_pixel_put(f.img, pixel, color);
+	color = map_color_maxiter(i, MAX_ITER, f->min_bound);
+	return (color);
 }
 
-void	color_all_pixels(t_fractal f)
+void	color_all_pixels(t_fractal *f)
 {
-	t_pixel	p;
+	int		*pixels;
+	int		color;
+	int		i;
+	t_pixel	curr_pix;
 
-	p = (t_pixel){0, 0};
-	while (p.x < f.pix_max.x)
+	pixels = (int *)f->img->addr;
+	i = 0;
+	while (i < f->pix_max.x * f->pix_max.y)
 	{
-		p.y = 0;
-		while (p.y < f.pix_max.y)
-		{
-			color_pixel(f, p);
-			p.y ++;
-		}
-		p.x ++;
+		curr_pix.x = i % f->pix_max.x;
+		curr_pix.y = i / f->pix_max.x;
+		color = color_pixel(f, curr_pix);
+		pixels[i] = color;
+		i ++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 21:51:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/21 22:07:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ t_complex	my_map_pixel(t_pixel pixel, t_point min_bound,
 t_fractal	*init_fractal(void);
 void		add_const_to_fract(t_fractal **f);
 void		draw_fractal(t_fractal *f);
-void		color_pixel(t_fractal f, t_pixel p);
-void		color_all_pixels(t_fractal f);
+int			color_pixel(t_fractal *f, t_pixel p);
+void		color_all_pixels(t_fractal *f);
 void		f_free(t_fractal **f, int perr_msg);
 
 /* coloring schemas */
