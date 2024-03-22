@@ -1,1 +1,3 @@
 https://www.karlsims.com/julia.html
+https://www.shadertoy.com/view/4df3Rn
+ gprof fractol > shader

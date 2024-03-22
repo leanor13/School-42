@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 21:36:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/22 16:05:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	map_color_maxiter(int iter, int max_iter, t_point min_bound)
 	double	coeff;
 
 	coeff = pow(fabs(1 / min_bound.x), 2) + 1;
+	coeff = 1;
 	log_iter = log(iter + 1) / log(max_iter * coeff);
 	r = (int)(255 * log_iter);
 	g = (int)(255 * pow(log_iter, 2));
