@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 22:07:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/22 13:09:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int			map_color_maxiter(int iter, int max_iter, t_point min_bound);
 
 /* hooks */
 int			close_win(int keycode, t_fractal *f);
-int			close_win2(int keycode, t_fractal *f);
+int			close_win2(t_fractal *f);
 int			my_zoom(int button, int x, int y, t_fractal *f);
 int			my_move(int keycode, t_fractal *f);
 

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 21:39:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/22 13:26:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_win(int keycode, t_fractal *f)
 {
-	if (keycode == ESC)
+	if(keycode == ESC)
 		f_free(&f, NO_ERROR);
 	return (0);
 }

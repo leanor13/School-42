@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:14:39 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/21 21:46:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/22 13:22:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	f_free(t_fractal **f_ptr, int perr_msg)
 	}
 	if (f->win != NULL)
 		mlx_destroy_window(f->mlx, f->win);
+	mlx_destroy_display(f->mlx);
+	free(f->mlx);
 	free(f);
 	*f_ptr = NULL;
 	if (perr_msg >= 0)
