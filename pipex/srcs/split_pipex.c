@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 20:19:55 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/19 15:11:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/22 11:20:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ char	**ft_split_pipex(char *s, char c)
 
 	count = ft_count_words(s, c);
 	if (count <= 0)
-		return (NULL);
+		return (ft_putstr_fd("Syntax Error: Empty command\n",
+				STDERR_FILENO), NULL);
 	result = (char **)malloc((count + 1) * sizeof(char *));
 	if (!result)
 		return (perror("Failed split memory allocation"), NULL);
