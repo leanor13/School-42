@@ -39,6 +39,7 @@ LIBS = $(LIBFT)
 GREEN = \033[0;32m
 CYAN = \033[0;36m
 PURPLE = \033[0;35m
+YELLOW = \033[0;33m
 NC = \033[0m
 
 $(info $(MAC_INFO))
@@ -82,6 +83,7 @@ fclean: clean
 	@$(RM) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory > /dev/null
+	@echo "✅ $(YELLOW) fclean done!"
 
 run: all
 	./$(NAME) 
