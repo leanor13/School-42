@@ -22,10 +22,12 @@ LIBFT_DIR = ./includes/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 ifdef MACOS_CONFIG
+	MAC_INFO = You are on macOS
 	MLX_DIR = ./includes/minilibx-mac
 	LDflags += -I$(MLX_DIR)
 	LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 else
+	MAC_INFO = You are not on School PC
 	MLX_DIR = ./includes/minilibx-linux
 	LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 endif
@@ -36,7 +38,10 @@ LIBS = $(LIBFT)
 
 GREEN = \033[0;32m
 CYAN = \033[0;36m
+PURPLE = \033[0;35m
 NC = \033[0m
+
+$(info $(MAC_INFO))
 
 all: $(NAME)
 
