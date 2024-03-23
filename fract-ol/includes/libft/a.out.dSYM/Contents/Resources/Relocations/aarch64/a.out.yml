@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     a.out
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _ft_atof, symObjAddr: 0x0, symBinAddr: 0x100003B7C, symSize: 0x1CC }
+  - { offsetInCU: 0x41, offset: 0x41, size: 0x8, addend: 0x0, symName: _ft_atof, symObjAddr: 0x0, symBinAddr: 0x100003B7C, symSize: 0x1CC }
+  - { offsetInCU: 0xA1, offset: 0xA1, size: 0x8, addend: 0x0, symName: _is_space, symObjAddr: 0x1CC, symBinAddr: 0x100003D48, symSize: 0x70 }
+  - { offsetInCU: 0xC9, offset: 0xC9, size: 0x8, addend: 0x0, symName: _is_sign, symObjAddr: 0x23C, symBinAddr: 0x100003DB8, symSize: 0x48 }
+  - { offsetInCU: 0xF1, offset: 0xF1, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x284, symBinAddr: 0x100003E00, symSize: 0x94 }
+  - { offsetInCU: 0x26, offset: 0x163, size: 0x8, addend: 0x0, symName: _ft_isascii, symObjAddr: 0x0, symBinAddr: 0x100003E94, symSize: 0x48 }
+  - { offsetInCU: 0x33, offset: 0x170, size: 0x8, addend: 0x0, symName: _ft_isascii, symObjAddr: 0x0, symBinAddr: 0x100003E94, symSize: 0x48 }
+  - { offsetInCU: 0x26, offset: 0x1C5, size: 0x8, addend: 0x0, symName: _ft_isdigit, symObjAddr: 0x0, symBinAddr: 0x100003EDC, symSize: 0x80 }
+  - { offsetInCU: 0x33, offset: 0x1D2, size: 0x8, addend: 0x0, symName: _ft_isdigit, symObjAddr: 0x0, symBinAddr: 0x100003EDC, symSize: 0x80 }
+...

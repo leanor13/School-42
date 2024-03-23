@@ -6,7 +6,7 @@
 #    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/02/26 12:30:42 by yioffe           ###   ########.fr        #
+#    Updated: 2024/03/23 13:49:22 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = ft_bzero.c ft_isalnum.c ft_isalpha.c \
 		ft_strlen.c ft_strcmp.c ft_strncmp.c ft_toupper.c \
 		ft_tolower.c ft_strchr.c ft_strrchr.c \
 		ft_memchr.c ft_memcmp.c ft_strnstr.c \
-		ft_atoi.c ft_calloc.c ft_strjoin.c \
+		ft_atoi.c ft_atof.c ft_calloc.c ft_strjoin.c \
 		ft_substr.c ft_strtrim.c ft_split.c \
 		ft_itoa.c ft_strmapi.c ft_striteri.c \
 		ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
@@ -30,7 +30,7 @@ NAME = libft.a
 LIBC = ar rcs
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -I.
+CFLAGS = -Wall -Wextra -Werror -g3 -I.
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
