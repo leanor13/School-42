@@ -9,7 +9,7 @@ S = main fractal coloring hooks my_mlx julia
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -O3 -Wall -Wextra -Werror -g -pg
+CFLAGS = -O3 -Wall -Wextra -Werror -g
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
