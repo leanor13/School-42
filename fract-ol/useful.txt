@@ -1,3 +1,5 @@
 https://www.karlsims.com/julia.html
 https://www.shadertoy.com/view/4df3Rn
+
+CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
  gprof fractol > shader
