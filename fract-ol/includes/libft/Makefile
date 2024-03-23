@@ -6,7 +6,7 @@
 #    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/03/23 13:49:22 by yioffe           ###   ########.fr        #
+#    Updated: 2024/03/23 22:38:44 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,19 +32,25 @@ CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g3 -I.
 
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+NC = \033[0m
+
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(LIBC) $(NAME) $(OBJS)
+	@echo "$(CYAN)Creating $(NAME) ..."
+	@$(LIBC) $(NAME) $(OBJS)
+	@echo "✅ $(GREEN)$(NAME) created"
 
 all: $(NAME)
-
+	
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all
 

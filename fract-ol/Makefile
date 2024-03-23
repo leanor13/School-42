@@ -1,7 +1,7 @@
 NAME = fractol
 BONUS_NAME = 
 
-BONUS = $(addprefix bonus/,$(addsuffix .c, $(B)))
+BONUS = $(addprefix srcs/,$(addsuffix .c, $(B)))
 B = 
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
@@ -34,6 +34,10 @@ MLX = $(MLX_DIR)/libmlx.a
 
 LIBS = $(LIBFT)
 
+GREEN = \033[0;32m
+CYAN = \033[0;36m
+NC = \033[0m
+
 all: $(NAME)
 
 $(OBJS_DIR)/%.o: srcs/%.c
@@ -45,7 +49,9 @@ $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBS) $(MLX)
+	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDflags)
+	@echo "✅ $(GREEN)$(NAME) created"
 
 $(OBJS): includes/fractol.h
 
@@ -56,18 +62,21 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
 $(MLX):
-	@$(MAKE) -C $(MLX_DIR) --no-print-directory
-	@echo $(MLX) compiled and ready!
+	@echo "$(CYAN)Creating $(MLX) ..."
+	@$(MAKE) -C $(MLX_DIR) --no-print-directory > /dev/null 2>&1
+	@echo "✅ $(GREEN)$(MLX) compiled and ready!"
 
 clean:
 	@$(RM) -r $(OBJS_DIR)
 	@$(RM) -r $(OBJS_DIR_BONUS)
 	@$(MAKE) -C $(LIBFT_DIR) clean --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory > /dev/null
 
 fclean: clean
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS_NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
+	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory > /dev/null
 
 run: all
 	./$(NAME) 
