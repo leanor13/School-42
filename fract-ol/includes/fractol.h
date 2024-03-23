@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 15:57:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 17:38:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void		draw_fractal(t_fractal *f);
 int			color_pixel(t_fractal *f, t_pixel p);
 void		color_all_pixels(t_fractal *f);
 void		f_free(t_fractal **f, int perr_msg);
+void		activate_hooks(t_fractal *f);
 
 /* coloring schemas */
 int			map_color_maxiter(int iter, int max_iter, t_point min_bound);

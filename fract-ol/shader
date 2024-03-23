@@ -3,21 +3,20 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
- 56.13     22.77    22.77 1914102108     0.00     0.00  mandelbrot_iter
- 36.41     37.54    14.77 128750000     0.00     0.00  color_pixel
-  4.04     39.18     1.64 128750000     0.00     0.00  map_color_maxiter
-  1.92     39.96     0.78      515     1.51    78.58  color_all_pixels
-  1.26     40.47     0.51 128750000     0.00     0.00  my_map_pixel
-  0.25     40.57     0.10                             _init
-  0.00     40.57     0.00      515     0.00    78.58  draw_fractal
-  0.00     40.57     0.00      478     0.00    77.92  my_zoom
-  0.00     40.57     0.00       40     0.00    78.58  my_move
-  0.00     40.57     0.00       39     0.00     0.00  close_win
-  0.00     40.57     0.00        1     0.00     0.00  activate_hooks
-  0.00     40.57     0.00        1     0.00     0.00  add_const_to_fract
-  0.00     40.57     0.00        1     0.00     0.00  close_win2
-  0.00     40.57     0.00        1     0.00     0.00  f_free
-  0.00     40.57     0.00        1     0.00     0.00  init_fractal
+ 51.63      2.22     2.22 1114067687     0.00     0.00  mandelbrot_iter
+ 41.16      3.99     1.77 15360000     0.00     0.00  color_pixel
+  4.19      4.17     0.18 15360000     0.00     0.00  map_color_maxiter
+  1.40      4.23     0.06 15360023     0.00     0.00  my_map_pixel
+  1.16      4.28     0.05       24     2.08   178.33  color_all_pixels
+  0.47      4.30     0.02                             _init
+  0.00      4.30     0.00       24     0.00   178.33  draw_fractal
+  0.00      4.30     0.00       23     0.00   170.58  my_zoom
+  0.00      4.30     0.00        1     0.00     0.00  activate_hooks
+  0.00      4.30     0.00        1     0.00     0.00  add_const_to_fract
+  0.00      4.30     0.00        1     0.00     0.00  close_win
+  0.00      4.30     0.00        1     0.00     0.00  f_free
+  0.00      4.30     0.00        1     0.00     0.00  init_fractal
+  0.00      4.30     0.00        1     0.00   178.33  my_move
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -55,77 +54,75 @@ notice and this notice are preserved.
 		     Call graph (explanation follows)
 
 
-granularity: each sample hit covers 4 byte(s) for 0.02% of 40.57 seconds
+granularity: each sample hit covers 4 byte(s) for 0.23% of 4.30 seconds
 
 index % time    self  children    called     name
-                0.78   39.69     515/515         draw_fractal [2]
-[1]     99.8    0.78   39.69     515         color_all_pixels [1]
-               14.77   24.92 128750000/128750000     color_pixel [4]
+                0.05    4.23      24/24          draw_fractal [2]
+[1]     99.5    0.05    4.23      24         color_all_pixels [1]
+                1.77    2.46 15360000/15360000     color_pixel [3]
 -----------------------------------------------
-                0.00    0.08       1/515         main [11]
-                0.00    3.14      40/515         my_move [7]
-                0.00   37.25     474/515         my_zoom [5]
-[2]     99.8    0.00   40.47     515         draw_fractal [2]
-                0.78   39.69     515/515         color_all_pixels [1]
+                0.00    0.18       1/24          main [9]
+                0.00    0.18       1/24          my_move [8]
+                0.00    3.92      22/24          my_zoom [5]
+[2]     99.5    0.00    4.28      24         draw_fractal [2]
+                0.05    4.23      24/24          color_all_pixels [1]
 -----------------------------------------------
-                                                 <spontaneous>
-[3]     99.6    0.00   40.39                 mlx_loop [3]
-                0.00   37.25     478/478         my_zoom [5]
-                0.00    3.14      40/40          my_move [7]
-                0.00    0.00      39/39          close_win [12]
-                0.00    0.00       1/1           close_win2 [15]
------------------------------------------------
-               14.77   24.92 128750000/128750000     color_all_pixels [1]
-[4]     97.8   14.77   24.92 128750000         color_pixel [4]
-               22.77    0.00 1914102108/1914102108     mandelbrot_iter [6]
-                1.64    0.00 128750000/128750000     map_color_maxiter [8]
-                0.51    0.00 128750000/128750000     my_map_pixel [9]
------------------------------------------------
-                0.00   37.25     478/478         mlx_loop [3]
-[5]     91.8    0.00   37.25     478         my_zoom [5]
-                0.00   37.25     474/515         draw_fractal [2]
------------------------------------------------
-               22.77    0.00 1914102108/1914102108     color_pixel [4]
-[6]     56.1   22.77    0.00 1914102108         mandelbrot_iter [6]
------------------------------------------------
-                0.00    3.14      40/40          mlx_loop [3]
-[7]      7.7    0.00    3.14      40         my_move [7]
-                0.00    3.14      40/515         draw_fractal [2]
------------------------------------------------
-                1.64    0.00 128750000/128750000     color_pixel [4]
-[8]      4.0    1.64    0.00 128750000         map_color_maxiter [8]
------------------------------------------------
-                0.51    0.00 128750000/128750000     color_pixel [4]
-[9]      1.3    0.51    0.00 128750000         my_map_pixel [9]
+                1.77    2.46 15360000/15360000     color_all_pixels [1]
+[3]     98.4    1.77    2.46 15360000         color_pixel [3]
+                2.22    0.00 1114067687/1114067687     mandelbrot_iter [6]
+                0.18    0.00 15360000/15360000     map_color_maxiter [7]
+                0.06    0.00 15360000/15360023     my_map_pixel [10]
 -----------------------------------------------
                                                  <spontaneous>
-[10]     0.2    0.10    0.00                 _init [10]
+[4]     95.4    0.00    4.10                 mlx_loop [4]
+                0.00    3.92      23/23          my_zoom [5]
+                0.00    0.18       1/1           my_move [8]
+                0.00    0.00       1/1           close_win [14]
+-----------------------------------------------
+                0.00    3.92      23/23          mlx_loop [4]
+[5]     91.2    0.00    3.92      23         my_zoom [5]
+                0.00    3.92      22/24          draw_fractal [2]
+                0.00    0.00      23/15360023     my_map_pixel [10]
+-----------------------------------------------
+                2.22    0.00 1114067687/1114067687     color_pixel [3]
+[6]     51.6    2.22    0.00 1114067687         mandelbrot_iter [6]
+-----------------------------------------------
+                0.18    0.00 15360000/15360000     color_pixel [3]
+[7]      4.2    0.18    0.00 15360000         map_color_maxiter [7]
+-----------------------------------------------
+                0.00    0.18       1/1           mlx_loop [4]
+[8]      4.1    0.00    0.18       1         my_move [8]
+                0.00    0.18       1/24          draw_fractal [2]
 -----------------------------------------------
                                                  <spontaneous>
-[11]     0.2    0.00    0.08                 main [11]
-                0.00    0.08       1/515         draw_fractal [2]
-                0.00    0.00       1/1           init_fractal [17]
-                0.00    0.00       1/1           activate_hooks [13]
+[9]      4.1    0.00    0.18                 main [9]
+                0.00    0.18       1/24          draw_fractal [2]
+                0.00    0.00       1/1           init_fractal [16]
+                0.00    0.00       1/1           activate_hooks [12]
 -----------------------------------------------
-                0.00    0.00      39/39          mlx_loop [3]
-[12]     0.0    0.00    0.00      39         close_win [12]
+                0.00    0.00      23/15360023     my_zoom [5]
+                0.06    0.00 15360000/15360023     color_pixel [3]
+[10]     1.4    0.06    0.00 15360023         my_map_pixel [10]
 -----------------------------------------------
-                0.00    0.00       1/1           main [11]
-[13]     0.0    0.00    0.00       1         activate_hooks [13]
+                                                 <spontaneous>
+[11]     0.5    0.02    0.00                 _init [11]
 -----------------------------------------------
-                0.00    0.00       1/1           init_fractal [17]
-[14]     0.0    0.00    0.00       1         add_const_to_fract [14]
+                0.00    0.00       1/1           main [9]
+[12]     0.0    0.00    0.00       1         activate_hooks [12]
 -----------------------------------------------
-                0.00    0.00       1/1           mlx_loop [3]
-[15]     0.0    0.00    0.00       1         close_win2 [15]
-                0.00    0.00       1/1           f_free [16]
+                0.00    0.00       1/1           init_fractal [16]
+[13]     0.0    0.00    0.00       1         add_const_to_fract [13]
 -----------------------------------------------
-                0.00    0.00       1/1           close_win2 [15]
-[16]     0.0    0.00    0.00       1         f_free [16]
+                0.00    0.00       1/1           mlx_loop [4]
+[14]     0.0    0.00    0.00       1         close_win [14]
+                0.00    0.00       1/1           f_free [15]
 -----------------------------------------------
-                0.00    0.00       1/1           main [11]
-[17]     0.0    0.00    0.00       1         init_fractal [17]
-                0.00    0.00       1/1           add_const_to_fract [14]
+                0.00    0.00       1/1           close_win [14]
+[15]     0.0    0.00    0.00       1         f_free [15]
+-----------------------------------------------
+                0.00    0.00       1/1           main [9]
+[16]     0.0    0.00    0.00       1         init_fractal [16]
+                0.00    0.00       1/1           add_const_to_fract [13]
 -----------------------------------------------
 
  This table describes the call tree of the program, and was sorted by
@@ -218,8 +215,8 @@ notice and this notice are preserved.
 
 Index by function name
 
-  [10] _init                   [1] color_all_pixels        [6] mandelbrot_iter
-  [13] activate_hooks          [4] color_pixel             [8] map_color_maxiter
-  [14] add_const_to_fract      [2] draw_fractal            [9] my_map_pixel
-  [12] close_win              [16] f_free                  [7] my_move
-  [15] close_win2             [17] init_fractal            [5] my_zoom
+  [11] _init                   [3] color_pixel             [7] map_color_maxiter
+  [12] activate_hooks          [2] draw_fractal           [10] my_map_pixel
+  [13] add_const_to_fract     [15] f_free                  [8] my_move
+  [14] close_win              [16] init_fractal            [5] my_zoom
+   [1] color_all_pixels        [6] mandelbrot_iter

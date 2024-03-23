@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 15:57:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 17:25:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ void	draw_fractal(t_fractal *f)
 	mlx_put_image_to_window(f->mlx, f->win, f->img->img, 0, 0);
 }
 
+t_point	tricorn_iter(t_point c, t_point c_0)
+{
+	t_point	next;
+
+	next.x = c.x * c.x - c.y * c.y + c_0.x;
+	next.y = -2 * c.x * c.y + c_0.y;
+	return (next);
+}
+
 int	color_pixel(t_fractal *f, t_pixel pixel)
 {
 	int			i;
@@ -76,7 +85,7 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 	{
 		if ((curr.y * curr.y + curr.x * curr.x >= 4))
 			break ;
-		curr = mandelbrot_iter(curr, c_0);
+		curr = tricorn_iter(curr, c_0);
 		i ++;
 	}
 	color = map_color_maxiter(i, MAX_ITER, f->min_bound);
