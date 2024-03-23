@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:52:19 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 13:44:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:39:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 int		ft_atoi(const char *str);
-double	ft_atof(const char *str);
+double	ft_atof(char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
