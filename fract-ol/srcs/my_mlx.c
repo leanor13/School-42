@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:14:39 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/22 13:22:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:57:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ void	my_mlx_pixel_put(t_data *data, t_pixel pixel, int color)
 	*(unsigned int *) dst = color;
 }
 
-t_complex	my_map_pixel(t_pixel pixel, t_point min_bound,
+t_point	my_map_pixel(t_pixel pixel, t_point min_bound,
 		t_point max_bound, t_pixel pix_max)
 {
-	t_complex	result;
+	t_point	result;
 	double		x_range;
 	double		y_range;
 
 	x_range = (max_bound.x - min_bound.x) / pix_max.x;
 	y_range = (max_bound.y - min_bound.y) / pix_max.y;
-	result.real = pixel.x * x_range + min_bound.x;
-	result.imaginary = pixel.y * y_range + min_bound.y;
+	result.x = pixel.x * x_range + min_bound.x;
+	result.y = pixel.y * y_range + min_bound.y;
 	return (result);
 }
 
@@ -57,7 +57,9 @@ void	f_free(t_fractal **f_ptr, int perr_msg)
 	}
 	if (f->win != NULL)
 		mlx_destroy_window(f->mlx, f->win);
+	#ifdef __unix__
 	mlx_destroy_display(f->mlx);
+	#endif
 	free(f->mlx);
 	free(f);
 	*f_ptr = NULL;

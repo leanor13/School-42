@@ -6,18 +6,18 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 12:44:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:57:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-t_complex	mandelbrot_iter(t_complex c, t_complex c_0)
+t_point	mandelbrot_iter(t_point c, t_point c_0)
 {
-	t_complex	next;
+	t_point	next;
 
-	next.real = c.real * c.real - c.imaginary * c.imaginary + c_0.real;
-	next.imaginary = 2 * c.real * c.imaginary + c_0.imaginary;
+	next.x = c.x * c.x - c.y * c.y + c_0.x;
+	next.y = 2 * c.x * c.y + c_0.y;
 	return (next);
 }
 
@@ -65,8 +65,8 @@ void	draw_fractal(t_fractal *f)
 int	color_pixel(t_fractal *f, t_pixel pixel)
 {
 	int			i;
-	t_complex	curr;
-	t_complex	c_0;
+	t_point	curr;
+	t_point	c_0;
 	int			color;
 
 	i = 0;
@@ -74,7 +74,7 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 	c_0 = curr;
 	while (i < MAX_ITER)
 	{
-		if ((curr.imaginary * curr.imaginary + curr.real * curr.real >= 4))
+		if ((curr.y * curr.y + curr.x * curr.x >= 4))
 			break ;
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/22 16:06:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:08:33 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 	double	coeff;
 	double	scale_factor;
 	double	range_avg;
+	t_point	mouse;
 
 	range_avg = (f->max_bound.x - f->min_bound.x)
 		+ (f->max_bound.y - f->min_bound.y) / 2.0;
-	(void)x;
-	(void)y;
+	mouse = my_map_pixel((t_pixel){x, y}, f->min_bound, f->max_bound, f->pix_max);
 	scale_factor = pow(ZOOM_IN, log10(range_avg + 1) + 1);
 	coeff = 0.0;
 	if (button == ON_MOUSEDOWN)
@@ -43,10 +43,10 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 		coeff = 1.0 / scale_factor;
 	if (coeff != 0.0)
 	{
-		f->min_bound.x *= coeff;
-		f->min_bound.y *= coeff;
-		f->max_bound.x *= coeff;
-		f->max_bound.y *= coeff;
+		f->min_bound.x = (f->min_bound.x - mouse.x) * coeff + mouse.x;
+    	f->min_bound.y = (f->min_bound.y - mouse.y) * coeff + mouse.y;
+    	f->max_bound.x = (f->max_bound.x - mouse.x) * coeff + mouse.x;
+    	f->max_bound.y = (f->max_bound.y - mouse.y) * coeff + mouse.y;
 		draw_fractal(f);
 	}
 	return (0);

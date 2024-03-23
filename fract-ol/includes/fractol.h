@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/22 13:09:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:57:35 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,6 @@ typedef struct point
 	double	y;
 }	t_point;
 
-typedef struct complex
-{
-	double	real;
-	double	imaginary;
-}	t_complex;
-
 typedef struct s_vars
 {
 	void	*mlx;
@@ -108,15 +102,15 @@ typedef struct fractal
 /* fract constants */
 # define MIN_BOUND	(t_point){-2, -2}
 # define MAX_BOUND	(t_point){2, 2}
-# define MAX_PIX	(t_pixel){500, 500}
+# define MAX_PIX	(t_pixel){800, 800}
 # define MAX_ITER	100
 
 /* Mandelbrot fractal */
-t_complex	mandelbrot_iter(t_complex c, t_complex c_0);
+t_point	mandelbrot_iter(t_point c, t_point c_0);
 
 /* basic img functions */
 void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
-t_complex	my_map_pixel(t_pixel pixel, t_point min_bound,
+t_point	my_map_pixel(t_pixel pixel, t_point min_bound,
 				t_point max_bound, t_pixel pix_max);
 
 /* build fractal */
