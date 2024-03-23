@@ -9,7 +9,7 @@ S = main fractal coloring hooks my_mlx julia
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g -pg
+CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
@@ -46,6 +46,8 @@ $(OBJS_DIR_BONUS)/%.o: bonus/%.c
 
 $(NAME): $(OBJS) $(LIBS) $(MLX)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDflags)
+
+$(OBJS): includes/fractol.h
 
 $(BONUS_NAME): $(BONUS_OBJS) $(LIBS)
 	@$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) $(filter-out $(OBJS_DIR)/main.o, $(OBJS)) $(LIBS) $(LDflags)
