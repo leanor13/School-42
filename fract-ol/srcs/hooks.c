@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 20:43:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 15:36:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,21 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 int	my_move(int keycode, t_fractal *f)
 {
 	t_point	move_point;
-	double	scale_factor;
+	//double	scale_factor;
 	double	range_avg;
 
 	range_avg = (f->max_bound.x - f->min_bound.x
-			+ f->max_bound.y - f->min_bound.y) / 2.0;
-	scale_factor = log10(range_avg + 1) + 1;
+			+ f->max_bound.y - f->min_bound.y) / 10.0;
+	//scale_factor = log10(range_avg + 1) + 1;
 	move_point = (t_point){0.0, 0.0};
 	if (keycode == UP)
-		move_point = (t_point){0.0, -scale_factor * MOVE_STEP};
+		move_point = (t_point){0.0, -range_avg};
 	else if (keycode == DOWN)
-		move_point = (t_point){0.0, scale_factor * MOVE_STEP};
+		move_point = (t_point){0.0, range_avg};
 	else if (keycode == RIGHT)
-		move_point = (t_point){scale_factor * MOVE_STEP, 0.0};
+		move_point = (t_point){range_avg, 0.0};
 	else if (keycode == LEFT)
-		move_point = (t_point){-scale_factor * MOVE_STEP, 0.0};
+		move_point = (t_point){-range_avg, 0.0};
 	if (move_point.x != 0.0 || move_point.y != 0.0)
 	{
 		f->min_bound.x += move_point.x;
