@@ -7,6 +7,7 @@ CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
 
  TODO:
 
+0. Push MLX for linux library
  1. Normi
  2. Parse parameters
  3. Julia - change constant
@@ -14,3 +15,4 @@ CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
  5. Drag by mouse (optional)
  6. Handle errors not in global variable
  7. Check valgrind for different parameters. Also for breaking something?
+ 
