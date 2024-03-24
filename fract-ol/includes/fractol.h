@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 10:35:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 11:26:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct fractal
 	t_point	min_bound;
 	t_point	max_bound;
 	int		iter;
-
+	int		color_scheme;
 }	t_fractal;
 
 /* fract constants */

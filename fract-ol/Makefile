@@ -27,7 +27,7 @@ ifdef MACOS_CONFIG
 	LDflags += -I$(MLX_DIR)
 	LDflags += -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 else
-	MAC_INFO = You are not on School PC
+	MAC_INFO = You are on School PC
 	MLX_DIR = ./includes/minilibx-linux
 	LDflags += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 endif
