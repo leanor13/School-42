@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 11:25:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 14:50:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	map_color_maxiter3(int iter, int max_iter)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int	map_color_maxiter(int iter, int max_iter)
+int	map_color_sriped(int iter, int max_iter)
 {
 	double	log_iter;
 	int		r;
@@ -102,7 +102,7 @@ int	map_color_maxiter(int iter, int max_iter)
 	return ((r << 16) | (g << 8) | b);
 }
 
-int	map_color_sriped(int iter, int max_iter)
+int	map_color_maxiter(int iter, int max_iter)
 {
 	double	log_iter;
 	int		r;
