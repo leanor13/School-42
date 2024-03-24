@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 20:55:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 10:16:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
 	c2 = curr.x * curr.x + curr.y * curr.y;
 	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0) 
-		return (map_color_maxiter(MAX_ITER, MAX_ITER, f->min_bound));
+		return (map_color_maxiter(MAX_ITER, MAX_ITER));
 	if (16.0 * (c2 + 2.0 * curr.x + 1.0) - 1.0 < 0.0) 
-		return (map_color_maxiter(MAX_ITER, MAX_ITER, f->min_bound));
+		return (map_color_maxiter(MAX_ITER, MAX_ITER));
 
 	c_0 = curr;
 	while (i < MAX_ITER)
@@ -95,7 +95,7 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	color = map_color_maxiter(i, MAX_ITER, f->min_bound);
+	color = map_color_maxiter(i, MAX_ITER);
 	return (color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 23:13:03 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 10:35:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_point	mandelbrot_iter(t_point c, t_point c_0);
 
 /* basic img functions */
 void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
-t_point	my_map_pixel(t_pixel pixel, t_point min_bound,
+t_point		my_map_pixel(t_pixel pixel, t_point min_bound,
 				t_point max_bound, t_pixel pix_max);
 
 /* build fractal */
@@ -123,7 +123,9 @@ void		f_free(t_fractal **f, int perr_msg);
 void		activate_hooks(t_fractal *f);
 
 /* coloring schemas */
-int			map_color_maxiter(int iter, int max_iter, t_point min_bound);
+int			map_color_maxiter2(int iter, int max_iter, t_point min_bound, t_point max_bound);
+int			map_color_maxiter(int iter, int max_iter);
+
 
 /* hooks */
 int			close_win(int keycode, t_fractal *f);
