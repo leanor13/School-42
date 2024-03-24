@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/19 15:13:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 12:19:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	ft_close(int fd)
 	if (fd != -1 && fd != STDERR_FILENO 
 		&& fd != STDIN_FILENO && fd != STDOUT_FILENO)
 		close(fd);
+}
+
+void	ft_close_all(void)
+{
+	int	i;
+
+	
 }
 
 void	free_command_list(t_command *command_list, int size)
