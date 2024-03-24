@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 11:26:46 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 11:28:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct fractal
 # define MAX_BOUND	(t_point){2, 2}
 # define MAX_PIX	(t_pixel){500, 500}
 # define MAX_ITER	100
+# define DEF_COLOR	1;
 
 /* Mandelbrot fractal */
 t_point	mandelbrot_iter(t_point c, t_point c_0);

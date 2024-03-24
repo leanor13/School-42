@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 10:16:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 11:28:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	add_const_to_fract(t_fractal **f)
 	(*f)->max_bound = MAX_BOUND;
 	(*f)->pix_max = MAX_PIX;
 	(*f)->iter = MAX_ITER;
+	(*f)->color_scheme = DEF_COLOR;
 }
 
 void	draw_fractal(t_fractal *f)
