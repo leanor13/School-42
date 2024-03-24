@@ -1,7 +1,7 @@
 NAME = pipex
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = pipex split_pipex build_command_list utils_free_close utils_misc here_doc
+S = pipex split_pipex build_command_list utils_free_close utils_misc here_doc free_command_list
 
 COMPRESS = ar rcs
 RM = rm -f

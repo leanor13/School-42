@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 17:02:16 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 12:19:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 13:47:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,28 @@ void	ft_close(int fd)
 		close(fd);
 }
 
+void	ft_close_protected(void)
+{
+	int	i;
+
+	i = 3;
+	while (i < 1024)
+	{
+		close(i);
+		i ++;
+	}
+}
+
 void	ft_close_all(void)
 {
 	int	i;
 
-	
-}
-
-void	free_command_list(t_command *command_list, int size)
-{
-	int	i;
-	int	j;
-
 	i = 0;
-	while (i < size)
+	while (i < 1024)
 	{
-		j = 0;
-		while (command_list[i].args[j])
-		{
-			free(command_list[i].args[j]);
-			command_list[i].args[j] = NULL;
-			j++;
-		}
-		free(command_list[i].args);
-		command_list[i].args = NULL;
-		free(command_list[i].path);
-		command_list[i].path = NULL;
-		i++;
+		close(i);
+		i ++;
 	}
-	free(command_list);
-	command_list = NULL;
 }
 
 void	close_both_ends(int fd[2], bool pipe_error)
@@ -64,13 +56,4 @@ void	close_3_fds(int fd_files[2], int fd[2], int fd_pipe[2])
 	close_both_ends(fd_files, !PRINT_PIPE_ERROR);
 	close_both_ends(fd, !PRINT_PIPE_ERROR);
 	close_both_ends(fd_pipe, !PRINT_PIPE_ERROR);
-}
-
-void	dup_close(int fd, int reference)
-{
-	if (fd != reference)
-	{
-		dup2(fd, reference);
-		ft_close(fd);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/15 15:42:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 12:31:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char		*absolute_path(char *command);
 void		here_doc(char *limiter, int *fd_files);
 int			open_file(int ac, char **av, int type);
 void		open_files_here_doc(int ac, char **av, int fd_files[2]);
+void		ft_close_protected(void);
+void		ft_close_all(void);
 
 void		free_command_list(t_command *command_list, int size);
 void		close_both_ends(int fd[2], bool pipe_error);
