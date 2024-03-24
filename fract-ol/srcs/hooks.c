@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 15:44:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/24 16:51:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	my_move(int keycode, t_fractal *f)
 	double	range_avg;
 
 	range_avg = (f->max_bound.x - f->min_bound.x
-			+ f->max_bound.y - f->min_bound.y) / 10.0;
+			+ f->max_bound.y - f->min_bound.y) / 20.0;
 	//scale_factor = log10(range_avg + 1) + 1;
 	move_point = (t_point){0.0, 0.0};
 	if (keycode == UP)
