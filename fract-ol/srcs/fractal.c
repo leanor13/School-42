@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:13:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:32:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	add_const_to_fract(t_fractal **f)
 	(*f)->min_bound = MIN_BOUND;
 	(*f)->max_bound = MAX_BOUND;
 	(*f)->pix_max = MAX_PIX;
-	(*f)->iter = MAX_ITER;
+	(*f)->iter = DEFAULT_ITER;
+	(*f)->c = DEF_JULIA;
 	(*f)->color_scheme = map_color_maxiter;
 }
 
@@ -84,19 +85,19 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
 	c2 = curr.x * curr.x + curr.y * curr.y;
 	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0) 
-		return (f->color_scheme(MAX_ITER, MAX_ITER));
+		return (f->color_scheme(f->iter, f->iter));
 	if (16.0 * (c2 + 2.0 * curr.x + 1.0) - 1.0 < 0.0) 
-		return (f->color_scheme(MAX_ITER, MAX_ITER));
+		return (f->color_scheme(f->iter, f->iter));
 
 	c_0 = curr;
-	while (i < MAX_ITER)
+	while (i < f->iter)
 	{
 		if ((curr.y * curr.y + curr.x * curr.x >= 4))
 			break ;
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	color = f->color_scheme(i, MAX_ITER);
+	color = f->color_scheme(i, f->iter);
 	return (color);
 }
 

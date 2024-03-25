@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 13:07:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:39:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ enum
 /* movement constants*/
 # define ZOOM_IN 1.1
 # define ZOOM_OUT 0.9
-# define MOVE_STEP 0.1
 
 typedef struct s_data
 {
@@ -119,11 +118,16 @@ typedef struct fractal
 }	t_fractal;
 
 /* fract constants */
-# define MIN_BOUND	(t_point){-2, -2}
-# define MAX_BOUND	(t_point){2, 2}
-# define MAX_PIX	(t_pixel){500, 500}
-# define MAX_ITER	500
-# define DEF_COLOR	1;
+# define MIN_BOUND		(t_point){-2.0, -2.0}
+# define MAX_BOUND		(t_point){2.0, 2.0}
+# define MAX_PIX		(t_pixel){500, 500}
+# define DEFAULT_ITER	500
+# define MIN_ITER		2
+# define MAX_ITER		999
+# define DEF_COLOR		1;
+# define DEF_JULIA		(t_point){0.0, 0.0};
+# define MIN_JULIA		(t_point){-2.0, -2.0};
+# define MAX_JULIA		(t_point){2.0, 2.0};
 
 /* Read input and instructions */
 t_fractal	*handle_input_and_init(int ac, char **av);

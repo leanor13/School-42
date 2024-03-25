@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 13:35:09 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/23 15:41:36 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:03:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,3 @@ double	ft_atof(char *str)
 	}
 	return (sign * number);
 }
-
-/* #include <float.h>
-
-int	main(void)
-{
-	char	s[]="  6558.6  ";
-
-	printf("Minimum value for double: %e\n", DBL_MIN);
-    printf("Maximum value for double: %e\n", DBL_MAX);
-	printf("string: %s, number: %f", s, ft_atof(s));
-	return 0;
-} */
