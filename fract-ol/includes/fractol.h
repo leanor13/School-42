@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:44:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:07:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,12 @@ typedef struct fractal
 # define DEF_COLOR	1;
 
 /* Read input and instructions */
-void	validate_input(int ac, char **av);
-void	input_instruction(void);
-void	in_window_usage(void);
+t_fractal	*handle_input_and_init(int ac, char **av);
+void		input_instruction(void);
+void		in_window_usage(void);
 
 /* Mandelbrot fractal */
-t_point	mandelbrot_iter(t_point c, t_point c_0);
+t_point		mandelbrot_iter(t_point c, t_point c_0);
 
 /* basic img functions */
 void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);

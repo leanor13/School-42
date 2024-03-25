@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:26:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:07:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	main(int ac, char **av)
 {
 	t_fractal	*f;
 
-	validate_input(ac, av);
-	f = init_fractal();
+	f = handle_input_and_init(ac, av);
 	activate_hooks(f);
 	draw_fractal(f);
 	mlx_loop(f->mlx);
