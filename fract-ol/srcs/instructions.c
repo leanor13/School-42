@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 16:39:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 16:44:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	in_window_usage(void)
 	ft_putstr_fd("1. Zoom in and zoom: use mouse wheel\n", STDERR_FILENO);
 	ft_putstr_fd("2. Move fractal: use arrow keys\n", STDERR_FILENO);
 	ft_putstr_fd("3. Change color scheme: press 1, 2 or 3\n", STDERR_FILENO);
-	ft_putstr_fd("4. Change Julia constant on a flow: press r for real part change, i for imaginary part change\n", STDERR_FILENO);
+	ft_putstr_fd("4. Change Julia constant on the flow: press r for real part change, i for imaginary part change\n", STDERR_FILENO);
 	ft_putstr_fd("All additional buttons will be ignored\n", STDERR_FILENO);
 }
