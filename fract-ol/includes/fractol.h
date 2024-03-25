@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/24 11:28:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 11:44:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,43 @@
 # ifdef __APPLE__
 #  include "minilibx-mac/mlx.h"
 #  define ESC 53
-#  define W 13
-#  define A 0
-#  define S 1
-#  define D 2
+#  define KEY_W 13
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
 #  define UP 126
 #  define LEFT 123
 #  define RIGHT 124
 #  define DOWN 125
+#  define KEY_1 18
+#  define KEY_2 19
+#  define KEY_3 20
+#  define KEY_4 21
+#  define KEY_5 23
+#  define KEY_I 34
+#  define KEY_R 15
+#  define KEY_C 8
 
 # else
 #  include "minilibx-linux/mlx.h"
 #  define ESC 65307
-#  define W 119
-#  define A 97
-#  define S 115
-#  define D 100
+#  define KEY_W 119
+#  define KEY_A 97
+#  define KEY_S 115
+#  define KEU_D 100
 #  define UP 65362
 #  define LEFT 65361
 #  define RIGHT 65363
 #  define DOWN 65364
+#  define KEY_1 49
+#  define KEY_2 50
+#  define KEY_3 51
+#  define KEY_4 52
+#  define KEY_5 53
+#  define KEY_I 105
+#  define KEY_R 114
+#  define KEY_C 99
+
 # endif
 
 enum
@@ -96,15 +113,22 @@ typedef struct fractal
 	t_point	min_bound;
 	t_point	max_bound;
 	int		iter;
-	int		color_scheme;
+	int		type;
+	int		(*color_scheme)(int iter, int max_iter);
+	t_point	c;
 }	t_fractal;
 
 /* fract constants */
 # define MIN_BOUND	(t_point){-2, -2}
 # define MAX_BOUND	(t_point){2, 2}
 # define MAX_PIX	(t_pixel){500, 500}
-# define MAX_ITER	100
+# define MAX_ITER	500
 # define DEF_COLOR	1;
+
+/* Read input and instructions */
+void	validate_input(int ac, char **av);
+void	input_instruction(void);
+void	in_window_usage(void);
 
 /* Mandelbrot fractal */
 t_point	mandelbrot_iter(t_point c, t_point c_0);
@@ -124,14 +148,16 @@ void		f_free(t_fractal **f, int perr_msg);
 void		activate_hooks(t_fractal *f);
 
 /* coloring schemas */
-int			map_color_maxiter2(int iter, int max_iter, t_point min_bound, t_point max_bound);
 int			map_color_maxiter(int iter, int max_iter);
-
+int			map_color_b_w(int iter, int max_iter);
+int			map_color_striped(int iter, int max_iter);
 
 /* hooks */
 int			close_win(int keycode, t_fractal *f);
 int			close_win2(t_fractal *f);
 int			my_zoom(int button, int x, int y, t_fractal *f);
-int			my_move(int keycode, t_fractal *f);
+void		my_move(int keycode, t_fractal *f);
+void		my_color(int keycode, t_fractal *f);
+int			key_press(int keycode, t_fractal *f);
 
 #endif

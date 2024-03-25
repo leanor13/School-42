@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:26:31 by yioffe           ###   ########.fr       */
+/*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
+/*   Updated: 2024/03/25 11:48:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	activate_hooks(t_fractal *f)
+void	validate_input(int ac, char **av)
 {
-	mlx_mouse_hook(f->win, my_zoom, f);
-	mlx_key_hook(f->win, key_press, f);
-	mlx_hook(f->win, 17, 0, &close_win2, f);
-	mlx_hook(f->win, 2, 1L << 0, &close_win, f);
-}
-
-int	main(int ac, char **av)
-{
-	t_fractal	*f;
-
-	validate_input(ac, av);
-	f = init_fractal();
-	activate_hooks(f);
-	draw_fractal(f);
-	mlx_loop(f->mlx);
-	return (0);
+	if (ac < 2)
+		input_instruction();
+	else
+		in_window_usage();
+	(void)av;
+	return;
 }
