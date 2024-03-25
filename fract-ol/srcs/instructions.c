@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 12:59:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/25 13:22:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	input_instruction(void)
 	ft_putstr_fd("    Big window size may cause slowness of the program\n", STDERR_FILENO);
 	ft_putstr_fd("    Default window size is w_500, applied automatically\n", STDERR_FILENO);
 	ft_putstr_fd("All additional parameters will be ignored\n", STDERR_FILENO);
-	ft_putstr_fd("                    Have fun!", STDERR_FILENO);
+	ft_putstr_fd("                    Have fun!\n", STDERR_FILENO);
 	exit(EXIT_FAILURE);
 }
 
