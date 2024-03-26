@@ -9,16 +9,10 @@ CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
 
 0. Push MLX for linux library
  1. Normi
- 2. Parse parameters
  3. Julia - change constant
- 4. Bonus fractal
  5. Drag by mouse (optional)
  6. Handle errors not in global variable
- 7. Check valgrind for different parameters. Also for breaking something?
- 8. for movement use boundary size - don't move out of the screen
  9. check movement: outside of the screen. 
- 10.check zoom when pixels?
- 11.press few keys simultaniously
  12.if we zoom really deep - we loose square shape
  13.check make on bash
  
