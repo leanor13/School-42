@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 10:53:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:54:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,6 @@ typedef struct fractal
 # define MAX_JULIA_X    2.0
 # define MAX_JULIA_Y    2.0
 # define NEG_ERROR      -1
-
-enum
-{
-	MANDELBROT = 1,
-	JULIA = 2,
-	TRICORN = 3
-};
 
 /* Read input and instructions */
 t_fractal	*handle_input_and_init(int ac, char **av);
