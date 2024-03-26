@@ -1,7 +1,8 @@
 NAME = fractol
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main fractal coloring hooks my_mlx julia read_input instructions
+S = main coloring hooks my_mlx julia read_input instructions fractal_init \
+	fractal_color fractal_types
 
 COMPRESS = ar rcs
 RM = rm -f

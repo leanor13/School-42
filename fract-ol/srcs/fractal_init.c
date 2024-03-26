@@ -1,25 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractal.c                                          :+:      :+:    :+:   */
+/*   fractal_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 16:32:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 01:51:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
-
-t_point	mandelbrot_iter(t_point c, t_point c_0)
-{
-	t_point	next;
-	
-	next.x = c.x * c.x - c.y * c.y + c_0.x;
-	next.y = 2 * c.x * c.y + c_0.y;
-	return (next);
-}
 
 t_fractal	*init_fractal(void)
 {
@@ -64,57 +55,28 @@ void	draw_fractal(t_fractal *f)
 	mlx_put_image_to_window(f->mlx, f->win, f->img->img, 0, 0);
 }
 
-t_point	tricorn_iter(t_point c, t_point c_0)
-{
-	t_point	next;
-
-	next.x = c.x * c.x - c.y * c.y + c_0.x;
-	next.y = -2 * c.x * c.y + c_0.y;
-	return (next);
-}
-
-int	color_pixel(t_fractal *f, t_pixel pixel)
-{
-	int			i;
-	t_point		curr;
-	t_point		c_0;
-	int			color;
-	double		c2;
-
-	i = 0;
-	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
-	c2 = curr.x * curr.x + curr.y * curr.y;
-	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0) 
-		return (f->color_scheme(f->iter, f->iter));
-	if (16.0 * (c2 + 2.0 * curr.x + 1.0) - 1.0 < 0.0) 
-		return (f->color_scheme(f->iter, f->iter));
-
-	c_0 = curr;
-	while (i < f->iter)
-	{
-		if ((curr.y * curr.y + curr.x * curr.x >= 4))
-			break ;
-		curr = mandelbrot_iter(curr, c_0);
-		i ++;
-	}
-	color = f->color_scheme(i, f->iter);
-	return (color);
-}
-
 void	color_all_pixels(t_fractal *f)
 {
 	int		*pixels;
 	int		color;
 	int		i;
 	t_pixel	curr_pix;
+	int 	(*color_func)(t_fractal *, t_pixel);
 
+	if (f->type == MANDELBROT)
+        color_func = &mandelbrot_color_pix;
+    else if (f->type == JULIA)
+        color_func = &julia_color_pix;
+    else if (f->type == TRICORN)
+        color_func = &tricorn_color_pix;
+	color_func = color_pixel;
 	pixels = (int *)f->img->addr;
 	i = 0;
 	while (i < f->pix_max.x * f->pix_max.y)
 	{
 		curr_pix.x = i % f->pix_max.x;
 		curr_pix.y = i / f->pix_max.x;
-		color = color_pixel(f, curr_pix);
+		color = color_func(f, curr_pix);
 		pixels[i] = color;
 		i ++;
 	}

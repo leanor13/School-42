@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 16:39:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 01:34:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,17 +125,29 @@ typedef struct fractal
 # define MIN_ITER		2
 # define MAX_ITER		999
 # define DEF_COLOR		1;
-# define DEF_JULIA		(t_point){0.0, 0.0};
-# define MIN_JULIA		(t_point){-2.0, -2.0};
-# define MAX_JULIA		(t_point){2.0, 2.0};
+# define DEF_JULIA		(t_point){-0.79, 0.15}
+# define MIN_JULIA		(t_point){-2.0, -2.0}
+# define MAX_JULIA		(t_point){2.0, 2.0}
+# define NEG_ERROR		-1
+
+enum
+{
+	MANDELBROT = 1,
+	JULIA = 2,
+	TRICORN = 3
+};
 
 /* Read input and instructions */
 t_fractal	*handle_input_and_init(int ac, char **av);
 void		input_instruction(void);
 void		in_window_usage(void);
 
-/* Mandelbrot fractal */
+/* Fractal functions */
 t_point		mandelbrot_iter(t_point c, t_point c_0);
+t_point		tricorn_iter(t_point c, t_point c_0);
+int			mandelbrot_color_pix(t_fractal *f, t_pixel pixel);
+int			julia_color_pix(t_fractal *f, t_pixel pixel);
+int			tricorn_color_pix(t_fractal *f, t_pixel pixel);
 
 /* basic img functions */
 void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);

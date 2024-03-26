@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 16:38:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 00:35:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,32 @@ void	parse_input(int ac, char **av, t_fractal *f)
 	}
 }
 
-void	check_mandatory(char *name)
+int	check_mandatory(char *name)
 {
 	if (ft_strcmp(name, "m") == 0 || ft_strcmp(name, "Mandelbrot") == 0)
-		return ;
+		return (MANDELBROT);
 	else if (ft_strcmp(name, "j") == 0 || ft_strcmp(name, "Julia") == 0)
-		return ;
+		return (JULIA);
 	else if (ft_strcmp(name, "t") == 0 || ft_strcmp(name, "Tricorn") == 0)
-		return ;
+		return (TRICORN);
 	else
 		input_instruction();
+	return (NEG_ERROR);
 }
 
 t_fractal	*handle_input_and_init(int ac, char **av)
 {
 	t_fractal	*f;
+	int			type;
 
 	f = NULL;
 	if (ac < 2 || !av || !av[1] || !av[1][0])
 		input_instruction();
 	else
 	{
-		check_mandatory(av[1]);
+		type = check_mandatory(av[1]);
 		f = init_fractal();
+		f->type = type;
 		if (ac > 2)
 			parse_input(ac, av, f);
 	}
