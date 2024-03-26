@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 11:39:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 11:59:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	julia_param_set(char **av, t_fractal *f)
 	{
 		if ((x == 0 && av[2][0] != '0') || (y == 0 && av[3][0] != '0'))
 			return ;
-		if (x > 2.0 || y > 2.0 || x < -2.0 || y < -2.0)
+		if (x > MAX_JULIA || y > MAX_JULIA || x < MIN_JULIA || y < MIN_JULIA)
 			return ;
 		f->c = (t_point){x, y};
 	}

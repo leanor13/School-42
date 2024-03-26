@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 10:54:57 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 12:01:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,23 +120,18 @@ typedef struct fractal
 }	t_fractal;
 
 /* fract constants */
-# define MIN_BOUND_X    -2.0
-# define MIN_BOUND_Y    -2.0
-# define MAX_BOUND_X    2.0
-# define MAX_BOUND_Y    2.0
-# define MAX_PIX_X      500
-# define MAX_PIX_Y      500
-# define DEFAULT_ITER   500
-# define MIN_ITER       2
-# define MAX_ITER       999
-# define DEF_COLOR      1
-# define DEF_JULIA_X    -0.79
-# define DEF_JULIA_Y    0.15
-# define MIN_JULIA_X    -2.0
-# define MIN_JULIA_Y    -2.0
-# define MAX_JULIA_X    2.0
-# define MAX_JULIA_Y    2.0
-# define NEG_ERROR      -1
+# define MIN_BOUND -2.0
+# define MAX_BOUND 2.0
+# define MAX_PIX 500
+# define DEFAULT_ITER 500
+# define MIN_ITER 2
+# define MAX_ITER 999
+# define DEF_COLOR 1
+# define DEF_JULIA_X -0.79
+# define DEF_JULIA_Y 0.15
+# define MIN_JULIA -2.0
+# define MAX_JULIA 2.0
+# define NEG_ERROR -1
 
 /* Read input and instructions */
 t_fractal	*handle_input_and_init(int ac, char **av);
