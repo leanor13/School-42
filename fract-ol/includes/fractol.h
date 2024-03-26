@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 01:34:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:53:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct s_vars
 	void	*win;
 }	t_vars;
 
+typedef struct fractal	t_fractal;
+
 typedef struct fractal
 {
 	t_data	*img;
@@ -112,23 +114,29 @@ typedef struct fractal
 	t_point	min_bound;
 	t_point	max_bound;
 	int		iter;
-	int		type;
+	int		(*color_pix_fun)(t_fractal *f, t_pixel pixel);
 	int		(*color_scheme)(int iter, int max_iter);
 	t_point	c;
 }	t_fractal;
 
 /* fract constants */
-# define MIN_BOUND		(t_point){-2.0, -2.0}
-# define MAX_BOUND		(t_point){2.0, 2.0}
-# define MAX_PIX		(t_pixel){500, 500}
-# define DEFAULT_ITER	500
-# define MIN_ITER		2
-# define MAX_ITER		999
-# define DEF_COLOR		1;
-# define DEF_JULIA		(t_point){-0.79, 0.15}
-# define MIN_JULIA		(t_point){-2.0, -2.0}
-# define MAX_JULIA		(t_point){2.0, 2.0}
-# define NEG_ERROR		-1
+# define MIN_BOUND_X    -2.0
+# define MIN_BOUND_Y    -2.0
+# define MAX_BOUND_X    2.0
+# define MAX_BOUND_Y    2.0
+# define MAX_PIX_X      500
+# define MAX_PIX_Y      500
+# define DEFAULT_ITER   500
+# define MIN_ITER       2
+# define MAX_ITER       999
+# define DEF_COLOR      1
+# define DEF_JULIA_X    -0.79
+# define DEF_JULIA_Y    0.15
+# define MIN_JULIA_X    -2.0
+# define MIN_JULIA_Y    -2.0
+# define MAX_JULIA_X    2.0
+# define MAX_JULIA_Y    2.0
+# define NEG_ERROR      -1
 
 enum
 {

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:36:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 01:51:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:53:05 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ t_fractal	*init_fractal(void)
 	f->mlx = mlx_init();
 	if (!f->mlx)
 		f_free(&f, GRAPHICS);
-	f->win = mlx_new_window(f->mlx, MAX_PIX.x, MAX_PIX.y, "Fract-ol!");
+	f->win = mlx_new_window(f->mlx, MAX_PIX_X, MAX_PIX_Y, "Fract-ol!");
 	if (!f->win)
 		f_free(&f, WINDOW);
 	f->img = malloc(sizeof(t_data));
 	if (!f->img)
 		f_free(&f, MALLOC_IMG);
-	f->img->img = mlx_new_image(f->mlx, MAX_PIX.x, MAX_PIX.y);
+	f->img->img = mlx_new_image(f->mlx, MAX_PIX_X, MAX_PIX_Y);
 	if (!f->img->img)
 		f_free(&f, NEW_IMG);
 	f->img->addr = mlx_get_data_addr(f->img->img, &f->img->bits_per_pixel,
@@ -41,11 +41,11 @@ t_fractal	*init_fractal(void)
 
 void	add_const_to_fract(t_fractal **f)
 {
-	(*f)->min_bound = MIN_BOUND;
-	(*f)->max_bound = MAX_BOUND;
-	(*f)->pix_max = MAX_PIX;
+	(*f)->min_bound = (t_point){MIN_BOUND_X, MIN_BOUND_Y};
+	(*f)->max_bound = (t_point){MAX_BOUND_X, MAX_BOUND_Y};
+	(*f)->pix_max = (t_pixel){MAX_PIX_X, MAX_PIX_Y};
 	(*f)->iter = DEFAULT_ITER;
-	(*f)->c = DEF_JULIA;
+	(*f)->c = (t_point){DEF_JULIA_X, DEF_JULIA_Y};
 	(*f)->color_scheme = map_color_maxiter;
 }
 
@@ -61,15 +61,9 @@ void	color_all_pixels(t_fractal *f)
 	int		color;
 	int		i;
 	t_pixel	curr_pix;
-	int 	(*color_func)(t_fractal *, t_pixel);
+	int		(*color_func)(t_fractal *, t_pixel);
 
-	if (f->type == MANDELBROT)
-        color_func = &mandelbrot_color_pix;
-    else if (f->type == JULIA)
-        color_func = &julia_color_pix;
-    else if (f->type == TRICORN)
-        color_func = &tricorn_color_pix;
-	color_func = color_pixel;
+	color_func = f->color_pix_fun;
 	pixels = (int *)f->img->addr;
 	i = 0;
 	while (i < f->pix_max.x * f->pix_max.y)

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 00:35:39 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:44:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,23 @@ void	parse_input(int ac, char **av, t_fractal *f)
 	}
 }
 
-int	check_mandatory(char *name)
+static int (*check_mandatory(char *name))(t_fractal *, t_pixel)
 {
 	if (ft_strcmp(name, "m") == 0 || ft_strcmp(name, "Mandelbrot") == 0)
-		return (MANDELBROT);
+		return (&mandelbrot_color_pix);
 	else if (ft_strcmp(name, "j") == 0 || ft_strcmp(name, "Julia") == 0)
-		return (JULIA);
+		return (&julia_color_pix);
 	else if (ft_strcmp(name, "t") == 0 || ft_strcmp(name, "Tricorn") == 0)
-		return (TRICORN);
+		return (&tricorn_color_pix);
 	else
 		input_instruction();
-	return (NEG_ERROR);
+	return (NULL);
 }
 
 t_fractal	*handle_input_and_init(int ac, char **av)
 {
 	t_fractal	*f;
-	int			type;
+	int			(*type)(t_fractal *, t_pixel);
 
 	f = NULL;
 	if (ac < 2 || !av || !av[1] || !av[1][0])
@@ -88,7 +88,7 @@ t_fractal	*handle_input_and_init(int ac, char **av)
 	{
 		type = check_mandatory(av[1]);
 		f = init_fractal();
-		f->type = type;
+		f->color_pix_fun = type;
 		if (ac > 2)
 			parse_input(ac, av, f);
 	}

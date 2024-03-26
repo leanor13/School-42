@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:29:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 01:30:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:44:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-int	color_pixel(t_fractal *f, t_pixel pixel)
+/* int	color_pixel(t_fractal *f, t_pixel pixel)
 {
 	int			i;
 	t_point		curr;
@@ -47,4 +47,4 @@ int	color_pixel(t_fractal *f, t_pixel pixel)
 	}
 	color = f->color_scheme(i, f->iter);
 	return (color);
-}
+} */

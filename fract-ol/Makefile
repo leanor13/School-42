@@ -6,7 +6,7 @@ S = main coloring hooks my_mlx julia read_input instructions fractal_init \
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -O3 -Wall -Wextra -Werror -g
+CFLAGS = -O3 -Wall -Wextra -Werror -g3
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))

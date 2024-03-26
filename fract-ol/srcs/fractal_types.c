@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:17:57 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 01:33:26 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 10:27:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 	int			i;
 	t_point		curr;
 	t_point		c_0;
-	int			color;
 	double		c2;
+	t_point		next;
+
 
 	i = 0;
+	(void)next;
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
 	c2 = curr.x * curr.x + curr.y * curr.y;
 	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0) 
@@ -30,13 +32,12 @@ int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 	c_0 = curr;
 	while (i < f->iter)
 	{
-		if (c2 >= 4)
+		if ((curr.y * curr.y + curr.x * curr.x >= 4))
 			break ;
 		curr = mandelbrot_iter(curr, c_0);
 		i ++;
 	}
-	color = f->color_scheme(i, f->iter);
-	return (color);
+	return (f->color_scheme(i, f->iter));
 }
 
 int	julia_color_pix(t_fractal *f, t_pixel pixel)
@@ -45,17 +46,18 @@ int	julia_color_pix(t_fractal *f, t_pixel pixel)
 	t_point		curr;
 	t_point		c_0;
 	int			color;
-	double		c2;
+	t_point		next;
 
 	i = 0;
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
-	c2 = curr.x * curr.x + curr.y * curr.y;
 	c_0 = f->c;
 	while (i < f->iter)
 	{
-		if (c2 >= 4)
+		if (curr.x * curr.x + curr.y * curr.y >= 4)
 			break ;
-		curr = mandelbrot_iter(curr, c_0);
+		next.x = curr.x * curr.x - curr.y * curr.y + c_0.x;
+		next.y = 2 * curr.x * curr.y + c_0.y;
+		curr = next;
 		i ++;
 	}
 	color = f->color_scheme(i, f->iter);
