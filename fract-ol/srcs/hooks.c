@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:04:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:10:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,3 @@ int	key_press(int keycode, t_fractal *f)
 	draw_fractal(f);
 	return (0);
 }
-
