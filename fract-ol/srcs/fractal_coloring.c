@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:17:57 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:12:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:15:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,20 @@ static t_point	mandelbrot_iter(t_point c, t_point c_0)
 	next.y = 2 * c.x * c.y + c_0.y;
 	return (next);
 } */
+
+t_point	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound,
+		t_pixel pix_max)
+{
+	t_point	result;
+	double	x_range;
+	double	y_range;
+
+	x_range = (max_bound.x - min_bound.x) / pix_max.x;
+	y_range = (max_bound.y - min_bound.y) / pix_max.y;
+	result.x = pixel.x * x_range + min_bound.x;
+	result.y = pixel.y * y_range + min_bound.y;
+	return (result);
+}
 
 int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 {

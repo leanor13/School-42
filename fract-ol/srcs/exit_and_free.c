@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:14:39 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:56:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:15:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ char	*return_error_message(int perr_msg)
 		return (err_msg[perr_msg]);
 	else
 		return ("Unknown error");
-}
-
-t_point	my_map_pixel(t_pixel pixel, t_point min_bound, t_point max_bound,
-		t_pixel pix_max)
-{
-	t_point	result;
-	double	x_range;
-	double	y_range;
-
-	x_range = (max_bound.x - min_bound.x) / pix_max.x;
-	y_range = (max_bound.y - min_bound.y) / pix_max.y;
-	result.x = pixel.x * x_range + min_bound.x;
-	result.y = pixel.y * y_range + min_bound.y;
-	return (result);
 }
 
 static void	exit_with_status(int perr_msg)

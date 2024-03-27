@@ -1,7 +1,7 @@
 NAME = fractol
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main color_schemas hooks my_mlx read_input instructions fractal_init \
+S = main color_schemas hook_functions exit_and_free read_input instructions fractal_init \
 	fractal_coloring movement
 
 COMPRESS = ar rcs

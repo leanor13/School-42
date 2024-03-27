@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 19:01:18 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:17:40 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-void	julia_param_set(char **av, t_fractal *f)
+static void	julia_param_set(char **av, t_fractal *f)
 {
 	double	x;
 	double	y;
@@ -31,7 +31,7 @@ void	julia_param_set(char **av, t_fractal *f)
 	}
 }
 
-void	set_iter(char *param, t_fractal *f)
+static void	set_iter(char *param, t_fractal *f)
 {
 	int	iter;
 
@@ -48,7 +48,7 @@ void	set_iter(char *param, t_fractal *f)
 		f->iter = iter;
 }
 
-void	parse_input(int ac, char **av, t_fractal *f)
+static void	parse_input(int ac, char **av, t_fractal *f)
 {
 	int		i;
 
