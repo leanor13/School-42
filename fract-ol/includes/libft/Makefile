@@ -6,7 +6,7 @@
 #    By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/19 19:28:24 by yioffe            #+#    #+#              #
-#    Updated: 2024/03/27 10:50:48 by yioffe           ###   ########.fr        #
+#    Updated: 2024/03/27 19:18:38 by yioffe           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ NC = \033[0m
 $(NAME): $(OBJS)
 	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(LIBC) $(NAME) $(OBJS)
-	@echo "✅ $(GREEN)$(NAME) created"
+	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 all: $(NAME)
 	
