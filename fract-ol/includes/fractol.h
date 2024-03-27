@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 12:01:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 11:04:46 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct fractal
 # define MIN_BOUND -2.0
 # define MAX_BOUND 2.0
 # define MAX_PIX 500
-# define DEFAULT_ITER 500
+# define DEFAULT_ITER 100
 # define MIN_ITER 2
 # define MAX_ITER 999
 # define DEF_COLOR 1

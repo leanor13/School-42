@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 22:14:41 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:15:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 11:19:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int clamp(int value, int min, int max) 
 {
-    if (value < min)
-        return min;
+	if (value < min)
+		return min;
 	else if (value > max)
-        return max;
+		return max;
 	else 
-        return value;
+		return value;
 }
 
 int	map_color_maxiter(int iter, int max_iter)
@@ -33,11 +33,11 @@ int	map_color_maxiter(int iter, int max_iter)
 	coeff = 1;
 	if (iter == max_iter) 
 	{
-        r = 0;
-        g = 0;
-        b = 0;
-        return (r << 16) | (g << 8) | b;
-    }
+		r = 0;
+		g = 0;
+		b = 0;
+		return (r << 16) | (g << 8) | b;
+	}
 	else if (iter == 0)
 		coeff = 500;
 	log_iter = log(iter + 1) / log(max_iter * coeff);
@@ -58,11 +58,11 @@ int	map_color_striped(int iter, int max_iter)
 	coeff = 1;
 	if (iter == max_iter) 
 	{
-        r = 0;
-        g = 0;
-        b = 0;
-        return (r << 16) | (g << 8) | b;
-    }
+		r = 0;
+		g = 0;
+		b = 0;
+		return (r << 16) | (g << 8) | b;
+	}
 	if (iter % 2 == 0)
 		log_iter = log(iter + 1) / log(max_iter * coeff);
 	else
@@ -81,17 +81,17 @@ int	map_color_b_w(int iter, int max_iter)
 
 	if (iter == max_iter) 
 	{
-        r = 0;
-        g = 0;
-        b = 0;
-        return (r << 16) | (g << 8) | b;
-    }
+		r = 0;
+		g = 0;
+		b = 0;
+		return (r << 16) | (g << 8) | b;
+	}
 	else
 	{
 		r = 255;
-        g = 255;
-        b = 255;
-        return (r << 16) | (g << 8) | b;
+		g = 255;
+		b = 255;
+		return (r << 16) | (g << 8) | b;
 	}
 	return ((r << 16) | (g << 8) | b);
 }
