@@ -9,10 +9,7 @@ CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
 
 0. Push MLX for linux library
  1. Normi
- 3. Julia - change constant
  5. Drag by mouse (optional)
- 6. Handle errors not in global variable
- 9. check movement: outside of the screen. 
  12.if we zoom really deep - we loose square shape
  13.check make on bash
  

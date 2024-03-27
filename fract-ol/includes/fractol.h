@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:03:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:55:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,11 @@ void		f_free(t_fractal **f, int perr_msg);
 void		activate_hooks(t_fractal *f);
 
 /* hooks */
-int			close_win(int keycode, t_fractal *f);
-int			close_win2(t_fractal *f);
+int			close_win(t_fractal *f);
 int			my_zoom(int button, int x, int y, t_fractal *f);
 void		my_move(int keycode, t_fractal *f);
 int			key_press(int keycode, t_fractal *f);
+int			key_hold(int keycode, t_fractal *f);
 
 /* coloring schemas */
 int			map_color_maxiter(int iter, int max_iter);
