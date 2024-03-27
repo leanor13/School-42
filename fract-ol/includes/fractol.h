@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:55:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:59:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@
 
 # else
 #  include "minilibx-linux/mlx.h"
+#  include <X11/keysym.h>
 #  define IS_APPLE 0
-#  define ESC 65307
+#  define ESC XK_Escape
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115

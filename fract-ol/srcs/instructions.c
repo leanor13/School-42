@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:52:11 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 13:05:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 17:08:37 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	in_window_usage(void)
 	ft_putstr_fd("4. Change Julia constant on the flow: press r ",
 		STDERR_FILENO);
 	ft_putstr_fd("for real part change, i for imaginary part change\n",
+		STDERR_FILENO);
+	ft_putstr_fd("5. Change iterations on the flow: press q and w\n",
+		STDERR_FILENO);
+	ft_putstr_fd("6. To reset to default: press space bar\n",
 		STDERR_FILENO);
 	ft_putstr_fd("All additional buttons will be ignored\n", STDERR_FILENO);
 }
