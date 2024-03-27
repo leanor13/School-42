@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:04:46 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 11:40:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # ifdef __APPLE__
 #  include "minilibx-mac/mlx.h"
+#  define IS_APPLE 1
 #  define ESC 53
 #  define KEY_W 13
 #  define KEY_A 0
@@ -41,6 +42,7 @@
 
 # else
 #  include "minilibx-linux/mlx.h"
+#  define IS_APPLE 0
 #  define ESC 65307
 #  define KEY_W 119
 #  define KEY_A 97
@@ -146,7 +148,6 @@ int			julia_color_pix(t_fractal *f, t_pixel pixel);
 int			tricorn_color_pix(t_fractal *f, t_pixel pixel);
 
 /* basic img functions */
-void		my_mlx_pixel_put(t_data *data, t_pixel pixel, int color);
 t_point		my_map_pixel(t_pixel pixel, t_point min_bound,
 				t_point max_bound, t_pixel pix_max);
 
@@ -171,5 +172,10 @@ int			my_zoom(int button, int x, int y, t_fractal *f);
 void		my_move(int keycode, t_fractal *f);
 void		my_color(int keycode, t_fractal *f);
 int			key_press(int keycode, t_fractal *f);
+
+# ifdef __APPLE__
+
+void		mlx_destroy_display(void *mlx_ptr);
+# endif
 
 #endif
