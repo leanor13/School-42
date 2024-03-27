@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:17:57 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:13:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 11:23:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 {
-	int			i;
-	t_point		curr;
-	t_point		c_0;
-	double		c2;
-	t_point		next;
+	int		i;
+	t_point	curr;
+	t_point	c_0;
+	double	c2;
+	t_point	next;
 
 	i = 0;
 	(void)next;
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
 	c2 = curr.x * curr.x + curr.y * curr.y;
-	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0) 
+	if (256.0 * c2 * c2 - 96.0 * c2 + 32.0 * curr.x - 3.0 < 0.0)
 		return (f->color_scheme(f->iter, f->iter));
-	if (16.0 * (c2 + 2.0 * curr.x + 1.0) - 1.0 < 0.0) 
+	if (16.0 * (c2 + 2.0 * curr.x + 1.0) - 1.0 < 0.0)
 		return (f->color_scheme(f->iter, f->iter));
 	c_0 = curr;
 	while (i < f->iter)
@@ -34,18 +34,18 @@ int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 		if ((curr.y * curr.y + curr.x * curr.x >= 4))
 			break ;
 		curr = mandelbrot_iter(curr, c_0);
-		i ++;
+		i++;
 	}
 	return (f->color_scheme(i, f->iter));
 }
 
 int	julia_color_pix(t_fractal *f, t_pixel pixel)
 {
-	int			i;
-	t_point		curr;
-	t_point		c_0;
-	int			color;
-	t_point		next;
+	int		i;
+	t_point	curr;
+	t_point	c_0;
+	int		color;
+	t_point	next;
 
 	i = 0;
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
@@ -57,7 +57,7 @@ int	julia_color_pix(t_fractal *f, t_pixel pixel)
 		next.x = curr.x * curr.x - curr.y * curr.y + c_0.x;
 		next.y = 2 * curr.x * curr.y + c_0.y;
 		curr = next;
-		i ++;
+		i++;
 	}
 	color = f->color_scheme(i, f->iter);
 	return (color);
@@ -65,11 +65,11 @@ int	julia_color_pix(t_fractal *f, t_pixel pixel)
 
 int	tricorn_color_pix(t_fractal *f, t_pixel pixel)
 {
-	int			i;
-	t_point		curr;
-	t_point		c_0;
-	int			color;
-	t_point		next;
+	int		i;
+	t_point	curr;
+	t_point	c_0;
+	int		color;
+	t_point	next;
 
 	i = 0;
 	curr = my_map_pixel(pixel, f->min_bound, f->max_bound, f->pix_max);
@@ -81,7 +81,7 @@ int	tricorn_color_pix(t_fractal *f, t_pixel pixel)
 		next.x = curr.x * curr.x - curr.y * curr.y + c_0.x;
 		next.y = -2 * curr.x * curr.y + c_0.y;
 		curr = next;
-		i ++;
+		i++;
 	}
 	color = f->color_scheme(i, f->iter);
 	return (color);
