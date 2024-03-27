@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 10:10:28 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 11:59:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 19:01:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	julia_param_set(char **av, t_fractal *f)
 	}
 }
 
-void set_iter(char *param, t_fractal *f)
+void	set_iter(char *param, t_fractal *f)
 {
 	int	iter;
 
@@ -63,7 +63,7 @@ void	parse_input(int ac, char **av, t_fractal *f)
 	}
 }
 
-static int (*check_mandatory(char *name))(t_fractal *, t_pixel)
+static int	(*check_mandatory(char	*name))(t_fractal *f, t_pixel pix)
 {
 	if (ft_strcmp(name, "m") == 0 || ft_strcmp(name, "Mandelbrot") == 0)
 		return (&mandelbrot_color_pix);

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:17:57 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/26 10:27:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 19:05:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 	t_point		c_0;
 	double		c2;
 	t_point		next;
-
 
 	i = 0;
 	(void)next;
@@ -91,7 +90,7 @@ int	tricorn_color_pix(t_fractal *f, t_pixel pixel)
 t_point	mandelbrot_iter(t_point c, t_point c_0)
 {
 	t_point	next;
-	
+
 	next.x = c.x * c.x - c.y * c.y + c_0.x;
 	next.y = 2 * c.x * c.y + c_0.y;
 	return (next);

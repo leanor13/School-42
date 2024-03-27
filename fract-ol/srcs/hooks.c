@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/25 11:49:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/26 18:57:35 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,32 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 	return (0);
 }
 
+void	change_julia(int keycode, t_fractal *f)
+{
+	if (keycode == KEY_I)
+	{
+		if (f->c.y < MAX_JULIA)
+			f->c.y += 0.01;
+		else
+			f->c.y = MIN_JULIA;
+	}
+	if (keycode == KEY_R)
+	{
+		if (f->c.x < MAX_JULIA)
+			f->c.x += 0.01;
+		else
+			f->c.x = MIN_JULIA;
+	}
+}
+
 int	key_press(int keycode, t_fractal *f)
 {
 	if (keycode == UP || keycode == DOWN || keycode == LEFT || keycode == RIGHT)
 		my_move(keycode, f);
 	if (keycode == KEY_1 || keycode == KEY_2 || keycode == KEY_3)
 		my_color(keycode, f);
+	if ((keycode == KEY_I || keycode == KEY_R) && f->color_pix_fun == julia_color_pix)
+		change_julia(keycode, f);
 	draw_fractal(f);
 	return (0);
 }
