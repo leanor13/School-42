@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:26:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:04:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	close_win2(t_fractal *f)
 	return (0);
 }
 
-void	change_julia(int keycode, t_fractal *f)
+static void	change_julia(int keycode, t_fractal *f)
 {
 	if (keycode == KEY_I)
 	{
@@ -47,6 +47,16 @@ void	change_julia(int keycode, t_fractal *f)
 	}
 }
 
+static void	my_color(int keycode, t_fractal *f)
+{
+	if (keycode == KEY_1)
+		f->color_scheme = map_color_maxiter;
+	if (keycode == KEY_2)
+		f->color_scheme = map_color_striped;
+	if (keycode == KEY_3)
+		f->color_scheme = map_color_b_w;
+}
+
 int	key_press(int keycode, t_fractal *f)
 {
 	if (keycode == UP || keycode == DOWN || keycode == LEFT || keycode == RIGHT)
@@ -60,12 +70,3 @@ int	key_press(int keycode, t_fractal *f)
 	return (0);
 }
 
-void	my_color(int keycode, t_fractal *f)
-{
-	if (keycode == KEY_1)
-		f->color_scheme = map_color_maxiter;
-	if (keycode == KEY_2)
-		f->color_scheme = map_color_striped;
-	if (keycode == KEY_3)
-		f->color_scheme = map_color_b_w;
-}

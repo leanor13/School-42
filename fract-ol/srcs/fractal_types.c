@@ -6,11 +6,20 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 00:17:57 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:23:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:00:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
+
+static t_point	mandelbrot_iter(t_point c, t_point c_0)
+{
+	t_point	next;
+
+	next.x = c.x * c.x - c.y * c.y + c_0.x;
+	next.y = 2 * c.x * c.y + c_0.y;
+	return (next);
+}
 
 int	mandelbrot_color_pix(t_fractal *f, t_pixel pixel)
 {
@@ -87,20 +96,3 @@ int	tricorn_color_pix(t_fractal *f, t_pixel pixel)
 	return (color);
 }
 
-t_point	mandelbrot_iter(t_point c, t_point c_0)
-{
-	t_point	next;
-
-	next.x = c.x * c.x - c.y * c.y + c_0.x;
-	next.y = 2 * c.x * c.y + c_0.y;
-	return (next);
-}
-
-t_point	tricorn_iter(t_point c, t_point c_0)
-{
-	t_point	next;
-
-	next.x = c.x * c.x - c.y * c.y + c_0.x;
-	next.y = -2 * c.x * c.y + c_0.y;
-	return (next);
-}

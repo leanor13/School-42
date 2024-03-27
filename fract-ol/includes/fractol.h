@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 11:40:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 12:03:32 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FRACTOL_H
 
 # include "libft/libft.h"
-# include "error_handling.h"
 # include <math.h>
 # include <stdio.h>
 # include <stdbool.h>
@@ -72,6 +71,19 @@ enum
 	ON_MOUSEMOVE = 6,
 	ON_EXPOSE = 12,
 	ON_DESTROY = 17
+};
+
+# define ERROR_MSG_NUM 6
+
+enum e_error_codes
+{
+	NO_ERROR = -1,
+	MALLOC_FRCT = 0,
+	GRAPHICS = 1,
+	WINDOW = 2,
+	MALLOC_IMG = 3,
+	NEW_IMG = 4,
+	IMG_ADDR = 5
 };
 
 /* movement constants*/
@@ -140,13 +152,6 @@ t_fractal	*handle_input_and_init(int ac, char **av);
 void		input_instruction(void);
 void		in_window_usage(void);
 
-/* Fractal functions */
-t_point		mandelbrot_iter(t_point c, t_point c_0);
-t_point		tricorn_iter(t_point c, t_point c_0);
-int			mandelbrot_color_pix(t_fractal *f, t_pixel pixel);
-int			julia_color_pix(t_fractal *f, t_pixel pixel);
-int			tricorn_color_pix(t_fractal *f, t_pixel pixel);
-
 /* basic img functions */
 t_point		my_map_pixel(t_pixel pixel, t_point min_bound,
 				t_point max_bound, t_pixel pix_max);
@@ -155,23 +160,26 @@ t_point		my_map_pixel(t_pixel pixel, t_point min_bound,
 t_fractal	*init_fractal(void);
 void		add_const_to_fract(t_fractal **f);
 void		draw_fractal(t_fractal *f);
-int			color_pixel(t_fractal *f, t_pixel p);
 void		color_all_pixels(t_fractal *f);
 void		f_free(t_fractal **f, int perr_msg);
 void		activate_hooks(t_fractal *f);
-
-/* coloring schemas */
-int			map_color_maxiter(int iter, int max_iter);
-int			map_color_b_w(int iter, int max_iter);
-int			map_color_striped(int iter, int max_iter);
 
 /* hooks */
 int			close_win(int keycode, t_fractal *f);
 int			close_win2(t_fractal *f);
 int			my_zoom(int button, int x, int y, t_fractal *f);
 void		my_move(int keycode, t_fractal *f);
-void		my_color(int keycode, t_fractal *f);
 int			key_press(int keycode, t_fractal *f);
+
+/* coloring schemas */
+int			map_color_maxiter(int iter, int max_iter);
+int			map_color_b_w(int iter, int max_iter);
+int			map_color_striped(int iter, int max_iter);
+
+/* Fractal coloring functions */
+int			mandelbrot_color_pix(t_fractal *f, t_pixel pixel);
+int			julia_color_pix(t_fractal *f, t_pixel pixel);
+int			tricorn_color_pix(t_fractal *f, t_pixel pixel);
 
 # ifdef __APPLE__
 
