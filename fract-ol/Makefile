@@ -48,7 +48,7 @@ $(OBJS_DIR)/%.o: srcs/%.c
 $(NAME): $(OBJS) $(LIBS) $(MLX)
 	@echo "$(CYAN)Creating $(NAME) ..."
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBS) $(LDflags)
-	@echo "✅ $(GREEN)$(NAME) created"
+	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 $(OBJS): includes/fractol.h
 
@@ -58,7 +58,7 @@ $(LIBFT):
 $(MLX):
 	@echo "$(CYAN)Creating $(MLX) ..."
 	@$(MAKE) -C $(MLX_DIR) --no-print-directory > /dev/null 2>&1
-	@echo "✅ $(GREEN)$(MLX) compiled and ready!"
+	@echo "✅ $(GREEN)$(MLX) compiled and ready! $(NC)"
 
 clean:
 	@$(RM) -r $(OBJS_DIR)
@@ -69,7 +69,7 @@ fclean: clean
 	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean --no-print-directory
 	@$(MAKE) -C $(MLX_DIR) clean --no-print-directory > /dev/null
-	@echo "✅ $(YELLOW) fclean done!"
+	@echo "✅ $(YELLOW) fclean done! $(NC)"
 
 run: all
 	./$(NAME) m
