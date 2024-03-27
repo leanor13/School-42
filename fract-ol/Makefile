@@ -72,8 +72,13 @@ fclean: clean
 	@echo "✅ $(YELLOW) fclean done!"
 
 run: all
-	./$(NAME) 
+	./$(NAME) m
+
+norminette:
+	norminette $(LIBFT_DIR)
+	norminette $(SRCS)
+	norminette includes/*.*
 
 re: fclean all
 
-.PHONY: all fclean clean re
+.PHONY: all fclean clean re norminette
