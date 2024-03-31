@@ -10,6 +10,5 @@ CFLAGS = -O1 -Wall -Wextra -Werror -g -pg
 0. Push MLX for linux library
  1. Normi
  5. Drag by mouse (optional)
- 12.if we zoom really deep - we loose square shape
  13.check make on bash
  

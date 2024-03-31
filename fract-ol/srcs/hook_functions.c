@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:12:04 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:55:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 17:07:09 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ int	key_press(int keycode, t_fractal *f)
 		my_color(keycode, f);
 	if (keycode == ESC)
 		close_win(f);
+	if (keycode == XK_q && f->iter < 990)
+		(f->iter += 10);
+	if (keycode == XK_w && f->iter > 11)
+		(f->iter -= 10);
+	if (keycode == XK_space)
+		add_const_to_fract(&f);
 	draw_fractal(f);
 	return (0);
 }

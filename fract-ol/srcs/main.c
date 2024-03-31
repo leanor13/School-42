@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 12:09:05 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 13:12:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:57:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	activate_hooks(t_fractal *f)
 	mlx_mouse_hook(f->win, &my_zoom, f);
 	mlx_key_hook(f->win, &key_press, f);
 	mlx_hook(f->win, 17, 0, &close_win, f);
-	mlx_hook(f->win, 2, 1L << 1, &key_hold, f);
+	mlx_hook(f->win, 2, 1L << 0, &key_hold, f);
 }
 
 int	main(int ac, char **av)

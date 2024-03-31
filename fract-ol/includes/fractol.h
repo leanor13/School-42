@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 11:27:07 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 12:55:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:33:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@
 
 # else
 #  include "minilibx-linux/mlx.h"
+#  include <X11/keysym.h>
 #  define IS_APPLE 0
-#  define ESC 65307
+#  define ESC XK_Escape
 #  define KEY_W 119
 #  define KEY_A 97
 #  define KEY_S 115
@@ -89,6 +90,8 @@ enum e_error_codes
 /* movement constants*/
 # define ZOOM_IN 1.1
 # define ZOOM_OUT 0.9
+# define DBL_MIN 2.2250738585072014e-308
+# define DBL_MAX 1.7976931348623157e+308
 
 typedef struct s_data
 {
