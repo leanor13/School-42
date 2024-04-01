@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 11:25:35 by yioffe            #+#    #+#             */
-/*   Updated: 2024/03/27 18:27:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/03/29 19:23:18 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	my_zoom(int button, int x, int y, t_fractal *f)
 			- f->min_bound.y) / 2.0;
 	mouse = my_map_pixel((t_pixel){x, y}, f->min_bound, f->max_bound,
 			f->pix_max);
-	scale_factor = pow(ZOOM_IN, log10(range_avg + 1) + 1);
+	scale_factor = 1.1;
 	coeff = zoom_coeff(scale_factor, button);
 	if (coeff != 0.0)
 	{
