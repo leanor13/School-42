@@ -1,7 +1,7 @@
 NAME = philo
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main
+S = main atoi_custom
 
 COMPRESS = ar rcs
 RM = rm -f
