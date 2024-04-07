@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/04 19:08:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/05 16:06:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ void *myThreadFun(void *arg)
 int	main(int ac, char **av)
 {
 	pthread_t thread_id; 
+
+    (void)ac;
+    (void)av;
     printf("Before Thread\n"); 
     pthread_create(&thread_id, NULL, myThreadFun, NULL); 
     pthread_join(thread_id, NULL); 
     printf("After Thread\n"); 
-    exit(0); 
+    exit(0);
 }
