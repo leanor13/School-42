@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/07 15:58:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/04/08 10:59:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <stdlib.h> 
 #include <unistd.h>
 #include <limits.h>
+#include <stdbool.h>
 
 # define NEG_ERROR -1
 
@@ -28,6 +29,7 @@ typedef struct philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_num;
+	bool			alive;
 	struct philo	*next;
 }	t_philo;
 
