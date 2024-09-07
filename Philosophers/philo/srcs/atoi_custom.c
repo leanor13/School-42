@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/04/07 15:58:40 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/07 12:57:39 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	atoi_positive(char *str)
 	number = 0;
 	while (is_digit(*str))
 	{
+		 if (number > (INT_MAX - (*str - '0')) / 10)
+            return (NEG_ERROR);
 		number = 10 * number + (*str - '0');
 		str ++;
 	}
