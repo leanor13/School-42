@@ -71,7 +71,7 @@ int main(void)
 {
     int num = 42;
     char *str = "ola mundio";
-    unsigned int hex = 0xAABBCCDD;
+    int hex = 42;
 
     printf("printf: \n");
     printf("num: %d\nstr: %s\nhex: %x\n", num, str, hex);
