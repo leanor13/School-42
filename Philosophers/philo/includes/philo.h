@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/07 16:09:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/08 11:15:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@
 
 # define NEG_ERROR -1
 
-typedef struct philo
+typedef struct s_config
+{
+	int number_of_philosophers;
+    int	time_to_die;
+    int	time_to_eat;
+    int	time_to_sleep;
+    int	number_of_times_each_philosopher_must_eat;
+	int	dead_philo;
+}	t_config;
+
+typedef struct s_philo
 {
     int				id;
     int				eat_num;
@@ -33,20 +43,14 @@ typedef struct philo
     int				eat_count;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
-    struct philo	*next;
-	struct philo	*previous;
+    struct s_philo	*next;
+	struct s_philo	*previous;
+	struct s_config *config;
 }	t_philo;
 
-typedef struct s_config
-{
-	int number_of_philosophers;
-    int	time_to_die;
-    int	time_to_eat;
-    int	time_to_sleep;
-    int	number_of_times_each_philosopher_must_eat; // Этот параметр может быть опциональным
-}	t_config;
-
-
 int	atoi_positive(char *str);
+void	*philosopher_routine(void *arg);
+void pick_up_forks(t_philo *philo);
+void put_down_forks(t_philo *philo);
 
 # endif
