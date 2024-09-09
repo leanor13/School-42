@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 18:43:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:54:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ void *monitor_routine(void *params) {
             pthread_mutex_unlock(&philo->mutex_eating);
             
             philo = philo->next;
-            if (philo == config->first_philo)
+            if (philo == config->first_philo || config->number_of_philosophers == 1)
                 break;
         }
         usleep(1000); 
@@ -259,13 +259,22 @@ void philo_take_forks_and_eat(t_philo *philo)
 {
 	if (philo->config->stop || !philo->alive)
             return;
-    pthread_mutex_lock(philo->left_fork);
-    pthread_mutex_lock(philo->right_fork);
+	if (philo->left_fork == philo->right_fork) 
+	{
+        pthread_mutex_lock(philo->left_fork);
+		p_sleep(philo->config->time_to_die, philo->config);
+        pthread_mutex_unlock(philo->left_fork);
+    }
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
 
-    philo_eat(philo);
+		philo_eat(philo);
 
-    pthread_mutex_unlock(philo->right_fork);
-    pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
 }
 
 
