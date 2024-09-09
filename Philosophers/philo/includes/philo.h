@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/08 11:15:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 13:27:24 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ typedef struct s_config
     int	time_to_eat;
     int	time_to_sleep;
     int	number_of_times_each_philosopher_must_eat;
-	int	dead_philo;
+	bool	stop;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	mutex_write;
 }	t_config;
 
 typedef struct s_philo
@@ -52,5 +54,7 @@ int	atoi_positive(char *str);
 void	*philosopher_routine(void *arg);
 void pick_up_forks(t_philo *philo);
 void put_down_forks(t_philo *philo);
+long	current_time_in_ms(void);
+
 
 # endif

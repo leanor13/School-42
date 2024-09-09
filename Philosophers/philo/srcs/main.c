@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/08 11:15:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 13:27:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,11 @@ t_philo	*initiate_philos(t_config *config)
 		gettimeofday(&temp->last_eat_time, NULL);
 		temp->eat_count = 0;
 		pthread_mutex_init(&temp->mutex_eating, NULL);
-		//if it's the first philosopher, there's no previous one to take the fork from. 
-		if (i == 0)
-			temp->left_fork = NULL;                                                               
-		// Otherwise, the left fork is the previous philosopher's eating mutex. 
-		else 
-			temp->left_fork = &prev->mutex_eating; 
-		temp->right_fork = &temp->mutex_eating;
+		
+		// Assign forks
+		temp->left_fork = &config->forks[i]; // left philo fork
+		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers]; // right philo fork - fork of the next philosopher
+		
 		temp->next = NULL;
 		temp->previous = prev;
 		if (prev)
@@ -78,11 +76,8 @@ t_philo	*initiate_philos(t_config *config)
 		else
 			head = temp;
 		prev = temp;
-		i++; // Increment the loop counter
+		i++;
 	}
-	// Correct the left fork setup for the first philosopher at the end of the loop
-	if (config->number_of_philosophers > 1)
-		head->left_fork = &prev->mutex_eating;
 	return (head);
 }
 
@@ -109,10 +104,18 @@ t_config	*init_config(int argc, char **argv)
 	config->time_to_die = arguments[1];
 	config->time_to_eat = arguments[2];
 	config->time_to_sleep = arguments[3];
+	config->stop = false;
 	if (argc == 6)
 		config->number_of_times_each_philosopher_must_eat = arguments[4];
 	else
 		config->number_of_times_each_philosopher_must_eat = -1;
+	pthread_mutex_init(&config->mutex_write, NULL);
+	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philosophers);
+	if (!config->forks)
+		return (NULL);
+	for (i = 0; i < config->number_of_philosophers; i++) {
+		pthread_mutex_init(&config->forks[i], NULL);
+	}
 	return (config);
 }
 
@@ -125,37 +128,11 @@ long	current_time_in_ms(void)
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
 
-void eat(t_philo *philo, t_config *config) 
-{
-    printf("%lu %d is trying to eat\n", current_time_in_ms(), philo->id);
-	pick_up_forks(philo);
-    // pthread_mutex_lock(philo->left_fork);
-    // printf("%lu %d has picked up left fork\n", current_time_in_ms(), philo->id);
-    // pthread_mutex_lock(philo->right_fork);
-    // printf("%lu %d has picked up right fork\n", current_time_in_ms(), philo->id);
-
-    printf("%lu %d is eating\n", current_time_in_ms(), philo->id);
-    gettimeofday(&philo->last_eat_time, NULL); // Update the last eating time
-    usleep(config->time_to_eat * 1000);        // Simulate eating by sleeping
-
-	put_down_forks(philo);
-    // pthread_mutex_unlock(philo->right_fork);
-    // printf("%lu %d has put down right fork\n", current_time_in_ms(), philo->id);
-    // pthread_mutex_unlock(philo->left_fork);
-    // printf("%lu %d has put down left fork\n", current_time_in_ms(), philo->id);
-
-    // Increment the eat count if there's a limit on the number of times they must eat
-    if (config->number_of_times_each_philosopher_must_eat > 0) {
-        philo->eat_count++;
-    }
-}
-
-
 void	think(t_philo *philo)
 {
 	printf("%lu %d is thinking\n", current_time_in_ms(), philo->id);
 	// No specific duration for thinking,
-	//usleep(1000); // This line is optional, just simulates brief thinking time
+	usleep(1000); // This line is optional, just simulates brief thinking time
 }
 
 void	sleep_philo(t_philo *philo, t_config *config)
@@ -198,45 +175,33 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 	return (0);
 }
 
-void pick_up_forks(t_philo *philo) {
-    if (philo->id % 2 == 1) {  // Odd philosophers
-        pthread_mutex_lock(philo->left_fork);  // Always pick up the left fork first if available
-        pthread_mutex_lock(philo->right_fork);
-    } else {  // Even philosophers
-        pthread_mutex_lock(philo->right_fork);  // Always pick up the right fork first if available
-        pthread_mutex_lock(philo->left_fork);
-    }
-    printf("%lu %d has picked up both forks and is now eating\n", current_time_in_ms(), philo->id);
-}
 
-void put_down_forks(t_philo *philo) {
-    pthread_mutex_unlock(philo->left_fork);
-    pthread_mutex_unlock(philo->right_fork);
-}
+void *philosopher_routine(void *params) {
+    int			i;
+	t_philo		*philo;
+	t_config	*config;
 
-void *philosopher_routine(void *arg) {
-    t_philo *philo = (t_philo *)arg;
-    struct timeval now;
-    long time_since_last_meal;
-
-    while (philo->alive) {
-        think(philo);
-        //pick_up_forks(philo);
-        eat(philo, philo->config);
-        //put_down_forks(philo);
-        sleep_philo(philo, philo->config);
-
-        gettimeofday(&now, NULL);
-        time_since_last_meal = (now.tv_sec - philo->last_eat_time.tv_sec) * 1000
-                             + (now.tv_usec - philo->last_eat_time.tv_usec) / 1000;
-
-        if (time_since_last_meal > philo->config->time_to_die) {
-            printf("%lu %d has died\n", current_time_in_ms(), philo->id);
-            philo->alive = false;
-            break;
-        }
-    }
-    return NULL;
+	i = 0;
+	philo = (t_philo *)params;
+	config = philo->config;
+	if (!config)
+	{
+		//free_config(config);
+		return (EXIT_FAILURE);
+	}
+	if (philo->id % 2 && config->number_of_philosophers > 1)
+		new_sleep(config->time_to_eat / 50, config);
+	while (!config->stop)
+	// add here check for maximum eat time
+	{
+		if (config->number_of_times_each_philosopher_must_eat != -1 && philo->eat_count >= config->number_of_times_each_philosopher_must_eat)
+    		break; // no need to continue if philo ate enough times
+		philo_eat(philo);
+		philo_print("is sleeping", philo, UNLOCK);
+		new_sleep(config->time_to_sleep, env);
+		philo_print("is thinking", philo, UNLOCK);
+	}
+	return (NULL);
 }
 
 int	main(int argc, char **argv)
