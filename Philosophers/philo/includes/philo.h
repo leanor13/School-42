@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 13:27:24 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 17:56:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # define NEG_ERROR -1
 
+struct s_philo;
+
 typedef struct s_config
 {
 	int number_of_philosophers;
@@ -33,6 +35,7 @@ typedef struct s_config
 	bool	stop;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
+	struct s_philo	*first_philo;
 }	t_config;
 
 typedef struct s_philo

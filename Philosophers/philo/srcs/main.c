@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 14:14:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:43:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,44 @@ void	free_philos(t_philo *philos)
 		current = next;
 	}
 }
+
+void	ft_putnbr_fd(unsigned long long n, int fd)
+{
+	char	c;
+
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	c = (n % 10) + '0';
+	write(fd, &c, 1);
+}
+
+void philo_print(const char *message, t_philo *philo)
+{
+    t_config *config = philo->config;
+    struct timeval current_time;
+	unsigned long long timestamp_in_ms;
+
+    gettimeofday(&current_time, NULL);
+    timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+
+    pthread_mutex_lock(&config->mutex_write);
+
+    ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
+    write(STDOUT_FILENO, " Philosopher ", 13);
+
+    ft_putnbr_fd(philo->id, STDOUT_FILENO);
+    write(STDOUT_FILENO, " ", 1);
+
+	while(*message)
+	{
+    	write(STDOUT_FILENO, message, 1);
+		message ++;
+	}
+    write(STDOUT_FILENO, "\n", 1);
+
+    pthread_mutex_unlock(&config->mutex_write);
+}
+
 
 t_philo	*initiate_philos(t_config *config)
 {
@@ -78,6 +116,12 @@ t_philo	*initiate_philos(t_config *config)
 		prev = temp;
 		i++;
 	}
+	if (config->number_of_philosophers > 1)
+	{
+		prev->next = head;
+		head->previous = prev;
+	}
+	config->first_philo = head;
 	return (head);
 }
 
@@ -108,6 +152,7 @@ t_config	*init_config(int argc, char **argv)
 	config->time_to_eat = arguments[2];
 	config->time_to_sleep = arguments[3];
 	config->stop = false;
+	config->first_philo = NULL;
 	if (argc == 6)
 		config->number_of_times_each_philosopher_must_eat = arguments[4];
 	else
@@ -144,46 +189,130 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 	}
 	while (i < config->number_of_philosophers)
 	{
-		if (pthread_create(&(*threads)[i], NULL, philosopher_routine,
-				&philos[i]) != 0)
-		{
-			fprintf(stderr, "Failed to create thread for philosopher %d.\n", i
-				+ 1);
-			return (i);
-			// Return the count of successfully created threads for cleanup
-		}
-		i++;
+		pthread_create(&(*threads)[i], NULL, philosopher_routine, &philos[i]);
+		i ++;
 	}
 	return (0);
 }
 
+void p_sleep(int duration_ms, t_config *config) {
+    int elapsed = 0;
+    while (elapsed < duration_ms && !config->stop) {
+        usleep(1000);
+        elapsed += 1;
+    }
+}
+
+long time_diff_in_ms(struct timeval start, struct timeval end)
+{
+    return ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000);
+}
+
+void *monitor_routine(void *params) {
+    t_config *config = (t_config *)params;
+    t_philo *philo;
+    struct timeval current_time;
+
+    while (!config->stop) {
+        philo = config->first_philo;
+        while (philo) {
+            pthread_mutex_lock(&philo->mutex_eating);
+            gettimeofday(&current_time, NULL);
+
+			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
+            if (time_since_last_eat > config->time_to_die) {
+                philo->alive = false;
+                philo_print("died", philo);
+                config->stop = true;
+            }
+            pthread_mutex_unlock(&philo->mutex_eating);
+            
+            philo = philo->next;
+            if (philo == config->first_philo)
+                break;
+        }
+        usleep(1000); 
+    }
+    return (NULL);
+}
+
+void philo_eat(t_philo *philo)
+{
+    t_config *config = philo->config;
+
+	if (philo->config->stop || !philo->alive)
+			return;
+    pthread_mutex_lock(&philo->mutex_eating);
+
+    gettimeofday(&philo->last_eat_time, NULL);
+    philo->eat_count++;
+
+    philo_print("is eating", philo);
+
+    pthread_mutex_unlock(&philo->mutex_eating);
+
+    p_sleep(config->time_to_eat, config);
+}
+
+
+void philo_take_forks_and_eat(t_philo *philo)
+{
+	if (philo->config->stop || !philo->alive)
+            return;
+    pthread_mutex_lock(philo->left_fork);
+    pthread_mutex_lock(philo->right_fork);
+
+    philo_eat(philo);
+
+    pthread_mutex_unlock(philo->right_fork);
+    pthread_mutex_unlock(philo->left_fork);
+}
+
 
 void *philosopher_routine(void *params) {
-    int			i;
 	t_philo		*philo;
 	t_config	*config;
 
-	i = 0;
 	philo = (t_philo *)params;
 	config = philo->config;
 	if (!config)
 		return (NULL);
 	if (philo->id % 2 && config->number_of_philosophers > 1)
-		new_sleep(config->time_to_eat / 50, config);
-	while (!config->stop)
+		p_sleep(config->time_to_eat / 50, config);
+	while (!config->stop && philo->alive)
 	// add here check for maximum eat time
 	{
 		if (config->number_of_times_each_philosopher_must_eat != -1 && philo->eat_count >= config->number_of_times_each_philosopher_must_eat)
     		break; // no need to continue if philo ate enough times
-		if (!philo->alive)
+		if (config->stop || !philo->alive)
 			break;
-		philo_eat(philo);
-		philo_print("is sleeping", philo, UNLOCK);
+		philo_take_forks_and_eat(philo);
+		if (config->stop || !philo->alive)
+			break;
+		philo_print("is sleeping", philo);
 		p_sleep(config->time_to_sleep, config);
-		philo_print("is thinking", philo, UNLOCK);
+		if (config->stop || !philo->alive)
+			break;
+		philo_print("is thinking", philo);
 	}
 	return (NULL);
 }
+
+void cleanup(t_philo *philos, pthread_t *threads, t_config *config)
+{
+    if (threads)
+        free(threads);
+    if (philos)
+        free_philos(philos);
+   if (config) {
+        for (int i = 0; i < config->number_of_philosophers; i++) {
+            pthread_mutex_destroy(&config->forks[i]);
+        }
+        free(config->forks);
+        free(config);
+    }
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -191,6 +320,7 @@ int	main(int argc, char **argv)
 	t_philo		*philos;
 	pthread_t	*threads;
 	int			created_threads;
+	pthread_t   monitor_thread;
 	int			i;
 
 	config = init_config(argc, argv);
@@ -219,11 +349,15 @@ int	main(int argc, char **argv)
 				i++;
 			}
 		}
-		free(threads);
-		free_philos(philos);
-		free(config);
+		cleanup(philos, threads, config);
 		return (EXIT_FAILURE);
 	}
+	if (pthread_create(&monitor_thread, NULL, monitor_routine, config) != 0)
+    {
+        fprintf(stderr, "Failed to create monitor thread.\n");
+        cleanup(philos, threads, config);
+        return (EXIT_FAILURE);
+    }
 	// Join all threads
 	i = 0;
 	while (i < config->number_of_philosophers)
@@ -232,8 +366,6 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	// Cleanup
-	free(threads);
-	free_philos(philos);
-	free(config);
+	cleanup(philos, threads, config);
 	return (EXIT_SUCCESS);
 }
