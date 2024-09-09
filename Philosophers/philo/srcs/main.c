@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 13:27:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 14:14:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_philo	*initiate_philos(t_config *config)
 	{
 		temp = malloc(sizeof(t_philo));
 		if (!temp)
-			return (free_philos(temp), NULL);
+			return (free_philos(head), NULL);
 		// Initialize philosopher
 		temp->config = config;
 		temp->id = i + 1;
@@ -88,7 +88,10 @@ t_config	*init_config(int argc, char **argv)
 	t_config	*config;
 
 	if (argc != 5 && argc != 6)
+	{
+		fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
 		return (NULL);
+	}
 	i = 0;
 	while (i < argc - 1)
 	{
@@ -112,7 +115,7 @@ t_config	*init_config(int argc, char **argv)
 	pthread_mutex_init(&config->mutex_write, NULL);
 	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philosophers);
 	if (!config->forks)
-		return (NULL);
+		return (free(config), NULL);
 	for (i = 0; i < config->number_of_philosophers; i++) {
 		pthread_mutex_init(&config->forks[i], NULL);
 	}
@@ -126,27 +129,6 @@ long	current_time_in_ms(void)
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
-}
-
-void	think(t_philo *philo)
-{
-	printf("%lu %d is thinking\n", current_time_in_ms(), philo->id);
-	// No specific duration for thinking,
-	usleep(1000); // This line is optional, just simulates brief thinking time
-}
-
-void	sleep_philo(t_philo *philo, t_config *config)
-{
-	printf("%lu %d is sleeping\n", current_time_in_ms(), philo->id);
-	usleep(config->time_to_sleep * 1000); 
-	// Simulate sleeping, converting ms to microseconds
-}
-
-void	die(t_philo *philo)
-{
-	printf("%lu %d has died\n", current_time_in_ms(), philo->id);
-	philo->alive = false;
-		// This would cause the philosopher's thread to exit its routine
 }
 
 int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
@@ -185,10 +167,7 @@ void *philosopher_routine(void *params) {
 	philo = (t_philo *)params;
 	config = philo->config;
 	if (!config)
-	{
-		//free_config(config);
-		return (EXIT_FAILURE);
-	}
+		return (NULL);
 	if (philo->id % 2 && config->number_of_philosophers > 1)
 		new_sleep(config->time_to_eat / 50, config);
 	while (!config->stop)
@@ -196,9 +175,11 @@ void *philosopher_routine(void *params) {
 	{
 		if (config->number_of_times_each_philosopher_must_eat != -1 && philo->eat_count >= config->number_of_times_each_philosopher_must_eat)
     		break; // no need to continue if philo ate enough times
+		if (!philo->alive)
+			break;
 		philo_eat(philo);
 		philo_print("is sleeping", philo, UNLOCK);
-		new_sleep(config->time_to_sleep, env);
+		p_sleep(config->time_to_sleep, config);
 		philo_print("is thinking", philo, UNLOCK);
 	}
 	return (NULL);
