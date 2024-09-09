@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 18:54:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:41:53 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ long	current_time_in_ms(void)
 int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 {
 	int	i;
+	t_philo *current = philos;
 
 	i = 0;
 	*threads = malloc(sizeof(pthread_t) * config->number_of_philosophers);
@@ -189,8 +190,10 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 	}
 	while (i < config->number_of_philosophers)
 	{
-		pthread_create(&(*threads)[i], NULL, philosopher_routine, &philos[i]);
+		pthread_create(&(*threads)[i], NULL, philosopher_routine, current);
+		usleep(100);
 		i ++;
+		current = current->next;
 	}
 	return (0);
 }
@@ -224,6 +227,7 @@ void *monitor_routine(void *params) {
                 philo->alive = false;
                 philo_print("died", philo);
                 config->stop = true;
+				break;
             }
             pthread_mutex_unlock(&philo->mutex_eating);
             
@@ -244,14 +248,14 @@ void philo_eat(t_philo *philo)
 			return;
     pthread_mutex_lock(&philo->mutex_eating);
 
-    gettimeofday(&philo->last_eat_time, NULL);
-    philo->eat_count++;
-
     philo_print("is eating", philo);
 
-    pthread_mutex_unlock(&philo->mutex_eating);
-
     p_sleep(config->time_to_eat, config);
+
+	gettimeofday(&philo->last_eat_time, NULL);
+    philo->eat_count++;
+
+    pthread_mutex_unlock(&philo->mutex_eating);
 }
 
 
@@ -361,6 +365,7 @@ int	main(int argc, char **argv)
 		cleanup(philos, threads, config);
 		return (EXIT_FAILURE);
 	}
+
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, config) != 0)
     {
         fprintf(stderr, "Failed to create monitor thread.\n");
