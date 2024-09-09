@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 19:41:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:00:48 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,11 +223,14 @@ void *monitor_routine(void *params) {
             gettimeofday(&current_time, NULL);
 
 			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
+			printf("\nPhilosopher %d: time since last meal %ld ms\n", philo->id, time_since_last_eat);
             if (time_since_last_eat > config->time_to_die) {
                 philo->alive = false;
                 philo_print("died", philo);
+				printf("\nPhilosopher %d died: time since last meal %ld ms\n", philo->id, time_since_last_eat);
                 config->stop = true;
-				break;
+				pthread_mutex_unlock(&philo->mutex_eating);
+				return (NULL);
             }
             pthread_mutex_unlock(&philo->mutex_eating);
             
@@ -235,7 +238,7 @@ void *monitor_routine(void *params) {
             if (philo == config->first_philo || config->number_of_philosophers == 1)
                 break;
         }
-        usleep(1000); 
+        usleep(5000); 
     }
     return (NULL);
 }
@@ -281,7 +284,6 @@ void philo_take_forks_and_eat(t_philo *philo)
 	}
 }
 
-
 void *philosopher_routine(void *params) {
 	t_philo		*philo;
 	t_config	*config;
@@ -296,6 +298,7 @@ void *philosopher_routine(void *params) {
 	// add here check for maximum eat time
 	{
 		if (config->number_of_times_each_philosopher_must_eat != -1 && philo->eat_count >= config->number_of_times_each_philosopher_must_eat)
+			// TODO: we need to check somewhere and stop if all philos eaten enough times.
     		break; // no need to continue if philo ate enough times
 		if (config->stop || !philo->alive)
 			break;
