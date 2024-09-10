@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/10 14:59:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:12:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 // TODO: remove printf and other not allowed functions
 // TODO: remove printf for put up/down fork
-// TODO: fix case for 1 philo
+// TODO: add limits (60 for time and 200 for philo)
+// TODO: fix valgrind --tool=drd
+// TODO: fix normi
+// TODO: put back Makefile flags
 
 void philo_print(const char *message, t_philo *philo)
 {
@@ -43,7 +46,7 @@ void philo_print(const char *message, t_philo *philo)
     pthread_mutex_unlock(&config->mutex_write);
 }
 
-void p_sleep(int duration_ms, t_config *config) {
+void philo_sleep(int duration_ms, t_config *config) {
     int elapsed = 0;
     while (elapsed < duration_ms && !config->stop) {
         usleep(1000);
@@ -57,35 +60,21 @@ void philo_eat(t_philo *philo)
 	struct timeval current_time;
 	long time_since_last_meal;
 
-	if (philo->config->stop || !philo->alive)
-			return;
+	if (config->stop || !philo->alive)
+		return ;
     pthread_mutex_lock(&philo->mutex_eating);
 
 	gettimeofday(&current_time, NULL);
 
 	time_since_last_meal = time_diff_in_ms(philo->last_eat_time, current_time);
 
-	// pthread_mutex_lock(&config->mutex_write);
-	// printf("\n[PHILO] Philosopher %d is going to start eating.\n", philo->id);
-    // printf("Time since last meal: %ld ms\n", time_since_last_meal);
-    // printf("Current time: %ld ms\n", 
-    //     (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
-	// pthread_mutex_unlock(&config->mutex_write);
-
     philo_print("is eating", philo);
 
-    p_sleep(config->time_to_eat, config);
+    philo_sleep(config->time_to_eat, config);
 
 	gettimeofday(&current_time, NULL);  
 	gettimeofday(&philo->last_eat_time, NULL);
     philo->eat_count++;
-
-	// pthread_mutex_lock(&config->mutex_write);
-	// printf("\n[PHILO] Philosopher %d finished eating, time updated.\n", philo->id);
-    // printf("Current time: %ld ms, Last eat time set: %ld ms\n", 
-    //     (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000),
-    //     (philo->last_eat_time.tv_sec * 1000) + (philo->last_eat_time.tv_usec / 1000));
-	// pthread_mutex_unlock(&config->mutex_write);
 
     pthread_mutex_unlock(&philo->mutex_eating);
 }
@@ -93,18 +82,26 @@ void philo_eat(t_philo *philo)
 
 void philo_take_forks_and_eat(t_philo *philo)
 {
-	if (philo->config->stop || !philo->alive)
-            return;
+	t_config	*config;
+	
+	config = philo->config;
+
+	if (config->stop || !philo->alive)
+		return ;
+
 	if (philo->left_fork == philo->right_fork) 
 	{
         pthread_mutex_lock(philo->left_fork);
-		p_sleep(philo->config->time_to_die, philo->config);
+		philo_print("has taken a fork", philo);
+		philo_sleep(philo->config->time_to_die, philo->config);
         pthread_mutex_unlock(philo->left_fork);
     }
 	else
 	{
 		pthread_mutex_lock(philo->left_fork);
+		philo_print("has taken a fork", philo);
 		pthread_mutex_lock(philo->right_fork);
+		philo_print("has taken a fork", philo);
 
 		philo_eat(philo);
 
@@ -124,10 +121,7 @@ int	main(int argc, char **argv)
 
 	config = init_config(argc, argv);
 	if (!config)
-	{
-		fprintf(stderr, "Error initializing configuration.\n");
 		return (EXIT_FAILURE);
-	}
 	philos = initiate_philos(config);
 	if (!philos)
 	{

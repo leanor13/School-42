@@ -31,11 +31,10 @@ typedef struct s_config
     int	time_to_die;
     int	time_to_eat;
     int	time_to_sleep;
-    int	number_of_times_each_philosopher_must_eat;
+    int	max_eat_times;
 	bool	stop;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
-    pthread_mutex_t	mutex_stop;
 	struct s_philo	*first_philo;
 }	t_config;
 
@@ -49,7 +48,6 @@ typedef struct s_philo
     int				eat_count;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
-    pthread_mutex_t *mutex_alive;
     struct s_philo	*next;
 	struct s_config *config;
 }	t_philo;
@@ -63,6 +61,10 @@ long	current_time_in_ms(void);
 long time_diff_in_ms(struct timeval start, struct timeval end);
 void	ft_putnbr_fd(unsigned long long n, int fd);
 
+void philo_eat(t_philo *philo);
+void philo_sleep(int duration_ms, t_config *config);
+void philo_print(const char *message, t_philo *philo);
+void philo_take_forks_and_eat(t_philo *philo);
 
 t_philo	*initiate_philos(t_config *config);
 t_config	*init_config(int argc, char **argv);

@@ -18,14 +18,13 @@ t_philo	*initiate_philos(t_config *config)
 			return (free_philos(head), NULL);
 		temp->config = config;
 		temp->id = i + 1;
-		temp->eat_num = config->number_of_times_each_philosopher_must_eat;
+		temp->eat_num = config->max_eat_times;
 		temp->alive = true;
 		gettimeofday(&temp->last_eat_time, NULL);
 		temp->eat_count = 0;
 		pthread_mutex_init(&temp->mutex_eating, NULL);
-		pthread_mutex_init(&temp->mutex_alive, NULL);
 		temp->left_fork = &config->forks[i];
-		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers]; // right philo fork - fork of the next philosopher
+		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers];
 		
 		temp->next = NULL;
 		if (head != NULL)
@@ -51,7 +50,7 @@ t_config	*init_config(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+		fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n");
 		return (NULL);
 	}
 	i = 0;
@@ -59,7 +58,10 @@ t_config	*init_config(int argc, char **argv)
 	{
 		arguments[i] = atoi_positive(argv[i + 1]);
 		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
+		{
+			fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n");
 			return (NULL);
+		}
 		i++;
 	}
 	config = malloc(sizeof(t_config));
@@ -72,11 +74,12 @@ t_config	*init_config(int argc, char **argv)
 	config->stop = false;
 	config->first_philo = NULL;
 	if (argc == 6)
-		config->number_of_times_each_philosopher_must_eat = arguments[4];
+		config->max_eat_times = arguments[4];
 	else
-		config->number_of_times_each_philosopher_must_eat = -1;
+		config->max_eat_times = -1;
+	if (config->max_eat_times == 0)
+		config->stop = true;
 	pthread_mutex_init(&config->mutex_write, NULL);
-	pthread_mutex_init(&config->mutex_stop, NULL);
 	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philosophers);
 	if (!config->forks)
 		return (free(config), NULL);

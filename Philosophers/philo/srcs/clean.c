@@ -8,15 +8,11 @@ void	free_philos(t_philo *philos)
 	current = philos;
 	if (!philos)
 		return ;
-	// Now that the list is non-circular, use a while loop to free the list
 	while (current != NULL)
 	{
 		next = current->next;
-		// Destroy mutexes if necessary
 		pthread_mutex_destroy(&current->mutex_eating);
-		// Free the current philosopher
 		free(current);
-		// Move to the next philosopher
 		current = next;
 	}
 }
