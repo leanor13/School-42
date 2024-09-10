@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/10 09:30:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/10 09:51:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,6 +374,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 
+	// check how to join this thread
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, config) != 0)
     {
         fprintf(stderr, "Failed to create monitor thread.\n");
