@@ -1,11 +1,14 @@
 NAME = philo
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main atoi_custom
+S = main utils clean init routines
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -O3 -Wall -Wextra -Werror -g3
+# CFLAGS = -O3 -Wall -Wextra -Werror -g3
+CFLAGS = -O3 -g3
+LDFLAGS = -pthread
+
 CC = cc
 
 OBJS = $(addprefix $(OBJS_DIR)/,$(SRCS:srcs/%.c=%.o))
@@ -34,7 +37,7 @@ $(OBJS_DIR)/%.o: srcs/%.c
 
 $(NAME): $(OBJS) 
 	@echo "$(CYAN)Creating $(NAME) ..."
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
 $(OBJS): includes/philo.h

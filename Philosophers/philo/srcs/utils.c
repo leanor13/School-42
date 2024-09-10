@@ -12,15 +12,7 @@
 
 #include "../includes/philo.h"
 
-static int	is_space(char c)
-{
-	return (c == 32 || (c > 8 && c < 14));
-}
-
-static int	is_digit(char c)
-{
-	return (c >= '0' && c <= '9');
-}
+#include <limits.h>
 
 int	atoi_positive(char *str)
 {
@@ -28,18 +20,40 @@ int	atoi_positive(char *str)
 
 	if (!str || !*str)
 		return (NEG_ERROR);
-	while (is_space(*str))
-		str ++;
+	while (*str == 32 || (*str > 8 && *str < 14))
+		str++;
 	number = 0;
-	while (is_digit(*str))
+	while (*str >= '0' && *str <= '9')
 	{
-		 if (number > (INT_MAX - (*str - '0')) / 10)
-            return (NEG_ERROR);
+		if (number > (INT_MAX - (*str - '0')) / 10)
+			return (NEG_ERROR);
 		number = 10 * number + (*str - '0');
-		str ++;
+		str++;
 	}
 	if (*str != '\0')
 		return (NEG_ERROR);
 	return (number);
 }
 
+void	ft_putnbr_fd(unsigned long long n, int fd)
+{
+	char	c;
+
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	c = (n % 10) + '0';
+	write(fd, &c, 1);
+}
+
+long time_diff_in_ms(struct timeval start, struct timeval end)
+{
+    return ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000);
+}
+
+long	current_time_in_ms(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
+}
