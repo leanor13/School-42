@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/09 20:00:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/10 09:30:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@ void	free_philos(t_philo *philos)
 	current = philos;
 	if (!philos)
 		return ;
-	// Break the circular link if necessary
-	if (philos->previous)
-		philos->previous->next = NULL;
 	// Now that the list is non-circular, use a while loop to free the list
 	while (current != NULL)
 	{
@@ -108,19 +105,17 @@ t_philo	*initiate_philos(t_config *config)
 		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers]; // right philo fork - fork of the next philosopher
 		
 		temp->next = NULL;
-		temp->previous = prev;
-		if (prev)
+		if (head != NULL)
 			prev->next = temp;
 		else
 			head = temp;
 		prev = temp;
 		i++;
 	}
-	if (config->number_of_philosophers > 1)
+	if (prev) 
 	{
-		prev->next = head;
-		head->previous = prev;
-	}
+        prev->next = NULL;
+    }
 	config->first_philo = head;
 	return (head);
 }
@@ -223,11 +218,19 @@ void *monitor_routine(void *params) {
             gettimeofday(&current_time, NULL);
 
 			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
+
+			pthread_mutex_lock(&config->mutex_write);
 			printf("\nPhilosopher %d: time since last meal %ld ms\n", philo->id, time_since_last_eat);
+			pthread_mutex_unlock(&config->mutex_write);
+			
             if (time_since_last_eat > config->time_to_die) {
                 philo->alive = false;
                 philo_print("died", philo);
+
+				pthread_mutex_lock(&config->mutex_write);
 				printf("\nPhilosopher %d died: time since last meal %ld ms\n", philo->id, time_since_last_eat);
+				pthread_mutex_unlock(&config->mutex_write);
+
                 config->stop = true;
 				pthread_mutex_unlock(&philo->mutex_eating);
 				return (NULL);
@@ -235,10 +238,8 @@ void *monitor_routine(void *params) {
             pthread_mutex_unlock(&philo->mutex_eating);
             
             philo = philo->next;
-            if (philo == config->first_philo || config->number_of_philosophers == 1)
-                break;
         }
-        usleep(5000); 
+        usleep(1000); 
     }
     return (NULL);
 }
@@ -257,6 +258,10 @@ void philo_eat(t_philo *philo)
 
 	gettimeofday(&philo->last_eat_time, NULL);
     philo->eat_count++;
+
+	pthread_mutex_lock(&config->mutex_write);
+	printf("Philosopher %d finished eating, time updated\n", philo->id);
+	pthread_mutex_unlock(&config->mutex_write);
 
     pthread_mutex_unlock(&philo->mutex_eating);
 }
