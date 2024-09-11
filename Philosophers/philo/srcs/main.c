@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 18:18:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:29:10 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void philo_sleep(int duration_ms, t_config *config) {
     gettimeofday(&start_time, NULL);
 
     // Sleep in small intervals, but frequently check if the simulation should stop
-    while (elapsed_time_ms < duration_ms && !check_config_stop(config)) 
+    while ((elapsed_time_ms < duration_ms) && !check_config_stop(config)) 
     {
         usleep(1000);  // Sleep for 1 millisecond
         gettimeofday(&current_time, NULL);

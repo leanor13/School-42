@@ -12,6 +12,7 @@ void	free_philos(t_philo *philos)
 	{
 		next = current->next;
 		pthread_mutex_destroy(&current->mutex_eating);
+		pthread_mutex_destroy(&current->mutex_counter);
 		free(current);
 		current = next;
 	}
@@ -27,6 +28,8 @@ void cleanup(t_philo *philos, pthread_t *threads, t_config *config)
         for (int i = 0; i < config->number_of_philosophers; i++) {
             pthread_mutex_destroy(&config->forks[i]);
         }
+		pthread_mutex_destroy(&config->mutex_stop);
+		pthread_mutex_destroy(&config->mutex_write);
         free(config->forks);
         free(config);
     }
