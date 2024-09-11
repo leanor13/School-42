@@ -5,8 +5,8 @@ S = main utils clean init routines
 
 COMPRESS = ar rcs
 RM = rm -f
-# CFLAGS = -O3 -Wall -Wextra -Werror -g3
-CFLAGS = -O3 -g3
+CFLAGS = -O3 -Wall -Wextra -Werror -g3
+#CFLAGS = -O3 -g3
 LDFLAGS = -pthread
 
 CC = cc

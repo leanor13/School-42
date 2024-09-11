@@ -37,7 +37,7 @@ void *monitor_routine(void *params)
 			config->stop = true;
 			return (NULL);
 		}
-        usleep(500); 
+        usleep(1000); 
     }
     return (NULL);
 }
@@ -75,8 +75,6 @@ void *philosopher_routine(void *params) {
 		philo_sleep(config->time_to_sleep, config);
 
 		gettimeofday(&end_sleep, NULL);
-
-		long sleep_duration = time_diff_in_ms(start_sleep, end_sleep);
 
 		if (config->stop || !philo->alive)
 			break;

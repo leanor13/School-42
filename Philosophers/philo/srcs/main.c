@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/10 18:12:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 11:59:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void philo_eat(t_philo *philo)
 {
     t_config *config = philo->config;
 	struct timeval current_time;
-	long time_since_last_meal;
+	//long time_since_last_meal;
 
 	if (config->stop || !philo->alive)
 		return ;
@@ -66,7 +66,7 @@ void philo_eat(t_philo *philo)
 
 	gettimeofday(&current_time, NULL);
 
-	time_since_last_meal = time_diff_in_ms(philo->last_eat_time, current_time);
+	//time_since_last_meal = time_diff_in_ms(philo->last_eat_time, current_time);
 
     philo_print("is eating", philo);
 
