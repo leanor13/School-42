@@ -1,7 +1,7 @@
 NAME = philo
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main utils clean init routines
+S = main utils clean init routines mutexes
 
 COMPRESS = ar rcs
 RM = rm -f

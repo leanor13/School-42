@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
+/*   Updated: 2024/09/11 20:04:45 by yioffe           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 t_philo	*initiate_philos(t_config *config)
@@ -8,7 +20,6 @@ t_philo	*initiate_philos(t_config *config)
 	int		i;
 
 	head = NULL;
-	temp = NULL;
 	prev = NULL;
 	i = 0;
 	while (i < config->number_of_philosophers)
@@ -35,9 +46,7 @@ t_philo	*initiate_philos(t_config *config)
 		i++;
 	}
 	if (prev) 
-	{
         prev->next = NULL;
-    }
 	config->first_philo = head;
 	return (head);
 }
@@ -50,7 +59,7 @@ t_config	*init_config(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n");
+		write(STDERR_FILENO, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n", 93);
 		return (NULL);
 	}
 	i = 0;
@@ -59,7 +68,7 @@ t_config	*init_config(int argc, char **argv)
 		arguments[i] = atoi_positive(argv[i + 1]);
 		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
 		{
-			fprintf(stderr, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n");
+			write(STDERR_FILENO, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n", 93);
 			return (NULL);
 		}
 		i++;

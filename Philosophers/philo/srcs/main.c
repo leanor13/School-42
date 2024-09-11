@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 18:29:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 19:42:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // TODO: remove printf and other not allowed functions
 // TODO: remove printf for put up/down fork
 // TODO: add limits (60 for time and 200 for philo)
-// TODO: fix valgrind --tool=drd
 // TODO: fix normi
 // TODO: put back Makefile flags
 // TODO: put all in philo dir
@@ -48,29 +47,16 @@ void philo_print(const char *message, t_philo *philo)
     pthread_mutex_unlock(&config->mutex_write);
 }
 
-// void philo_sleep(int duration_ms, t_config *config) {
-//     int elapsed = 0;
-//     while ((elapsed < duration_ms) && !check_config_stop(config)) 
-// 	{
-//         usleep(1000);
-//         elapsed += 1;
-//     }
-// }
-
 void philo_sleep(int duration_ms, t_config *config) {
     struct timeval start_time, current_time;
     int elapsed_time_ms = 0;
 
-    // Get the start time
     gettimeofday(&start_time, NULL);
 
-    // Sleep in small intervals, but frequently check if the simulation should stop
     while ((elapsed_time_ms < duration_ms) && !check_config_stop(config)) 
     {
-        usleep(1000);  // Sleep for 1 millisecond
+        usleep(500);
         gettimeofday(&current_time, NULL);
-        
-        // Calculate the actual time that has passed in milliseconds
         elapsed_time_ms = time_diff_in_ms(start_time, current_time);
     }
 }
@@ -79,25 +65,15 @@ void philo_eat(t_philo *philo)
 {
     t_config *config = philo->config;
 	struct timeval current_time;
-	//long time_since_last_meal;
 
 	if (check_config_stop(config))
 		return ;
     pthread_mutex_lock(&philo->mutex_eating);
-
 	gettimeofday(&current_time, NULL);
-
-	//time_since_last_meal = time_diff_in_ms(philo->last_eat_time, current_time);
-
 	gettimeofday(&philo->last_eat_time, NULL);
     philo_print("is eating", philo);
-
     philo_sleep(config->time_to_eat, config);
-
-	// check
-	//gettimeofday(&current_time, NULL);  
     increment_eat_counter(philo);
-
     pthread_mutex_unlock(&philo->mutex_eating);
 }
 
@@ -110,31 +86,39 @@ void philo_take_forks_and_eat(t_philo *philo)
 
 	if (check_config_stop(config))
 		return ;
-
 	if (philo->left_fork == philo->right_fork) 
 	{
         pthread_mutex_lock(philo->left_fork);
 		philo_print("has taken a fork", philo);
 		philo_sleep(philo->config->time_to_die, philo->config);
         pthread_mutex_unlock(philo->left_fork);
+		return ;
     }
-	else
-	{
-		pthread_mutex_lock(philo->left_fork);
-		philo_print("has taken a fork", philo);
-		if (check_config_stop(config))
+	if (check_config_stop(config))
+		return ;
+    if (philo->id % 2 == 0) {
+        pthread_mutex_lock(philo->left_fork);
+        philo_print("has taken a fork", philo);
+        if (check_config_stop(config)) 
 		{
-			pthread_mutex_unlock(philo->left_fork);
-			return ;
-		}
-		pthread_mutex_lock(philo->right_fork);
-		philo_print("has taken a fork", philo);
-
-		philo_eat(philo);
-
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
+            pthread_mutex_unlock(philo->left_fork);
+            return;
+        }
+        pthread_mutex_lock(philo->right_fork);
+    } else {
+        pthread_mutex_lock(philo->right_fork);
+        philo_print("has taken a fork", philo);
+        if (check_config_stop(config)) {
+            pthread_mutex_unlock(philo->right_fork);
+            return;
+        }
+        pthread_mutex_lock(philo->left_fork);
+    }
+    philo_print("has taken a fork", philo);
+    if (!check_config_stop(config))
+        philo_eat(philo);
+    pthread_mutex_unlock(philo->right_fork);
+    pthread_mutex_unlock(philo->left_fork);
 }
 
 int	main(int argc, char **argv)
