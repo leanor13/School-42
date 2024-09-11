@@ -44,13 +44,13 @@ void *monitor_routine(void *params)
 
     while (!config->stop) {
 
-		gettimeofday(&current_time, NULL);
+		//gettimeofday(&current_time, NULL);
 
         philo = config->first_philo;
 		done_philo = 0;
         while (philo) {
             pthread_mutex_lock(&philo->mutex_eating);
-            //gettimeofday(&current_time, NULL);
+            gettimeofday(&current_time, NULL);
 
 			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 			
