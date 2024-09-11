@@ -1,11 +1,46 @@
 #include "../includes/philo.h"
 
+bool	check_config_stop(t_config *config)
+{
+	bool	status;
+
+	pthread_mutex_lock(&config->mutex_stop);
+	status = config->stop;
+	pthread_mutex_unlock(&config->mutex_stop);
+	return (status);
+}
+
+void	set_config_stop(t_config *config, bool status)
+{
+	pthread_mutex_lock(&config->mutex_stop);
+	config->stop = status;
+	pthread_mutex_unlock(&config->mutex_stop);
+}
+
+int	get_eat_counter(t_philo *philo)
+{
+	int	result;
+
+	pthread_mutex_lock(&philo->mutex_counter);
+	result = philo->eat_counter;
+	pthread_mutex_unlock(&philo->mutex_counter);
+	return (result);
+}
+
+void	increment_eat_counter(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->mutex_counter);
+	philo->eat_counter += 1;
+	pthread_mutex_unlock(&philo->mutex_counter);
+}
+
 void *monitor_routine(void *params) 
 {
     t_config *config = (t_config *)params;
     t_philo *philo;
     struct timeval current_time;
 	int	done_philo;
+	int	eat_counter;
 
     while (!config->stop) {
 
@@ -20,24 +55,24 @@ void *monitor_routine(void *params)
 			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 			
             if (time_since_last_eat > config->time_to_die) {
-                philo->alive = false;
+                //philo->alive = false;
+				set_config_stop(config, true);
                 philo_print("died", philo);
-
-                config->stop = true;
 				pthread_mutex_unlock(&philo->mutex_eating);
 				return (NULL);
             }
             pthread_mutex_unlock(&philo->mutex_eating);
-			if (config->max_eat_times >= 0 && philo->eat_count >= config->max_eat_times)
+			eat_counter = get_eat_counter(philo);
+			if (config->max_eat_times >= 0 && eat_counter >= config->max_eat_times)
 				done_philo ++;
             philo = philo->next;
         }
 		if (config->max_eat_times >= 0 && done_philo == config->number_of_philosophers)
 		{
-			config->stop = true;
+			set_config_stop(config, true);
 			return (NULL);
 		}
-        usleep(1000); 
+        usleep(500); 
     }
     return (NULL);
 }
@@ -57,15 +92,15 @@ void *philosopher_routine(void *params) {
 	while (!config->stop && philo->alive)
 	// add here check for maximum eat time
 	{
-		//if (config->max_eat_times != -1 && philo->eat_count >= config->max_eat_times)
+		//if (config->max_eat_times != -1 && philo->eat_counter >= config->max_eat_times)
 			// TODO: we need to check somewhere and stop if all philos eaten enough times.
     	//	break; // no need to continue if philo ate enough times
-		if (config->stop || !philo->alive)
+		if (check_config_stop(config))
 			break;
 
 		philo_take_forks_and_eat(philo);
 
-		if (config->stop || !philo->alive)
+		if (check_config_stop(config))
 			break;
 
 		philo_print("is sleeping", philo);
@@ -76,7 +111,7 @@ void *philosopher_routine(void *params) {
 
 		gettimeofday(&end_sleep, NULL);
 
-		if (config->stop || !philo->alive)
+		if (check_config_stop(config))
 			break;
 
 		philo_print("is thinking", philo);

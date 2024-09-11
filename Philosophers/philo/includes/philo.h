@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/10 14:46:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 13:57:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,20 @@ typedef struct s_config
 	bool	stop;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	mutex_write;
+    pthread_mutex_t	mutex_stop;
 	struct s_philo	*first_philo;
 }	t_config;
 
 typedef struct s_philo
 {
     int				id;
-    int				eat_num;
+    int				eat_counter;
     bool			alive;
     pthread_mutex_t	mutex_eating;
     struct timeval	last_eat_time;
-    int				eat_count;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
+    pthread_mutex_t mutex_counter;
     struct s_philo	*next;
 	struct s_config *config;
 }	t_philo;
@@ -73,5 +74,9 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config);
 void	free_philos(t_philo *philos);
 void cleanup(t_philo *philos, pthread_t *threads, t_config *config);
 
+bool	check_config_stop(t_config *config);
+void	set_config_stop(t_config *config, bool status);
+int	get_eat_counter(t_philo *philo);
+void	increment_eat_counter(t_philo *philo);
 
 # endif

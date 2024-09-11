@@ -18,14 +18,15 @@ t_philo	*initiate_philos(t_config *config)
 			return (free_philos(head), NULL);
 		temp->config = config;
 		temp->id = i + 1;
-		temp->eat_num = config->max_eat_times;
 		temp->alive = true;
 		gettimeofday(&temp->last_eat_time, NULL);
-		temp->eat_count = 0;
 		pthread_mutex_init(&temp->mutex_eating, NULL);
 		temp->left_fork = &config->forks[i];
 		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers];
-		
+		pthread_mutex_init(&temp->mutex_counter, NULL);
+		pthread_mutex_lock(&temp->mutex_counter);
+		temp->eat_counter = 0;
+		pthread_mutex_unlock(&temp->mutex_counter);
 		temp->next = NULL;
 		if (head != NULL)
 			prev->next = temp;
@@ -71,15 +72,17 @@ t_config	*init_config(int argc, char **argv)
 	config->time_to_die = arguments[1];
 	config->time_to_eat = arguments[2];
 	config->time_to_sleep = arguments[3];
-	config->stop = false;
 	config->first_philo = NULL;
 	if (argc == 6)
 		config->max_eat_times = arguments[4];
 	else
 		config->max_eat_times = -1;
-	if (config->max_eat_times == 0)
-		config->stop = true;
 	pthread_mutex_init(&config->mutex_write, NULL);
+	pthread_mutex_init(&config->mutex_stop, NULL);
+	if (config->max_eat_times == 0)
+		set_config_stop(config, true);
+	else
+		set_config_stop(config, false);
 	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philosophers);
 	if (!config->forks)
 		return (free(config), NULL);

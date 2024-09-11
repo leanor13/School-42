@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 11:59:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 13:57:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void philo_print(const char *message, t_philo *philo)
 
 void philo_sleep(int duration_ms, t_config *config) {
     int elapsed = 0;
-    while (elapsed < duration_ms && !config->stop) {
+    while (elapsed < duration_ms && !check_config_stop(config)) {
         usleep(1000);
         elapsed += 1;
     }
@@ -60,7 +60,7 @@ void philo_eat(t_philo *philo)
 	struct timeval current_time;
 	//long time_since_last_meal;
 
-	if (config->stop || !philo->alive)
+	if (check_config_stop(config))
 		return ;
     pthread_mutex_lock(&philo->mutex_eating);
 
@@ -74,7 +74,7 @@ void philo_eat(t_philo *philo)
 
 	gettimeofday(&current_time, NULL);  
 	gettimeofday(&philo->last_eat_time, NULL);
-    philo->eat_count++;
+    increment_eat_counter(philo);
 
     pthread_mutex_unlock(&philo->mutex_eating);
 }
@@ -86,7 +86,7 @@ void philo_take_forks_and_eat(t_philo *philo)
 	
 	config = philo->config;
 
-	if (config->stop || !philo->alive)
+	if (check_config_stop(config))
 		return ;
 
 	if (philo->left_fork == philo->right_fork) 
@@ -100,6 +100,11 @@ void philo_take_forks_and_eat(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		philo_print("has taken a fork", philo);
+		if (check_config_stop(config))
+		{
+			pthread_mutex_unlock(philo->left_fork);
+			return ;
+		}
 		pthread_mutex_lock(philo->right_fork);
 		philo_print("has taken a fork", philo);
 
