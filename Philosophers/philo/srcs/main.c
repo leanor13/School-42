@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 13:57:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:18:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // TODO: fix valgrind --tool=drd
 // TODO: fix normi
 // TODO: put back Makefile flags
+// TODO: put all in philo dir
 
 void philo_print(const char *message, t_philo *philo)
 {
@@ -31,8 +32,9 @@ void philo_print(const char *message, t_philo *philo)
     pthread_mutex_lock(&config->mutex_write);
 
     ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
-    write(STDOUT_FILENO, " Philosopher ", 13);
+    //write(STDOUT_FILENO, " Philosopher ", 13);
 
+	write(STDOUT_FILENO, " ", 1);
     ft_putnbr_fd(philo->id, STDOUT_FILENO);
     write(STDOUT_FILENO, " ", 1);
 
@@ -46,11 +48,30 @@ void philo_print(const char *message, t_philo *philo)
     pthread_mutex_unlock(&config->mutex_write);
 }
 
+// void philo_sleep(int duration_ms, t_config *config) {
+//     int elapsed = 0;
+//     while ((elapsed < duration_ms) && !check_config_stop(config)) 
+// 	{
+//         usleep(1000);
+//         elapsed += 1;
+//     }
+// }
+
 void philo_sleep(int duration_ms, t_config *config) {
-    int elapsed = 0;
-    while (elapsed < duration_ms && !check_config_stop(config)) {
-        usleep(1000);
-        elapsed += 1;
+    struct timeval start_time, current_time;
+    int elapsed_time_ms = 0;
+
+    // Get the start time
+    gettimeofday(&start_time, NULL);
+
+    // Sleep in small intervals, but frequently check if the simulation should stop
+    while (elapsed_time_ms < duration_ms && !check_config_stop(config)) 
+    {
+        usleep(1000);  // Sleep for 1 millisecond
+        gettimeofday(&current_time, NULL);
+        
+        // Calculate the actual time that has passed in milliseconds
+        elapsed_time_ms = time_diff_in_ms(start_time, current_time);
     }
 }
 
@@ -68,12 +89,13 @@ void philo_eat(t_philo *philo)
 
 	//time_since_last_meal = time_diff_in_ms(philo->last_eat_time, current_time);
 
+	gettimeofday(&philo->last_eat_time, NULL);
     philo_print("is eating", philo);
 
     philo_sleep(config->time_to_eat, config);
 
-	gettimeofday(&current_time, NULL);  
-	gettimeofday(&philo->last_eat_time, NULL);
+	// check
+	//gettimeofday(&current_time, NULL);  
     increment_eat_counter(philo);
 
     pthread_mutex_unlock(&philo->mutex_eating);

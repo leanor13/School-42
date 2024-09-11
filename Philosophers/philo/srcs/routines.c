@@ -50,12 +50,11 @@ void *monitor_routine(void *params)
 		done_philo = 0;
         while (philo) {
             pthread_mutex_lock(&philo->mutex_eating);
-            gettimeofday(&current_time, NULL);
+            //gettimeofday(&current_time, NULL);
 
 			long time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 			
             if (time_since_last_eat > config->time_to_die) {
-                //philo->alive = false;
 				set_config_stop(config, true);
                 philo_print("died", philo);
 				pthread_mutex_unlock(&philo->mutex_eating);
@@ -72,7 +71,7 @@ void *monitor_routine(void *params)
 			set_config_stop(config, true);
 			return (NULL);
 		}
-        usleep(500); 
+        usleep(100); 
     }
     return (NULL);
 }
@@ -87,9 +86,9 @@ void *philosopher_routine(void *params) {
 	if (!config)
 		return (NULL);
 	if (philo->id % 2 && config->number_of_philosophers > 1)
-		philo_sleep(config->time_to_eat / 25, config);
+		philo_sleep(config->time_to_eat / 50, config);
 	
-	while (!config->stop && philo->alive)
+	while (!check_config_stop(config))
 	// add here check for maximum eat time
 	{
 		//if (config->max_eat_times != -1 && philo->eat_counter >= config->max_eat_times)

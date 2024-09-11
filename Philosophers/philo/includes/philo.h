@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 13:57:11 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/11 14:03:03 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_philo
 {
     int				id;
     int				eat_counter;
-    bool			alive;
     pthread_mutex_t	mutex_eating;
     struct timeval	last_eat_time;
     pthread_mutex_t *left_fork;

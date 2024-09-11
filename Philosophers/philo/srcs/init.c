@@ -18,7 +18,6 @@ t_philo	*initiate_philos(t_config *config)
 			return (free_philos(head), NULL);
 		temp->config = config;
 		temp->id = i + 1;
-		temp->alive = true;
 		gettimeofday(&temp->last_eat_time, NULL);
 		pthread_mutex_init(&temp->mutex_eating, NULL);
 		temp->left_fork = &config->forks[i];
