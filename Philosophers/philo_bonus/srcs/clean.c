@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:54:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:41:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ void	kill_all_philos(t_config *config)
 
 	for (i = 0; i < config->number_of_philos; i++)
 	{
-		if (kill(config->philos_pids[i], SIGKILL) == -1)
-		{
-			perror("kill");
-		}
+		kill(config->philos_pids[i], SIGKILL);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:55:23 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:45:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	philo_eat(t_philo *philo)
 	gettimeofday(&philo->last_eat_time, NULL);
 	philo_print("is eating", philo);
 	philo_sleep(config->time_to_eat, config);
-	increment_eat_counter(philo);
+	//increment_eat_counter(philo);
 	sem_post(philo->sem_eating);
 }
 

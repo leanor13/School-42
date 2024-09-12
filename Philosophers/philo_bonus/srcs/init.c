@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:47:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 16:42:06 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 	strcat(sem_name, id_str);
 	philo->sem_eating = sem_open(sem_name, O_CREAT, 0644, 1);
 	if (philo->sem_eating == SEM_FAILED)
-	{
-		perror("sem_open");
 		exit(EXIT_FAILURE);
-	}
 	philo->eat_counter = 0;
 }
 
