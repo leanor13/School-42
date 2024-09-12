@@ -30,3 +30,6 @@ Dockerfile
 
 # Ignore Minilibx
 **/minilibx*
+
+# Ignore compiled progs
+philo
