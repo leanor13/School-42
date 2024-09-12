@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 12:55:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:06:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ void	philo_sleep(int duration_ms, t_config *config)
 void	philo_eat(t_philo *philo)
 {
 	t_config		*config;
-	struct timeval	current_time;
+	//struct timeval	current_time;
 
 	config = philo->config;
 	if (check_config_stop(config))
 		return ;
 	pthread_mutex_lock(&philo->mutex_eating);
-	gettimeofday(&current_time, NULL);
+	//gettimeofday(&current_time, NULL);
 	gettimeofday(&philo->last_eat_time, NULL);
 	philo_print("is eating", philo);
 	philo_sleep(config->time_to_eat, config);
@@ -74,7 +74,7 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->mutex_eating);
 }
 
-// void	philo_take_forks_and_eat(t_philo *philo)
+// void	philo_take_forks_and_eat2(t_philo *philo)
 // {
 // 	t_config	*config;
 
@@ -175,7 +175,7 @@ void	philo_take_forks_and_eat(t_philo *philo)
 	}
 }
 
-// int	main(int argc, char **argv)
+// int	main2(int argc, char **argv)
 // {
 // 	t_config	*config;
 // 	t_philo		*philos;
