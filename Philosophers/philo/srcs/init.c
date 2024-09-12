@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 13:48:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:17:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,27 +124,4 @@ t_config	*init_config(int argc, char **argv)
 		i++;
 	}
 	return (config);
-}
-
-int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
-{
-	int		i;
-	t_philo	*current;
-
-	current = philos;
-	i = 0;
-	*threads = malloc(sizeof(pthread_t) * config->number_of_philos);
-	if (!*threads)
-	{
-		fprintf(stderr, "Failed to allocate memory for threads.\n");
-		return (-1);
-	}
-	while (i < config->number_of_philos)
-	{
-		pthread_create(&(*threads)[i], NULL, philosopher_routine, current);
-		usleep(100);
-		i++;
-		current = current->next;
-	}
-	return (0);
 }

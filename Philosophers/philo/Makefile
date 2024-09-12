@@ -1,12 +1,11 @@
 NAME = philo
 
 SRCS = $(addprefix srcs/,$(addsuffix .c, $(S)))
-S = main utils clean init routines mutexes
+S = main utils clean init routines mutexes philo_actions threads
 
 COMPRESS = ar rcs
 RM = rm -f
 CFLAGS = -O3 -Wall -Wextra -Werror -g3
-#CFLAGS = -O3 -g3
 LDFLAGS = -pthread
 
 CC = cc
