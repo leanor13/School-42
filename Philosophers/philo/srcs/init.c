@@ -6,11 +6,25 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 10:59:00 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:29:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+static void	philo_fields_init(t_philo *philo, t_config *config, int num)
+{
+	philo->config = config;
+	philo->id = num + 1;
+	gettimeofday(&philo->last_eat_time, NULL);
+	pthread_mutex_init(&philo->mutex_eating, NULL);
+	philo->left_fork = &config->forks[num];
+	philo->right_fork = &config->forks[(num + 1) % config->number_of_philos];
+	pthread_mutex_init(&philo->mutex_counter, NULL);
+	pthread_mutex_lock(&philo->mutex_counter);
+	philo->eat_counter = 0;
+	pthread_mutex_unlock(&philo->mutex_counter);
+}
 
 t_philo	*initiate_philos(t_config *config)
 {
@@ -22,21 +36,12 @@ t_philo	*initiate_philos(t_config *config)
 	head = NULL;
 	prev = NULL;
 	i = 0;
-	while (i < config->number_of_philosophers)
+	while (i < config->number_of_philos)
 	{
 		temp = malloc(sizeof(t_philo));
 		if (!temp)
 			return (free_philos(head), NULL);
-		temp->config = config;
-		temp->id = i + 1;
-		gettimeofday(&temp->last_eat_time, NULL);
-		pthread_mutex_init(&temp->mutex_eating, NULL);
-		temp->left_fork = &config->forks[i];
-		temp->right_fork = &config->forks[(i + 1) % config->number_of_philosophers];
-		pthread_mutex_init(&temp->mutex_counter, NULL);
-		pthread_mutex_lock(&temp->mutex_counter);
-		temp->eat_counter = 0;
-		pthread_mutex_unlock(&temp->mutex_counter);
+		philo_fields_init(temp, config, i);
 		temp->next = NULL;
 		if (head != NULL)
 			prev->next = temp;
@@ -45,38 +50,34 @@ t_philo	*initiate_philos(t_config *config)
 		prev = temp;
 		i++;
 	}
-	if (prev) 
-        prev->next = NULL;
+	prev->next = NULL;
 	config->first_philo = head;
 	return (head);
 }
 
-t_config	*init_config(int argc, char **argv)
+static int	validate_input(int argc, char **argv, int *arguments)
 {
-	int			arguments[5] = {0};
-	int			i;
-	t_config	*config;
+	int	i;
 
+	i = 0;
 	if (argc != 5 && argc != 6)
-	{
-		write(STDERR_FILENO, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n", 93);
-		return (NULL);
-	}
+		return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
+			EXIT_FAILURE);
 	i = 0;
 	while (i < argc - 1)
 	{
 		arguments[i] = atoi_positive(argv[i + 1]);
 		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
-		{
-			write(STDERR_FILENO, "Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [max_eat_times]\n", 93);
-			return (NULL);
-		}
+			return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
+				EXIT_FAILURE);
 		i++;
 	}
-	config = malloc(sizeof(t_config));
-	if (!config)
-		return (NULL);
-	config->number_of_philosophers = arguments[0];
+	return (EXIT_SUCCESS);
+}
+
+static int	config_fields_init(t_config *config, int *arguments, int argc)
+{
+	config->number_of_philos = arguments[0];
 	config->time_to_die = arguments[1];
 	config->time_to_eat = arguments[2];
 	config->time_to_sleep = arguments[3];
@@ -91,33 +92,36 @@ t_config	*init_config(int argc, char **argv)
 		set_config_stop(config, true);
 	else
 		set_config_stop(config, false);
-	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philosophers);
+	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philos);
 	if (!config->forks)
-		return (free(config), NULL);
-	for (i = 0; i < config->number_of_philosophers; i++) {
-		pthread_mutex_init(&config->forks[i], NULL);
-	}
-	return (config);
+		return (free(config), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
-int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
+t_config	*init_config(int argc, char **argv)
 {
-	int	i;
-	t_philo *current = philos;
+	int			arguments[5];
+	int			i;
+	t_config	*config;
 
 	i = 0;
-	*threads = malloc(sizeof(pthread_t) * config->number_of_philosophers);
-	if (!*threads)
+	while (i < 5)
 	{
-		write(STDERR_FILENO, "Failed to allocate memory for threads.\n", 40);
-		return (EXIT_FAILURE);
+		arguments[i] = 0;
+		i++;
 	}
-	while (i < config->number_of_philosophers)
+	if (validate_input(argc, argv, arguments) == EXIT_FAILURE)
+		return (NULL);
+	config = malloc(sizeof(t_config));
+	if (!config)
+		return (NULL);
+	if (config_fields_init(config, arguments, argc) == EXIT_FAILURE)
+		return (NULL);
+	i = 0;
+	while (i < config->number_of_philos)
 	{
-		pthread_create(&(*threads)[i], NULL, philosopher_routine, current);
-		usleep(100);
-		i ++;
-		current = current->next;
+		pthread_mutex_init(&config->forks[i], NULL);
+		i++;
 	}
-	return (i);
+	return (config);
 }

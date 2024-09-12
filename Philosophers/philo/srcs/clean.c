@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 19:59:43 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:56:15 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	cleanup(t_philo *philos, pthread_t *threads, t_config *config)
 	if (config)
 	{
 		i = 0;
-		while (i < config->number_of_philosophers)
+		while (i < config->number_of_philos)
 		{
 			pthread_mutex_destroy(&config->forks[i]);
 			i ++;
@@ -51,4 +51,13 @@ void	cleanup(t_philo *philos, pthread_t *threads, t_config *config)
 		free(config->forks);
 		free(config);
 	}
+}
+
+int	handle_thread_creation_error(t_philo *philos, pthread_t *threads,
+		t_config *config, int created_threads)
+{
+	if (created_threads > 0)
+		join_threads(threads, created_threads);
+	cleanup(philos, threads, config);
+	return (EXIT_FAILURE);
 }
