@@ -6,11 +6,17 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 16:52:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:02:55 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+// remove strcat
+// remove printf
+// remove snprintf
+// fix normi
+// fix maximum eat number
 
 void	clear_existing_semaphores(void)
 {
@@ -56,6 +62,7 @@ int	main(int argc, char **argv)
 		waitpid(philos_pids[i], NULL, 0);
 	waitpid(monitor_pid, NULL, 0);
 	cleanup(philos, philos_pids, config);
+	clear_existing_semaphores();
 	return (EXIT_SUCCESS);
 }
 

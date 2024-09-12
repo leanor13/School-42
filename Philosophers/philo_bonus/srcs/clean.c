@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 16:41:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:02:16 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	cleanup(t_philo *philos, pid_t *philos_pids, t_config *config)
 			sem_name[0] = '/';
 			sem_name[1] = '\0';
 			int_to_string(philos[i].id, id_str);
+			// add own function
 			strcat(sem_name, id_str);
 			sem_unlink(sem_name);
 		}

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 16:45:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 17:09:27 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ void	philo_sleep(int duration_ms, t_config *config)
 static void	philo_eat(t_philo *philo)
 {
 	t_config		*config;
-	struct timeval	current_time;
+	//struct timeval	current_time;
 
 	config = philo->config;
 	if (check_config_stop(config))
 		return;
 	sem_wait(philo->sem_eating);
-	gettimeofday(&current_time, NULL);
+	//gettimeofday(&current_time, NULL);
 	gettimeofday(&philo->last_eat_time, NULL);
 	philo_print("is eating", philo);
+	sem_post(philo->sem_eating);
 	philo_sleep(config->time_to_eat, config);
 	//increment_eat_counter(philo);
-	sem_post(philo->sem_eating);
 }
 
 
