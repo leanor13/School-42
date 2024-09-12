@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:16:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:51:22 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ void	philo_print(const char *message, t_philo *philo)
 
 	config = philo->config;
 	gettimeofday(&current_time, NULL);
-	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
-			/ 1000);
-	pthread_mutex_lock(&config->mutex_write);
+	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	sem_wait(config->sem_write);
 	ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
 	write(STDOUT_FILENO, " ", 1);
 	ft_putnbr_fd(philo->id, STDOUT_FILENO);
@@ -82,5 +81,6 @@ void	philo_print(const char *message, t_philo *philo)
 		message++;
 	}
 	write(STDOUT_FILENO, "\n", 1);
-	pthread_mutex_unlock(&config->mutex_write);
+	sem_post(config->sem_write);
 }
+

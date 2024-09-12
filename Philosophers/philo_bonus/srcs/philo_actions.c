@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:20:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:55:23 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,63 +35,42 @@ static void	philo_eat(t_philo *philo)
 
 	config = philo->config;
 	if (check_config_stop(config))
-		return ;
-	pthread_mutex_lock(&philo->mutex_eating);
+		return;
+	sem_wait(philo->sem_eating);
 	gettimeofday(&current_time, NULL);
 	gettimeofday(&philo->last_eat_time, NULL);
 	philo_print("is eating", philo);
 	philo_sleep(config->time_to_eat, config);
 	increment_eat_counter(philo);
-	pthread_mutex_unlock(&philo->mutex_eating);
+	sem_post(philo->sem_eating);
 }
 
-static int	philo_take_single_fork(t_philo *philo)
-{
-	pthread_mutex_lock(philo->left_fork);
-	philo_print("has taken a fork", philo);
-	philo_sleep(philo->config->time_to_die, philo->config);
-	pthread_mutex_unlock(philo->left_fork);
-	return (EXIT_FAILURE);
-}
 
 static int	philo_take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		philo_print("has taken a fork", philo);
-		if (check_config_stop(philo->config))
-			return (pthread_mutex_unlock(philo->left_fork), 1);
-		pthread_mutex_lock(philo->right_fork);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		philo_print("has taken a fork", philo);
-		if (check_config_stop(philo->config))
-			return (pthread_mutex_unlock(philo->right_fork), 1);
-		pthread_mutex_lock(philo->left_fork);
-	}
+	t_config *config = philo->config;
+
+	sem_wait(config->forks);
 	philo_print("has taken a fork", philo);
-	return (0);
+	if (check_config_stop(config))
+	{
+		sem_post(config->forks);
+		return (EXIT_FAILURE);
+	}
+	sem_wait(config->forks);
+	philo_print("has taken a fork", philo);
+	return (EXIT_SUCCESS);
 }
 
 void	philo_take_forks_and_eat(t_philo *philo)
 {
 	if (check_config_stop(philo->config))
-		return ;
-	if (philo->left_fork == philo->right_fork)
-	{
-		if (philo_take_single_fork(philo))
-			return ;
-	}
-	else
-	{
-		if (philo_take_forks(philo))
-			return ;
-		if (!check_config_stop(philo->config))
-			philo_eat(philo);
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
+		return;
+	if (philo_take_forks(philo))
+		return;
+	if (!check_config_stop(philo->config))
+		philo_eat(philo);
+	sem_post(philo->config->forks);
+	sem_post(philo->config->forks);
 }
+

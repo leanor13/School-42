@@ -6,58 +6,71 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 13:56:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:54:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	free_philos(t_philo *philos)
+void	cleanup(t_philo *philos, pid_t *philos_pids, t_config *config)
 {
-	t_philo	*current;
-	t_philo	*next;
+	int		i;
+	char	sem_name[10];
+	char	id_str[5];
 
-	current = philos;
-	if (!philos)
-		return ;
-	while (current != NULL)
-	{
-		next = current->next;
-		pthread_mutex_destroy(&current->mutex_eating);
-		pthread_mutex_destroy(&current->mutex_counter);
-		free(current);
-		current = next;
-	}
-}
-
-void	cleanup(t_philo *philos, pthread_t *threads, t_config *config)
-{
-	int	i;
-
-	if (threads)
-		free(threads);
+	if (philos_pids)
+		free(philos_pids);
 	if (philos)
-		free_philos(philos);
+	{
+		for (i = 0; i < config->number_of_philos; i++)
+		{
+			sem_close(philos[i].sem_eating);
+			sem_name[0] = '/';
+			sem_name[1] = '\0';
+			int_to_string(philos[i].id, id_str);
+			strcat(sem_name, id_str);
+			sem_unlink(sem_name);
+		}
+		free(philos);
+	}
 	if (config)
 	{
-		i = 0;
-		while (i < config->number_of_philos)
-		{
-			pthread_mutex_destroy(&config->forks[i]);
-			i ++;
-		}
-		pthread_mutex_destroy(&config->mutex_stop);
-		pthread_mutex_destroy(&config->mutex_write);
-		free(config->forks);
+		sem_close(config->forks);
+		sem_unlink("/forks_sem");
+		sem_close(config->sem_write);
+		sem_unlink("/sem_write");
+		sem_close(config->sem_stop);
+		sem_unlink("/sem_stop");
 		free(config);
 	}
 }
 
-int	handle_thread_creation_error(t_philo *philos, pthread_t *threads,
-		t_config *config, int created_threads)
+
+void	handle_process_creation_error(t_philo *philos, pid_t *philos_pids,
+		t_config *config, int created_processes)
 {
-	if (created_threads > 0)
-		join_threads(threads, created_threads);
-	cleanup(philos, threads, config);
-	return (EXIT_FAILURE);
+	int	i;
+
+	for (i = 0; i < created_processes; i++)
+	{
+		kill(philos_pids[i], SIGKILL);
+	}
+	free(philos_pids);
+	cleanup(philos, philos_pids, config);
+	write(STDERR_FILENO, "Error: Failed to create all philosopher processes.\n",
+		51);
+	exit(EXIT_FAILURE);
+}
+
+void	kill_all_philos(t_config *config)
+{
+	int i;
+
+	for (i = 0; i < config->number_of_philos; i++)
+	{
+		if (kill(config->philos_pids[i], SIGKILL) == -1)
+		{
+			perror("kill");
+		}
+	}
 }

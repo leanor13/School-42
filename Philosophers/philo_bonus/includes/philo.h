@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:46:05 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 15:54:29 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <signal.h>
+# include <string.h>
 
 # define NEG_ERROR -1
 
@@ -27,7 +29,7 @@
 time_to_eat time_to_sleep [max_eat_times]\n"
 # define WRONG_INPUT_MSG_LEN 92
 
-# define MONITOR_FREQUENSY_US 100
+# define MONITOR_FREQUENCY_US 500
 
 struct	s_philo;
 
@@ -42,9 +44,10 @@ typedef struct s_config
 	int				max_eat_times;
 	bool			stop;
 	sem_t			*forks;
-	sem_t			sem_write;
-	sem_t			sem_stop;
+	sem_t			*sem_write;
+	sem_t			*sem_stop;
 	pid_t			*philos_pids;
+	struct s_philo			*philos;
 }					t_config;
 
 typedef struct s_philo
@@ -52,15 +55,15 @@ typedef struct s_philo
 	int				id;
 	int				eat_counter;
 	struct timeval	last_eat_time;
-	sem_t			sem_eating;
-	sem_t			sem_counter;
+	sem_t			*sem_eating;
+	sem_t			*sem_counter;
 	struct s_config	*config;
 }					t_philo;
 
 
 int					atoi_positive(char *str);
-void				*philosopher_routine(void *arg);
-void				*monitor_routine(void *params);
+void	philosopher_routine(t_philo *philo);
+void	monitor_routine(t_config *config);
 void				pick_up_forks(t_philo *philo);
 void				put_down_forks(t_philo *philo);
 long				current_time_in_ms(void);
@@ -73,25 +76,21 @@ void				philo_take_forks_and_eat(t_philo *philo);
 
 t_philo				*initiate_philos(t_config *config);
 t_config			*init_config(int argc, char **argv);
-int					create_threads(pthread_t **threads, t_philo *philos,
-						t_config *config);
 
-void				free_philos(t_philo *philos);
-void				cleanup(t_philo *philos, pthread_t *threads,
-						t_config *config);
+void	cleanup(t_philo *philos, pid_t *philos_pids, t_config *config);
 
 bool				check_config_stop(t_config *config);
 void				set_config_stop(t_config *config, bool status);
 int					get_eat_counter(t_philo *philo);
 void				increment_eat_counter(t_philo *philo);
 
-int					handle_thread_creation_error(t_philo *philos,
-						pthread_t *threads, t_config *config,
-						int created_threads);
-int					join_threads(pthread_t *threads, int created_threads);
-int					start_monitor_thread(t_config *config,
-						pthread_t *monitor_thread);
-int					create_threads(pthread_t **threads, t_philo *philos,
-						t_config *config);
+void	handle_process_creation_error(t_philo *philos, pid_t *philos_pids, t_config *config, int created_processes);
+
+int	start_monitor_process(t_config *config, pid_t *monitor_pid);
+int	create_processes(pid_t **pids, t_philo *philos, t_config *config);
+int	wait_for_processes(t_config *config);
+void int_to_string(int num, char *str);
+void	kill_all_philos(t_config *config);
+
 
 #endif
