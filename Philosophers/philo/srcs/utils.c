@@ -6,17 +6,15 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 19:56:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:14:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-#include <limits.h>
-
 int	atoi_positive(char *str)
 {
-	int		number;
+	int	number;
 
 	if (!str || !*str)
 		return (NEG_ERROR);
@@ -45,15 +43,17 @@ void	ft_putnbr_fd(unsigned long long n, int fd)
 	write(fd, &c, 1);
 }
 
-long time_diff_in_ms(struct timeval start, struct timeval end)
+long	time_diff_in_ms(struct timeval start, struct timeval end)
 {
-    return ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000);
+	return ((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec)
+		/ 1000);
 }
 
 long	current_time_in_ms(void)
 {
-	struct timeval	time;
+	struct timeval time;
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
+

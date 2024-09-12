@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 20:06:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 13:35:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void *monitor_routine(void *params)
 				done_philo ++;
 			philo = philo->next;
 		}
-		if (config->max_eat_times >= 0 && done_philo == config->number_of_philosophers)
+		if (config->max_eat_times >= 0 && done_philo == config->number_of_philos)
 		{
 			set_config_stop(config, true);
 			return (NULL);
@@ -64,7 +64,7 @@ void *philosopher_routine(void *params) {
 	config = philo->config;
 	if (!config)
 		return (NULL);
-	if (philo->id % 2 && config->number_of_philosophers > 1)
+	if (philo->id % 2 && config->number_of_philos > 1)
 		philo_sleep(config->time_to_eat / 50, config);
 	while (!check_config_stop(config))
 	{
