@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 20:04:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 10:59:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 	*threads = malloc(sizeof(pthread_t) * config->number_of_philosophers);
 	if (!*threads)
 	{
-		fprintf(stderr, "Failed to allocate memory for threads.\n");
-		return (-1);
+		write(STDERR_FILENO, "Failed to allocate memory for threads.\n", 40);
+		return (EXIT_FAILURE);
 	}
 	while (i < config->number_of_philosophers)
 	{
@@ -119,5 +119,5 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 		i ++;
 		current = current->next;
 	}
-	return (0);
+	return (i);
 }

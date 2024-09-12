@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/11 19:42:29 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 10:59:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,15 +135,10 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	philos = initiate_philos(config);
 	if (!philos)
-	{
-		free(config);
-		fprintf(stderr, "Error initializing philosophers.\n");
-		return (EXIT_FAILURE);
-	}
+		return (free(config), EXIT_FAILURE);
 	created_threads = create_threads(&threads, philos, config);
-	if (created_threads != 0)
+	if (created_threads != EXIT_SUCCESS)
 	{
-		// Cleanup if thread creation failed
 		i = 0;
 		if (created_threads > 0)
 		{
@@ -156,22 +151,17 @@ int	main(int argc, char **argv)
 		cleanup(philos, threads, config);
 		return (EXIT_FAILURE);
 	}
-
-	// check how to join this thread
 	if (pthread_create(&monitor_thread, NULL, monitor_routine, config) != 0)
     {
-        fprintf(stderr, "Failed to create monitor thread.\n");
         cleanup(philos, threads, config);
         return (EXIT_FAILURE);
     }
-	// Join all threads
 	i = 0;
 	while (i < config->number_of_philosophers)
 	{
 		pthread_join(threads[i], NULL);
 		i++;
 	}
-
 	pthread_join(monitor_thread, NULL);
 	cleanup(philos, threads, config);
 	return (EXIT_SUCCESS);
