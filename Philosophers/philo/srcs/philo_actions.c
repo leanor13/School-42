@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:20:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 18:52:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	philo_take_single_fork(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	philo_print("has taken a fork", philo);
-	philo_sleep(philo->config->time_to_die, philo->config);
+	philo_sleep(philo->config->time_to_die + 1, philo->config);
 	pthread_mutex_unlock(philo->left_fork);
 	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:23:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 18:50:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int					start_monitor_thread(t_config *config,
 						pthread_t *monitor_thread);
 int					create_threads(pthread_t **threads, t_philo *philos,
 						t_config *config);
+int	death_check(t_philo *philo, t_config *config);
 
 #endif

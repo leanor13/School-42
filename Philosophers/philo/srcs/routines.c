@@ -6,13 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:12:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/12 18:50:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	death_check(t_philo *philo, t_config *config)
+int	death_check(t_philo *philo, t_config *config)
 {
 	long			time_since_last_eat;
 	struct timeval	current_time;
