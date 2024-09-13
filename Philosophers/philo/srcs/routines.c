@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 18:50:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 17:37:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*philosopher_routine(void *params)
 		if (check_config_stop(config))
 			break ;
 		philo_take_forks_and_eat(philo);
-		if (check_config_stop(config))
+		if (check_config_stop(config) || config->number_of_philos == 1)
 			break ;
 		philo_print("is sleeping", philo);
 		philo_sleep(config->time_to_sleep, config);
