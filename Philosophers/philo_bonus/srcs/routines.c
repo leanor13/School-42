@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:12:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:30:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,57 @@ static int	death_check(t_philo *philo, t_config *config)
 	long			time_since_last_eat;
 	struct timeval	current_time;
 
-	pthread_mutex_lock(&philo->mutex_eating);
+	//philo_print("Trying to check death for", philo);
+	sem_wait(philo->sem_eating);
+	//philo_print_debug("CHECKING", philo);
 	gettimeofday(&current_time, NULL);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	if (time_since_last_eat > config->time_to_die)
 	{
+		//philo_print_debug("KILLING", philo);
 		set_config_stop(config, true);
 		philo_print("died", philo);
-		pthread_mutex_unlock(&philo->mutex_eating);
+		sem_post(philo->sem_eating);
 		return (EXIT_FAILURE);
 	}
-	pthread_mutex_unlock(&philo->mutex_eating);
+	sem_post(philo->sem_eating);
+	//philo_print_debug("check done", philo);
 	return (EXIT_SUCCESS);
 }
 
-void	*monitor_routine(void *params)
+void	*monitor_routine(void *arg)
 {
-	t_config	*config;
-	t_philo		*philo;
-	int			done_philo;
-
-	config = (t_config *)params;
-	while (!check_config_stop(config))
+	t_philo *philo = (t_philo *)arg;
+	
+	while (1)
 	{
-		philo = config->first_philo;
-		done_philo = 0;
-		while (philo)
+		if (check_config_stop(philo->config))
+			return (NULL);
+		if (death_check(philo, philo->config) == EXIT_FAILURE)
 		{
-			if (death_check(philo, config) == EXIT_FAILURE)
-				return (NULL);
-			if (config->max_eat_times >= 0
-				&& get_eat_counter(philo) >= config->max_eat_times)
-				done_philo++;
-			philo = philo->next;
+			kill_all_philos(philo->config);
+			exit(EXIT_FAILURE);
 		}
-		if (config->max_eat_times >= 0
-			&& done_philo == config->number_of_philos)
-			return (set_config_stop(config, true), NULL);
-		usleep(MONITOR_FREQUENSY_US);
+		usleep(MONITOR_FREQUENCY_US);
 	}
-	return (NULL);
 }
 
-void	*philosopher_routine(void *params)
-{
-	t_philo		*philo;
-	t_config	*config;
 
-	philo = (t_philo *)params;
+
+void	philosopher_routine(t_philo *philo)
+{
+	t_config	*config;
+	pthread_t monitor_thread;
+
+    if (pthread_create(&monitor_thread, NULL, monitor_routine, (void *)philo) != 0) {
+        exit(EXIT_FAILURE);
+    }
+    pthread_detach(monitor_thread);
 	config = philo->config;
 	if (!config)
-		return (NULL);
-	if (philo->id % 2 && config->number_of_philos > 1)
-		philo_sleep(config->time_to_eat / 50, config);
+		return;
+	if (philo->id % 2)
+		philo_sleep(1, config);
 	while (!check_config_stop(config))
 	{
 		if (check_config_stop(config))
@@ -77,11 +75,15 @@ void	*philosopher_routine(void *params)
 		philo_take_forks_and_eat(philo);
 		if (check_config_stop(config))
 			break ;
+		sem_wait(philo->sem_eating);
+		//philo_print_debug("before going to sleep", philo);
+		sem_post(philo->sem_eating);
 		philo_print("is sleeping", philo);
 		philo_sleep(config->time_to_sleep, config);
 		if (check_config_stop(config))
 			break ;
 		philo_print("is thinking", philo);
 	}
-	return (NULL);
+	exit(EXIT_SUCCESS);
 }
+

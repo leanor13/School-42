@@ -6,53 +6,70 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:17:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 13:59:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+void int_to_string(int num, char *str)
+{
+	int i = 0;
+	int temp_num = num;
+
+	if (num == 0)
+	{
+		str[i++] = '0';
+		str[i] = '\0';
+		return;
+	}
+
+	while (temp_num != 0)
+	{
+		temp_num /= 10;
+		i++;
+	}
+	str[i] = '\0';
+	while (num != 0)
+	{
+		str[--i] = (num % 10) + '0';
+		num /= 10;
+	}
+}
+
 static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 {
+	char sem_name[10];
+	char id_str[5];
+
 	philo->config = config;
 	philo->id = num + 1;
+
+	sem_name[0] = '/';
+	sem_name[1] = '\0';
+	int_to_string(philo->id, id_str);
+	strcat(sem_name, id_str);
+	philo->sem_eating = sem_open(sem_name, O_CREAT, 0644, 1);
+	sem_wait(philo->sem_eating);
 	gettimeofday(&philo->last_eat_time, NULL);
-	pthread_mutex_init(&philo->mutex_eating, NULL);
-	philo->left_fork = &config->forks[num];
-	philo->right_fork = &config->forks[(num + 1) % config->number_of_philos];
-	pthread_mutex_init(&philo->mutex_counter, NULL);
-	pthread_mutex_lock(&philo->mutex_counter);
+	if (philo->sem_eating == SEM_FAILED)
+		exit(EXIT_FAILURE);
+	sem_post(philo->sem_eating);
 	philo->eat_counter = 0;
-	pthread_mutex_unlock(&philo->mutex_counter);
 }
 
 t_philo	*initiate_philos(t_config *config)
 {
-	t_philo	*head;
-	t_philo	*temp;
-	t_philo	*prev;
 	int		i;
-
-	head = NULL;
-	prev = NULL;
-	i = 0;
-	while (i < config->number_of_philos)
+	
+	config->philos = malloc(sizeof(t_philo) * config->number_of_philos);
+	if (!config->philos)
+		return (NULL);
+	for (i = 0; i < config->number_of_philos; i++)
 	{
-		temp = malloc(sizeof(t_philo));
-		if (!temp)
-			return (free_philos(head), NULL);
-		philo_fields_init(temp, config, i);
-		temp->next = NULL;
-		if (head != NULL)
-			prev->next = temp;
-		else
-			head = temp;
-		prev = temp;
-		i++;
+		philo_fields_init(&config->philos[i], config, i);
 	}
-	prev->next = NULL;
-	config->first_philo = head;
-	return (head);
+	return (config->philos);
 }
 
 static int	validate_input(int argc, char **argv, int *arguments)
@@ -81,22 +98,57 @@ static int	config_fields_init(t_config *config, int *arguments, int argc)
 	config->time_to_die = arguments[1];
 	config->time_to_eat = arguments[2];
 	config->time_to_sleep = arguments[3];
-	config->first_philo = NULL;
+	config->philos_pids = malloc(sizeof(pid_t) * config->number_of_philos);
+	if (!config->philos_pids)
+		return (free(config), EXIT_FAILURE);
+	for (int i = 0; i < config->number_of_philos; i++)
+	{
+		config->philos_pids[i] = 0;
+	}
+	//config->monitor_pids = malloc(sizeof(pid_t) * config->number_of_philos);
+	// if (!config->monitor_pids)
+	// {
+	// 	free(config->monitor_pids);
+	// 	return (free(config), EXIT_FAILURE);
+	// }
 	if (argc == 6)
 		config->max_eat_times = arguments[4];
 	else
 		config->max_eat_times = -1;
-	pthread_mutex_init(&config->mutex_write, NULL);
-	pthread_mutex_init(&config->mutex_stop, NULL);
+	config->sem_write = sem_open("/sem_write", O_CREAT, 0644, 1);
+	if (config->sem_write == SEM_FAILED)
+	{
+		free(config->philos_pids);
+		free(config);
+		return (EXIT_FAILURE);
+	}
+	config->sem_stop = sem_open("/sem_stop", O_CREAT, 0644, 1);
+	if (config->sem_stop == SEM_FAILED)
+	{
+		sem_close(config->sem_write);
+		sem_unlink("/sem_write");
+		free(config->philos_pids);
+		free(config);
+		return (EXIT_FAILURE);
+	}
+	config->forks = sem_open("/forks_sem", O_CREAT, 0644, config->number_of_philos);
+	if (config->forks == SEM_FAILED)
+	{
+		sem_close(config->sem_write);
+		sem_unlink("/sem_write");
+		sem_close(config->sem_stop);
+		sem_unlink("/sem_stop");
+		free(config->philos_pids);
+		free(config);
+		return (EXIT_FAILURE);
+	}
 	if (config->max_eat_times == 0)
 		set_config_stop(config, true);
 	else
 		set_config_stop(config, false);
-	config->forks = malloc(sizeof(pthread_mutex_t) * config->number_of_philos);
-	if (!config->forks)
-		return (free(config), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
+
 
 t_config	*init_config(int argc, char **argv)
 {
@@ -104,24 +156,17 @@ t_config	*init_config(int argc, char **argv)
 	int			i;
 	t_config	*config;
 
-	i = 0;
-	while (i < 5)
-	{
+	for (i = 0; i < 5; i++)
 		arguments[i] = 0;
-		i++;
-	}
 	if (validate_input(argc, argv, arguments) == EXIT_FAILURE)
 		return (NULL);
 	config = malloc(sizeof(t_config));
 	if (!config)
 		return (NULL);
 	if (config_fields_init(config, arguments, argc) == EXIT_FAILURE)
-		return (NULL);
-	i = 0;
-	while (i < config->number_of_philos)
 	{
-		pthread_mutex_init(&config->forks[i], NULL);
-		i++;
+		free(config);
+		return (NULL);
 	}
 	return (config);
 }
