@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 17:09:27 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:46:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ static void	philo_eat(t_philo *philo)
 	sem_wait(philo->sem_eating);
 	//gettimeofday(&current_time, NULL);
 	gettimeofday(&philo->last_eat_time, NULL);
+	philo_print_debug("eat time updated", philo);
 	philo_print("is eating", philo);
-	sem_post(philo->sem_eating);
 	philo_sleep(config->time_to_eat, config);
+	sem_post(philo->sem_eating);
 	//increment_eat_counter(philo);
 }
 
@@ -72,5 +73,28 @@ void	philo_take_forks_and_eat(t_philo *philo)
 		philo_eat(philo);
 	sem_post(philo->config->forks);
 	sem_post(philo->config->forks);
+}
+
+void	philo_print(const char *message, t_philo *philo)
+{
+	t_config			*config;
+	struct timeval		current_time;
+	unsigned long long	timestamp_in_ms;
+
+	config = philo->config;
+	gettimeofday(&current_time, NULL);
+	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	sem_wait(config->sem_write);
+	ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
+	write(STDOUT_FILENO, " ", 1);
+	ft_putnbr_fd(philo->id, STDOUT_FILENO);
+	write(STDOUT_FILENO, " ", 1);
+	while (*message)
+	{
+		write(STDOUT_FILENO, message, 1);
+		message++;
+	}
+	write(STDOUT_FILENO, "\n", 1);
+	sem_post(config->sem_write);
 }
 

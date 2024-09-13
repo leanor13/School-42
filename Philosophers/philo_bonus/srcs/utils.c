@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:51:22 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:56:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,19 @@ long	current_time_in_ms(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	philo_print(const char *message, t_philo *philo)
+void	philo_print_debug(const char *message, t_philo *philo)
 {
 	t_config			*config;
 	struct timeval		current_time;
 	unsigned long long	timestamp_in_ms;
+	long				time_since_last_eat;
 
 	config = philo->config;
 	gettimeofday(&current_time, NULL);
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	sem_wait(config->sem_write);
-	ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	ft_putnbr_fd(philo->id, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	while (*message)
-	{
-		write(STDOUT_FILENO, message, 1);
-		message++;
-	}
-	write(STDOUT_FILENO, "\n", 1);
+	printf("%llu debug: %s, philo: %d, since_last_eat: %ld\n", timestamp_in_ms, message, philo->id, time_since_last_eat);
+	fflush(stdout);
 	sem_post(config->sem_write);
 }
-

@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:13:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:25:43 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,12 @@ int	start_monitor_process(t_config *config, pid_t *monitor_pid)
 	if (*monitor_pid == 0)
 	{
 		monitor_routine(config);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	else if (*monitor_pid > 0)
-	{
 		return (EXIT_SUCCESS);
-	}
 	else
-	{
 		return (EXIT_FAILURE);
-	}
 }
 
 int	wait_for_processes(t_config *config)

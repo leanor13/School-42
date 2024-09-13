@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 17:02:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:25:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	clear_existing_semaphores(void)
 int	main(int argc, char **argv)
 {
 	t_config	*config;
-	t_philo		*philos;
-	pid_t		*philos_pids;
+	t_philo		*philos = NULL;
+	pid_t		*philos_pids = NULL;
 	pid_t		monitor_pid;
 
 	clear_existing_semaphores();
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	philos = initiate_philos(config);
 	if (!philos)
-		return (free(config), EXIT_FAILURE);
+		return (cleanup(philos, philos_pids, config), EXIT_FAILURE);
 	if (create_processes(&philos_pids, philos, config) != EXIT_SUCCESS)
 	{
 		handle_process_creation_error(philos, philos_pids, config, config->number_of_philos);

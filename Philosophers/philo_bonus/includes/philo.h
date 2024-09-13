@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 17:01:51 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 12:44:00 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	wait_for_processes(t_config *config);
 void int_to_string(int num, char *str);
 void	kill_all_philos(t_config *config);
 void	clear_existing_semaphores(void);
+void	philo_print_debug(const char *message, t_philo *philo);
 
 
 #endif
