@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:29:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 19:15:28 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define NEG_ERROR -1
 
-# define WRONG_INPUT "Usage: ./philo number_of_philosophers time_to_die \
+# define WRONG_INPUT "Usage: ./philo_bonus number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [max_eat_times]\n"
 # define WRONG_INPUT_MSG_LEN 92
 
