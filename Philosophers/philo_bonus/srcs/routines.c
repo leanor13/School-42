@@ -19,7 +19,7 @@ static int	death_check(t_philo *philo, t_config *config)
 
 	philo_print("Trying to check death for", philo);
 	sem_wait(philo->sem_eating);
-	philo_print_debug("checking", philo);
+	philo_print_debug("CHECKING", philo);
 	gettimeofday(&current_time, NULL);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	if (time_since_last_eat > config->time_to_die)

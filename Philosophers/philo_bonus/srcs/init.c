@@ -99,6 +99,10 @@ static int	config_fields_init(t_config *config, int *arguments, int argc)
 	config->philos_pids = malloc(sizeof(pid_t) * config->number_of_philos);
 	if (!config->philos_pids)
 		return (free(config), EXIT_FAILURE);
+	for (int i = 0; i < config->number_of_philos; i++)
+	{
+		config->philos_pids[i] = 0;
+	}
 	if (argc == 6)
 		config->max_eat_times = arguments[4];
 	else

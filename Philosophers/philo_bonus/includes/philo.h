@@ -22,6 +22,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <string.h>
+# include <fcntl.h>
+# include <semaphore.h>
 
 # define NEG_ERROR -1
 
@@ -47,6 +49,7 @@ typedef struct s_config
 	sem_t			*sem_write;
 	sem_t			*sem_stop;
 	pid_t			*philos_pids;
+	pid_t			*monitor_pids;
 	struct s_philo			*philos;
 }					t_config;
 
