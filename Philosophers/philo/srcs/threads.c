@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 14:17:10 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:05:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	create_threads(pthread_t **threads, t_philo *philos, t_config *config)
 	while (i < config->number_of_philos)
 	{
 		pthread_create(&(*threads)[i], NULL, philosopher_routine, current);
-		usleep(100);
 		i++;
 		current = current->next;
 	}
