@@ -72,6 +72,11 @@ void	philo_print(const char *message, t_philo *philo)
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
 			/ 1000);
 	pthread_mutex_lock(&config->mutex_write);
+	if (check_config_stop(philo->config) && message[0] != 'd')
+	{
+		pthread_mutex_unlock(&config->mutex_write);
+		return ;
+	}
 	ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
 	write(STDOUT_FILENO, " ", 1);
 	ft_putnbr_fd(philo->id, STDOUT_FILENO);

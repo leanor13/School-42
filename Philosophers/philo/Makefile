@@ -5,7 +5,7 @@ S = main utils clean init routines mutexes philo_actions threads
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -O3 -Wall -Wextra -Werror -g3
+CFLAGS = -O3 -g3 -Wall -Wextra -Werror
 LDFLAGS = -pthread
 
 CC = cc

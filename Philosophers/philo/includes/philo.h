@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 18:50:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 10:46:17 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 time_to_eat time_to_sleep [max_eat_times]\n"
 # define WRONG_INPUT_MSG_LEN 92
 
-# define MONITOR_FREQUENSY_US 100
+# define MONITOR_FREQUENSY_US 500
+# define USLEEP_LENGTH 100
 
 struct	s_philo;
 
