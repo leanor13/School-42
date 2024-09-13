@@ -6,20 +6,18 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 17:02:16 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:24:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	cleanup(t_philo *philos, pid_t *philos_pids, t_config *config)
+void	cleanup(t_philo *philos, t_config *config)
 {
 	int		i;
 	char	sem_name[10];
 	char	id_str[5];
 
-	if (philos_pids)
-		free(philos_pids);
 	if (philos)
 	{
 		for (i = 0; i < config->number_of_philos; i++)
@@ -36,6 +34,10 @@ void	cleanup(t_philo *philos, pid_t *philos_pids, t_config *config)
 	}
 	if (config)
 	{
+		//if (config->monitor_pids)
+		//	free(config->monitor_pids);
+		if (config->philos_pids)
+			free(config->philos_pids);
 		sem_close(config->forks);
 		sem_unlink("/forks_sem");
 		sem_close(config->sem_write);
@@ -56,10 +58,7 @@ void	handle_process_creation_error(t_philo *philos, pid_t *philos_pids,
 	{
 		kill(philos_pids[i], SIGKILL);
 	}
-	free(philos_pids);
-	cleanup(philos, philos_pids, config);
-	write(STDERR_FILENO, "Error: Failed to create all philosopher processes.\n",
-		51);
+	cleanup(philos, config);
 	exit(EXIT_FAILURE);
 }
 

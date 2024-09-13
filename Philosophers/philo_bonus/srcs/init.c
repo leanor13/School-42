@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 16:42:06 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 13:59:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,17 @@ static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 
 	philo->config = config;
 	philo->id = num + 1;
-	gettimeofday(&philo->last_eat_time, NULL);
 
 	sem_name[0] = '/';
 	sem_name[1] = '\0';
 	int_to_string(philo->id, id_str);
 	strcat(sem_name, id_str);
 	philo->sem_eating = sem_open(sem_name, O_CREAT, 0644, 1);
+	sem_wait(philo->sem_eating);
+	gettimeofday(&philo->last_eat_time, NULL);
 	if (philo->sem_eating == SEM_FAILED)
 		exit(EXIT_FAILURE);
+	sem_post(philo->sem_eating);
 	philo->eat_counter = 0;
 }
 
@@ -103,6 +105,12 @@ static int	config_fields_init(t_config *config, int *arguments, int argc)
 	{
 		config->philos_pids[i] = 0;
 	}
+	//config->monitor_pids = malloc(sizeof(pid_t) * config->number_of_philos);
+	// if (!config->monitor_pids)
+	// {
+	// 	free(config->monitor_pids);
+	// 	return (free(config), EXIT_FAILURE);
+	// }
 	if (argc == 6)
 		config->max_eat_times = arguments[4];
 	else

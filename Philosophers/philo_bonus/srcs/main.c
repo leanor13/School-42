@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 12:25:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:02:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,15 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	philos = initiate_philos(config);
 	if (!philos)
-		return (cleanup(philos, philos_pids, config), EXIT_FAILURE);
+		return (cleanup(philos, config), EXIT_FAILURE);
 	if (create_processes(&philos_pids, philos, config) != EXIT_SUCCESS)
 	{
 		handle_process_creation_error(philos, philos_pids, config, config->number_of_philos);
 		return (EXIT_FAILURE);
 	}
-	if (start_monitor_process(config, &monitor_pid) != EXIT_SUCCESS)
-	{
-		kill_all_philos(config);
-		cleanup(philos, philos_pids, config);
-		return (EXIT_FAILURE);
-	}
-	for (int i = 0; i < config->number_of_philos; i++)
-		waitpid(philos_pids[i], NULL, 0);
-	waitpid(monitor_pid, NULL, 0);
-	cleanup(philos, philos_pids, config);
-	clear_existing_semaphores();
+	wait_for_processes(config);
+	cleanup(philos, config);
+	//clear_existing_semaphores();
 	return (EXIT_SUCCESS);
 }
 

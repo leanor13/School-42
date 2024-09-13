@@ -73,7 +73,7 @@ void	philo_print_debug(const char *message, t_philo *philo)
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	long last_eat_in_ms = time_diff_in_ms((struct timeval){0, 0}, philo->last_eat_time);
-	printf("philo %d last_eat_time: %ld ms\n", philo->id, last_eat_in_ms);
+	//printf("philo %d last_eat_time: %ld ms\n", philo->id, last_eat_in_ms);
 	sem_wait(config->sem_write);
 	printf("%llu debug: %s, philo: %d, last_eat_time: %ld, since_last_eat: %ld\n", timestamp_in_ms, message, philo->id, last_eat_in_ms, time_since_last_eat);
 	fflush(stdout);
