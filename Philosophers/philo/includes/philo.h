@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 10:46:17 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:08:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 
 # define NEG_ERROR -1
 
-# define WRONG_INPUT "Usage: ./philo number_of_philosophers time_to_die \
+# define WRONG_INPUT \
+	"Usage: ./philo number_of_philosophers time_to_die \
 time_to_eat time_to_sleep [max_eat_times]\n"
 # define WRONG_INPUT_MSG_LEN 92
 
@@ -94,6 +95,6 @@ int					start_monitor_thread(t_config *config,
 						pthread_t *monitor_thread);
 int					create_threads(pthread_t **threads, t_philo *philos,
 						t_config *config);
-int	death_check(t_philo *philo, t_config *config);
+int					death_check(t_philo *philo, t_config *config);
 
 #endif
