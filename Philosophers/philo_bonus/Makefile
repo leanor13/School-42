@@ -39,7 +39,7 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 	@echo "✅ $(GREEN)$(NAME) created $(NC)"
 
-$(OBJS): includes/philo.h
+$(OBJS): includes/philo_bonus.h
 
 clean:
 	@$(RM) -r $(OBJS_DIR)

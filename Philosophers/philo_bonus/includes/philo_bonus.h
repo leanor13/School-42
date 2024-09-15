@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 19:15:28 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 11:32:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <limits.h>
 # include <pthread.h>
@@ -44,10 +44,10 @@ typedef struct s_config
 	int				time_to_sleep;
 	int				max_eat_times;
 	bool			stop;
-	sem_t			*forks;
+	sem_t			*forks_sem;
 	sem_t			*sem_write;
 	sem_t			*sem_stop;
-	pid_t			*philos_pids;
+	sem_t			*sem_killer;
 	//pid_t			*monitor_pids;
 	struct s_philo			*philos;
 }					t_config;
@@ -55,10 +55,10 @@ typedef struct s_config
 typedef struct s_philo
 {
 	int				id;
+	pid_t			pid;
 	int				eat_counter;
 	struct timeval	last_eat_time;
-	sem_t			*sem_eating;
-	sem_t			*sem_counter;
+	bool			is_dead;
 	struct s_config	*config;
 }					t_philo;
 
@@ -76,15 +76,15 @@ void				philo_sleep(int duration_ms, t_config *config);
 void				philo_print(const char *message, t_philo *philo);
 void				philo_take_forks_and_eat(t_philo *philo);
 
-t_philo				*initiate_philos(t_config *config);
+t_philo				*init_philos(t_config *config);
 t_config			*init_config(int argc, char **argv);
 
 void	cleanup(t_philo *philos, t_config *config);
 
 bool				check_config_stop(t_config *config);
 void				set_config_stop(t_config *config, bool status);
-int					get_eat_counter(t_philo *philo);
-void				increment_eat_counter(t_philo *philo);
+//int					get_eat_counter(t_philo *philo);
+//void				increment_eat_counter(t_philo *philo);
 
 void	handle_process_creation_error(t_philo *philos, pid_t *philos_pids, t_config *config, int created_processes);
 

@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:30:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 15:30:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 static int	death_check(t_philo *philo, t_config *config)
 {
@@ -18,8 +18,8 @@ static int	death_check(t_philo *philo, t_config *config)
 	struct timeval	current_time;
 
 	//philo_print("Trying to check death for", philo);
-	sem_wait(philo->sem_eating);
-	//philo_print_debug("CHECKING", philo);
+	//printf("here4\n");
+	sem_wait(config->sem_killer);
 	gettimeofday(&current_time, NULL);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	if (time_since_last_eat > config->time_to_die)
@@ -27,10 +27,15 @@ static int	death_check(t_philo *philo, t_config *config)
 		//philo_print_debug("KILLING", philo);
 		set_config_stop(config, true);
 		philo_print("died", philo);
-		sem_post(philo->sem_eating);
+		sem_post(config->sem_killer);
+		//sem_post(config->sem_stop);
 		return (EXIT_FAILURE);
 	}
-	sem_post(philo->sem_eating);
+	if (config->max_eat_times > 0 && philo->eat_counter >= config->max_eat_times)
+	{
+		kill(philo->pid, SIGKILL);
+	}
+	sem_post(config->sem_killer);
 	//philo_print_debug("check done", philo);
 	return (EXIT_SUCCESS);
 }
@@ -52,17 +57,23 @@ void	*monitor_routine(void *arg)
 	}
 }
 
+int start_monitor_thread(t_philo *philo)
+{
+    pthread_t monitor_thread;
 
+    if (pthread_create(&monitor_thread, NULL, monitor_routine, (void *)philo) != 0)
+        return (EXIT_FAILURE);
+    if (pthread_detach(monitor_thread) != 0)
+        return (EXIT_FAILURE);
+    return (EXIT_SUCCESS);
+}
 
 void	philosopher_routine(t_philo *philo)
 {
 	t_config	*config;
 	pthread_t monitor_thread;
 
-    if (pthread_create(&monitor_thread, NULL, monitor_routine, (void *)philo) != 0) {
-        exit(EXIT_FAILURE);
-    }
-    pthread_detach(monitor_thread);
+    start_monitor_thread(philo);
 	config = philo->config;
 	if (!config)
 		return;
@@ -70,14 +81,9 @@ void	philosopher_routine(t_philo *philo)
 		philo_sleep(1, config);
 	while (!check_config_stop(config))
 	{
-		if (check_config_stop(config))
-			break ;
 		philo_take_forks_and_eat(philo);
 		if (check_config_stop(config))
 			break ;
-		sem_wait(philo->sem_eating);
-		//philo_print_debug("before going to sleep", philo);
-		sem_post(philo->sem_eating);
 		philo_print("is sleeping", philo);
 		philo_sleep(config->time_to_sleep, config);
 		if (check_config_stop(config))

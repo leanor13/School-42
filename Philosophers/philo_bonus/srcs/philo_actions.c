@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:30:41 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 15:07:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 void	philo_sleep(int duration_ms, t_config *config)
 {
@@ -36,13 +36,12 @@ static void	philo_eat(t_philo *philo)
 	config = philo->config;
 	if (check_config_stop(config))
 		return;
-	sem_wait(philo->sem_eating);
 	//gettimeofday(&current_time, NULL);
 	gettimeofday(&philo->last_eat_time, NULL);
 	//philo_print_debug("eat time updated", philo);
 	philo_print("is eating", philo);
 	philo_sleep(config->time_to_eat, config);
-	sem_post(philo->sem_eating);
+	philo->eat_counter ++;
 	//increment_eat_counter(philo);
 }
 
@@ -51,14 +50,14 @@ static int	philo_take_forks(t_philo *philo)
 {
 	t_config *config = philo->config;
 
-	sem_wait(config->forks);
+	sem_wait(config->forks_sem);
 	philo_print("has taken a fork", philo);
 	if (check_config_stop(config))
 	{
-		sem_post(config->forks);
+		sem_post(config->forks_sem);
 		return (EXIT_FAILURE);
 	}
-	sem_wait(config->forks);
+	sem_wait(config->forks_sem);
 	philo_print("has taken a fork", philo);
 	return (EXIT_SUCCESS);
 }
@@ -71,8 +70,8 @@ void	philo_take_forks_and_eat(t_philo *philo)
 		return;
 	if (!check_config_stop(philo->config))
 		philo_eat(philo);
-	sem_post(philo->config->forks);
-	sem_post(philo->config->forks);
+	sem_post(philo->config->forks_sem);
+	sem_post(philo->config->forks_sem);
 }
 
 void	philo_print(const char *message, t_philo *philo)

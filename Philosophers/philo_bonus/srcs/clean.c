@@ -6,68 +6,51 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:24:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 14:53:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 void	cleanup(t_philo *philos, t_config *config)
 {
 	int		i;
 	char	sem_name[10];
 	char	id_str[5];
-
+	
 	if (philos)
-	{
-		for (i = 0; i < config->number_of_philos; i++)
-		{
-			sem_close(philos[i].sem_eating);
-			sem_name[0] = '/';
-			sem_name[1] = '\0';
-			int_to_string(philos[i].id, id_str);
-			// add own function
-			strcat(sem_name, id_str);
-			sem_unlink(sem_name);
-		}
+	{	
+		kill_all_philos(config);
 		free(philos);
 	}
 	if (config)
 	{
 		//if (config->monitor_pids)
 		//	free(config->monitor_pids);
-		if (config->philos_pids)
-			free(config->philos_pids);
-		sem_close(config->forks);
+		//if (config->philos_pids)
+		//	free(config->philos_pids);
+		sem_close(config->forks_sem);
 		sem_unlink("/forks_sem");
 		sem_close(config->sem_write);
 		sem_unlink("/sem_write");
 		sem_close(config->sem_stop);
 		sem_unlink("/sem_stop");
+		sem_close(config->sem_killer);
+		sem_unlink("/sem_killer");
 		free(config);
 	}
-}
-
-
-void	handle_process_creation_error(t_philo *philos, pid_t *philos_pids,
-		t_config *config, int created_processes)
-{
-	int	i;
-
-	for (i = 0; i < created_processes; i++)
-	{
-		kill(philos_pids[i], SIGKILL);
-	}
-	cleanup(philos, config);
-	exit(EXIT_FAILURE);
 }
 
 void	kill_all_philos(t_config *config)
 {
 	int i;
 
-	for (i = 0; i < config->number_of_philos; i++)
+	i = 0;
+	while (i < config->number_of_philos)
 	{
-		kill(config->philos_pids[i], SIGKILL);
+		// if not already killed - kill
+		if (!config->philos[i].is_dead)
+			kill(config->philos[i].pid, SIGKILL);
+		i ++;
 	}
 }
