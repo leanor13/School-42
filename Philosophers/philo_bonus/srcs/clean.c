@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 16:26:42 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:00:08 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	cleanup(t_philo *philos, t_config *config)
 		sem_unlink("/sem_stop");
 		sem_close(config->sem_killer);
 		sem_unlink("/sem_killer");
+		sem_close(config->sem_fed_up);
+		sem_unlink("/sem_fed_up");
 		free(config);
 	}
 }

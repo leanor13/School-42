@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 11:32:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 19:42:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_config
 	sem_t			*sem_write;
 	sem_t			*sem_stop;
 	sem_t			*sem_killer;
+	sem_t			*sem_fed_up;
 	//pid_t			*monitor_pids;
 	struct s_philo			*philos;
 }					t_config;

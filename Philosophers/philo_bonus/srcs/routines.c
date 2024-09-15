@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 16:23:56 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:01:25 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ static int	death_check(t_philo *philo, t_config *config)
 	if (time_since_last_eat > config->time_to_die)
 	{
 		//philo_print_debug("KILLING", philo);
-		set_config_stop(config, true);
 		philo_print("died", philo);
 		sem_post(config->sem_killer);
+		sem_post(config->sem_stop);
 		//sem_post(config->sem_stop);
 		return (EXIT_FAILURE);
 	}
-	if (config->max_eat_times > 0 && philo->eat_counter >= config->max_eat_times)
-	{
-		kill(philo->pid, SIGKILL);
-		philo->pid = -1;
-	}
+	// if (config->max_eat_times > 0 && philo->eat_counter >= config->max_eat_times)
+	// {
+	// 	kill(philo->pid, SIGKILL);
+	// 	philo->pid = 0;
+	// }
 	sem_post(config->sem_killer);
 	//philo_print_debug("check done", philo);
 	return (EXIT_SUCCESS);

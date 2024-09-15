@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 15:24:09 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:00:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 void	clear_existing_semaphores(void)
 {
-	sem_unlink("/forks_sem");
-	sem_unlink("/sem_write");
-	sem_unlink("/sem_stop");
-	sem_unlink("/sem_killer");
+	//sem_unlink("/forks_sem");
+	//sem_unlink("/sem_write");
+	//sem_unlink("/sem_stop");
+	//sem_unlink("/sem_killer");
 	return ;
 }
 

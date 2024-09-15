@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 15:07:12 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:02:11 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static void	philo_eat(t_philo *philo)
 	//philo_print_debug("eat time updated", philo);
 	philo_print("is eating", philo);
 	philo_sleep(config->time_to_eat, config);
-	sem_wait(config->sem_killer);
 	philo->eat_counter ++;
-	sem_post(config->sem_killer);
+	if (config->max_eat_times >= 0 && philo->eat_counter == config->max_eat_times)
+		sem_post(config->sem_fed_up);
 	//increment_eat_counter(philo);
 }
 
@@ -73,9 +73,9 @@ void	philo_take_forks_and_eat(t_philo *philo)
 		return;
 	if (!check_config_stop(philo->config))
 	{
-		//sem_wait(philo->config->sem_killer);
+		sem_wait(philo->config->sem_killer);
 		philo_eat(philo);
-		//sem_post(philo->config->sem_killer);
+		sem_post(philo->config->sem_killer);
 	}
 	sem_post(philo->config->forks_sem);
 	sem_post(philo->config->forks_sem);
