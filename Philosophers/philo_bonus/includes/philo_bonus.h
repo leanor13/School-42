@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:55:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:57:36 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 
 t_config			*init_config(int argc, char **argv);
 int					init_philos(t_config *config);
-int					create_processes(t_philo *philos, t_config *config);
+int					create_processes(t_config *config);
 
 void				philosopher_routine(t_philo *philo);
 int					start_monitor_thread(t_philo *philo);
@@ -76,7 +76,7 @@ void				philo_take_forks_and_eat(t_philo *philo);
 bool				check_config_stop(t_config *config);
 void				set_config_stop(t_config *config, bool status);
 
-void				cleanup(t_philo *philos, t_config *config);
+void				cleanup(t_config *config);
 void				kill_all_philos(t_config *config);
 int					wait_for_processes(t_config *config);
 

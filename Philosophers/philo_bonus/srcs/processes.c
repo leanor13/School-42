@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:51:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 10:00:50 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ static int	wait_for_fed_up(t_config *config)
 	return 1;
 }
 
-int	create_processes(t_philo *philos, t_config *config)
+int	create_processes(t_config *config)
 {
 	int		i;
 	pid_t	pid;
+	t_philo *philos;
 
+	philos = config->philos;
 	i = 0;
 	while (i < config->number_of_philos)
 	{
@@ -52,22 +54,6 @@ int	create_processes(t_philo *philos, t_config *config)
 	return (EXIT_SUCCESS);
 }
 
-
-// int	start_monitor_process(t_config *config, pid_t *monitor_pid)
-// {
-// 	*monitor_pid = fork();
-// 	if (*monitor_pid == 0)
-// 	{
-// 		monitor_routine(config);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	else if (*monitor_pid > 0)
-// 		return (EXIT_SUCCESS);
-// 	else
-// 		return (EXIT_FAILURE);
-// }
-
-
 int	wait_for_processes(t_config *config)
 {
 	int i;
@@ -76,7 +62,6 @@ int	wait_for_processes(t_config *config)
 	for (i = 0; i < config->number_of_philos; i++)
 	{
 		waitpid(config->philos[i].pid, &status, 0);
-		//waitpid(config->monitor_pids[i], &status, 0);
 		break ;
 	}
 	return (EXIT_SUCCESS);

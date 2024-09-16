@@ -6,22 +6,22 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:27:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:58:49 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-void	cleanup(t_philo *philos, t_config *config)
+void	cleanup(t_config *config)
 {
 	int		i;
 	char	sem_name[10];
 	char	id_str[5];
 
-	if (philos)
+	if (config->philos)
 	{
 		kill_all_philos(config);
-		free(philos);
+		free(config->philos);
 	}
 	if (config)
 	{
