@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:14:48 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:55:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,15 @@ typedef struct s_philo
 	struct s_config	*config;
 }					t_philo;
 
-t_philo				*init_philos(t_config *config);
 t_config			*init_config(int argc, char **argv);
+int					init_philos(t_config *config);
+int					create_processes(t_philo *philos, t_config *config);
+
 void				philosopher_routine(t_philo *philo);
+int					start_monitor_thread(t_philo *philo);
 void				*monitor_routine(void *arg);
 
 void				philo_take_forks_and_eat(t_philo *philo);
-int					create_processes(pid_t **pids, t_philo *philos,
-						t_config *config);
-void				philo_print_debug(const char *message, t_philo *philo);
-int					start_monitor_thread(t_philo *philo);
 
 bool				check_config_stop(t_config *config);
 void				set_config_stop(t_config *config, bool status);
@@ -80,12 +79,13 @@ void				set_config_stop(t_config *config, bool status);
 void				cleanup(t_philo *philos, t_config *config);
 void				kill_all_philos(t_config *config);
 int					wait_for_processes(t_config *config);
-void				clear_existing_semaphores(void);
 
 void				philo_sleep(int duration_ms, t_config *config);
 void				philo_print(const char *message, t_philo *philo);
 int					atoi_positive(char *str);
 void				ft_putnbr_fd(unsigned long long n, int fd);
 long				time_diff_in_ms(struct timeval start, struct timeval end);
+
+//void				philo_print_debug(const char *message, t_philo *philo);
 
 #endif

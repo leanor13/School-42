@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:14:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:27:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	cleanup(t_philo *philos, t_config *config)
 	int		i;
 	char	sem_name[10];
 	char	id_str[5];
-	
+
 	if (philos)
-	{	
+	{
 		kill_all_philos(config);
 		free(philos);
 	}
@@ -41,7 +41,7 @@ void	cleanup(t_philo *philos, t_config *config)
 
 void	kill_all_philos(t_config *config)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	sem_wait(config->sem_write);
@@ -49,7 +49,7 @@ void	kill_all_philos(t_config *config)
 	{
 		if (config->philos[i].pid > 0)
 			kill(config->philos[i].pid, SIGKILL);
-		i ++;
+		i++;
 	}
 	sem_post(config->sem_write);
 }

@@ -6,13 +6,18 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:05:02 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:51:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
+static int	wait_for_fed_up(t_config *config)
+{
+	return 1;
+}
+
+int	create_processes(t_philo *philos, t_config *config)
 {
 	int		i;
 	pid_t	pid;

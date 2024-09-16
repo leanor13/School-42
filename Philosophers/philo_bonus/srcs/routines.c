@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:41:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:34:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,18 @@ static int	death_check(t_philo *philo, t_config *config)
 	long			time_since_last_eat;
 	struct timeval	current_time;
 
-	//philo_print("Trying to check death for", philo);
-	//printf("here4\n");
 	sem_wait(config->sem_killer);
 	gettimeofday(&current_time, NULL);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
 	if (time_since_last_eat > config->time_to_die)
 	{
-		//philo_print_debug("KILLING", philo);
 		philo_print("died", philo);
 		set_config_stop(config, true);
 		sem_post(config->sem_fed_up);
 		sem_post(config->sem_killer);
-		//sem_post(config->sem_stop);
 		return (EXIT_FAILURE);
 	}
-	// if (config->max_eat_times > 0 && philo->eat_counter >= config->max_eat_times)
-	// {
-	// 	kill(philo->pid, SIGKILL);
-	// 	philo->pid = 0;
-	// }
 	sem_post(config->sem_killer);
-	//philo_print_debug("check done", philo);
 	return (EXIT_SUCCESS);
 }
 

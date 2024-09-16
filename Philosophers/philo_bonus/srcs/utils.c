@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:09:47 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:33:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ long	time_diff_in_ms(struct timeval start, struct timeval end)
 	return (sec_diff + usec_diff);
 }
 
-void	philo_print_debug(const char *message, t_philo *philo)
+/* void	philo_print_debug(const char *message, t_philo *philo)
 {
 	t_config			*config;
 	struct timeval		current_time;
@@ -71,3 +71,4 @@ void	philo_print_debug(const char *message, t_philo *philo)
 	fflush(stdout);
 	sem_post(config->sem_write);
 }
+*/
