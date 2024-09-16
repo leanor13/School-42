@@ -6,22 +6,19 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:23:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 08:50:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 {
 	int		i;
 	pid_t	pid;
 
-	*pids = malloc(sizeof(pid_t) * config->number_of_philos);
-	if (!*pids)
-		return (NEG_ERROR);
-
-	for (i = 0; i < config->number_of_philos; i++)
+	i = 0;
+	while (i < config->number_of_philos)
 	{
 		pid = fork();
 		if (pid == 0)
@@ -30,14 +27,24 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 			exit(EXIT_SUCCESS);
 		}
 		else if (pid > 0)
-		{
-			(*pids)[i] = pid;
-		}
+			philos[i].pid = pid;
 		else
-		{
 			return (NEG_ERROR);
-		}
+		i ++;
 	}
+	i = 0;
+	if (config->max_eat_times > 0)
+	{
+		while (i < config->number_of_philos && !check_config_stop(config))
+		{
+			sem_wait(config->sem_fed_up);
+			i ++;
+		}
+		philo_sleep(config->time_to_eat, config);
+		set_config_stop(config, true);
+		kill_all_philos(config);
+	}
+
 	return (EXIT_SUCCESS);
 }
 
@@ -56,17 +63,6 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 // 		return (EXIT_FAILURE);
 // }
 
-int start_monitor_thread(t_philo *philo)
-{
-    pthread_t monitor_thread;
-
-    if (pthread_create(&monitor_thread, NULL, monitor_routine, (void *)philo) != 0)
-        return (EXIT_FAILURE);
-    if (pthread_detach(monitor_thread) != 0)
-        return (EXIT_FAILURE);
-    return (EXIT_SUCCESS);
-}
-
 
 int	wait_for_processes(t_config *config)
 {
@@ -75,8 +71,9 @@ int	wait_for_processes(t_config *config)
 
 	for (i = 0; i < config->number_of_philos; i++)
 	{
-		waitpid(config->philos_pids[i], &status, 0);
+		waitpid(config->philos[i].pid, &status, 0);
 		//waitpid(config->monitor_pids[i], &status, 0);
+		break ;
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 13:57:32 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 09:37:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 int	atoi_positive(char *str)
 {

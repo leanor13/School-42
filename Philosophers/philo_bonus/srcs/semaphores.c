@@ -6,11 +6,11 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:20 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/12 15:54:53 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 07:47:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 bool	check_config_stop(t_config *config)
 {
@@ -31,19 +31,19 @@ void	set_config_stop(t_config *config, bool status)
 }
 
 
-int	get_eat_counter(t_philo *philo)
-{
-	int	result;
+// int	get_eat_counter(t_philo *philo)
+// {
+// 	int	result;
 
-	sem_wait(philo->sem_counter);
-	result = philo->eat_counter;
-	sem_post(philo->sem_counter);
-	return (result);
-}
+// 	sem_wait(philo->sem_counter);
+// 	result = philo->eat_counter;
+// 	sem_post(philo->sem_counter);
+// 	return (result);
+// }
 
-void	increment_eat_counter(t_philo *philo)
-{
-	sem_wait(philo->sem_counter);
-	philo->eat_counter += 1;
-	sem_post(philo->sem_counter);
-}
+// void	increment_eat_counter(t_philo *philo)
+// {
+// 	sem_wait(philo->sem_counter);
+// 	philo->eat_counter += 1;
+// 	sem_post(philo->sem_counter);
+// }

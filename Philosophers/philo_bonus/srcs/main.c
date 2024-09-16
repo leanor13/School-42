@@ -6,30 +6,26 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/13 14:02:44 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/15 20:00:21 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "../includes/philo_bonus.h"
 
 // remove strcat
 // remove printf
 // remove snprintf
 // fix normi
 // fix maximum eat number
+// fix cleanup
 
 void	clear_existing_semaphores(void)
 {
-	sem_unlink("/forks_sem");
-	sem_unlink("/sem_write");
-	sem_unlink("/sem_stop");
-
-	for (int i = 1; i <= 300; i++)
-	{
-		char sem_name[10];
-		snprintf(sem_name, sizeof(sem_name), "/%d", i);
-		sem_unlink(sem_name);
-	}
+	//sem_unlink("/forks_sem");
+	//sem_unlink("/sem_write");
+	//sem_unlink("/sem_stop");
+	//sem_unlink("/sem_killer");
+	return ;
 }
 
 
@@ -44,17 +40,16 @@ int	main(int argc, char **argv)
 	config = init_config(argc, argv);
 	if (!config)
 		return (EXIT_FAILURE);
-	philos = initiate_philos(config);
+	philos = init_philos(config);
 	if (!philos)
 		return (cleanup(philos, config), EXIT_FAILURE);
 	if (create_processes(&philos_pids, philos, config) != EXIT_SUCCESS)
 	{
-		handle_process_creation_error(philos, philos_pids, config, config->number_of_philos);
+		cleanup(philos, config);
 		return (EXIT_FAILURE);
 	}
 	wait_for_processes(config);
 	cleanup(philos, config);
-	//clear_existing_semaphores();
 	return (EXIT_SUCCESS);
 }
 
