@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:50:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:14:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,6 @@ void	cleanup(t_philo *philos, t_config *config)
 	}
 	if (config)
 	{
-		//if (config->monitor_pids)
-		//	free(config->monitor_pids);
-		//if (config->philos_pids)
-		//	free(config->philos_pids);
 		sem_close(config->forks_sem);
 		sem_unlink("/forks_sem");
 		sem_close(config->sem_write);
@@ -51,7 +47,6 @@ void	kill_all_philos(t_config *config)
 	sem_wait(config->sem_write);
 	while (i < config->number_of_philos)
 	{
-		// if not already killed - kill
 		if (config->philos[i].pid > 0)
 			kill(config->philos[i].pid, SIGKILL);
 		i ++;

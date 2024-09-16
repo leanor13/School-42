@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:50:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:05:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 		set_config_stop(config, true);
 		kill_all_philos(config);
 	}
-
 	return (EXIT_SUCCESS);
 }
 

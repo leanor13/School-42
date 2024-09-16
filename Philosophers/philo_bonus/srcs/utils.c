@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 09:37:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 09:09:47 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@ long	time_diff_in_ms(struct timeval start, struct timeval end)
 	sec_diff = (end.tv_sec - start.tv_sec) * 1000;
 	usec_diff = (end.tv_usec - start.tv_usec) / 1000;
 	return (sec_diff + usec_diff);
-}
-
-long	current_time_in_ms(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
 void	philo_print_debug(const char *message, t_philo *philo)
