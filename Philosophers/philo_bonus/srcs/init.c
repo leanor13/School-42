@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 20:08:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 08:15:34 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	init_config_fields(t_config *config, int *arguments, int argc)
 	sem_unlink("/sem_write");
 	config->sem_write = sem_open("/sem_write", O_CREAT, 0644, 1);
 	sem_unlink("/sem_stop");
-	config->sem_stop = sem_open("/sem_stop", O_CREAT, 0644, 0);
+	config->sem_stop = sem_open("/sem_stop", O_CREAT, 0644, 1);
 	sem_unlink("/forks_sem");
 	config->forks_sem = sem_open("/forks_sem", O_CREAT, 0644, config->number_of_philos);
 	sem_unlink("/sem_killer");

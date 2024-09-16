@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 20:01:25 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 08:41:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ static int	death_check(t_philo *philo, t_config *config)
 	{
 		//philo_print_debug("KILLING", philo);
 		philo_print("died", philo);
+		set_config_stop(config, true);
+		sem_post(config->sem_fed_up);
 		sem_post(config->sem_killer);
-		sem_post(config->sem_stop);
 		//sem_post(config->sem_stop);
 		return (EXIT_FAILURE);
 	}

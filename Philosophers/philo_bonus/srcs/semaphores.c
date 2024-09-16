@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:20 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 19:57:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 07:47:19 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ bool	check_config_stop(t_config *config)
 
 void	set_config_stop(t_config *config, bool status)
 {
+	sem_wait(config->sem_stop);
+	config->stop = status;
 	sem_post(config->sem_stop);
 }
 

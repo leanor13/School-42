@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 20:00:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 08:50:14 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	kill_all_philos(t_config *config)
 	int i;
 
 	i = 0;
+	sem_wait(config->sem_write);
 	while (i < config->number_of_philos)
 	{
 		// if not already killed - kill
@@ -55,4 +56,5 @@ void	kill_all_philos(t_config *config)
 			kill(config->philos[i].pid, SIGKILL);
 		i ++;
 	}
+	sem_post(config->sem_write);
 }

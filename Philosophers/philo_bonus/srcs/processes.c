@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/15 19:56:55 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 08:50:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 	i = 0;
 	if (config->max_eat_times > 0)
 	{
-		while (i < config->number_of_philos)
+		while (i < config->number_of_philos && !check_config_stop(config))
 		{
 			sem_wait(config->sem_fed_up);
 			i ++;
 		}
-		
+		set_config_stop(config, true);
+		kill_all_philos(config);
 	}
 
 	return (EXIT_SUCCESS);
