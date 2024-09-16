@@ -40,6 +40,7 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 			sem_wait(config->sem_fed_up);
 			i ++;
 		}
+		philo_sleep(config->time_to_eat, config);
 		set_config_stop(config, true);
 		kill_all_philos(config);
 	}
