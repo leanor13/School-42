@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 10:00:50 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:51:30 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static int	wait_for_fed_up(t_config *config)
 {
-	return 1;
+	return (1);
 }
 
 int	create_processes(t_config *config)
 {
 	int		i;
 	pid_t	pid;
-	t_philo *philos;
+	t_philo	*philos;
 
 	philos = config->philos;
 	i = 0;
@@ -37,7 +37,7 @@ int	create_processes(t_config *config)
 			philos[i].pid = pid;
 		else
 			return (NEG_ERROR);
-		i ++;
+		i++;
 	}
 	i = 0;
 	if (config->max_eat_times > 0)
@@ -45,7 +45,7 @@ int	create_processes(t_config *config)
 		while (i < config->number_of_philos && !check_config_stop(config))
 		{
 			sem_wait(config->sem_fed_up);
-			i ++;
+			i++;
 		}
 		philo_sleep(config->time_to_eat, config);
 		set_config_stop(config, true);
@@ -56,14 +56,15 @@ int	create_processes(t_config *config)
 
 int	wait_for_processes(t_config *config)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
-	for (i = 0; i < config->number_of_philos; i++)
+	i = 0;
+	while (i < config->number_of_philos)
 	{
 		waitpid(config->philos[i].pid, &status, 0);
-		break ;
+		i ++;
+		//break ;
 	}
 	return (EXIT_SUCCESS);
 }
-

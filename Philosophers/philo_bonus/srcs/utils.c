@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:33:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:50:07 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,20 @@ long	time_diff_in_ms(struct timeval start, struct timeval end)
 	struct timeval		current_time;
 	unsigned long long	timestamp_in_ms;
 	long				time_since_last_eat;
+	long				last_eat_in_ms;
 
 	config = philo->config;
 	gettimeofday(&current_time, NULL);
-	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec / 1000);
+	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
+			/ 1000);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
-	long last_eat_in_ms = time_diff_in_ms((struct timeval){0, 0}, philo->last_eat_time);
+	last_eat_in_ms = time_diff_in_ms((struct timeval){0, 0},
+			philo->last_eat_time);
 	//printf("philo %d last_eat_time: %ld ms\n", philo->id, last_eat_in_ms);
 	sem_wait(config->sem_write);
-	printf("%llu debug: %s, philo: %d, last_eat_time: %ld, since_last_eat: %ld\n", timestamp_in_ms, message, philo->id, last_eat_in_ms, time_since_last_eat);
+	printf("%llu debug: %s, philo: %d, last_eat_time: %ld, since_last_eat:
+		%ld\n", timestamp_in_ms, message, philo->id, last_eat_in_ms,
+		time_since_last_eat);
 	fflush(stdout);
 	sem_post(config->sem_write);
 }

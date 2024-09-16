@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:20 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 07:47:19 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:49:52 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	set_config_stop(t_config *config, bool status)
 	config->stop = status;
 	sem_post(config->sem_stop);
 }
-
 
 // int	get_eat_counter(t_philo *philo)
 // {
