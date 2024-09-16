@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:48:37 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/16 12:26:58 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	philo_take_forks(t_philo *philo)
 	philo_print("has taken a fork", philo);
 	if (check_config_stop(config))
 	{
-		sem_post(config->forks_sem);
+		//sem_post(config->forks_sem);
 		return (EXIT_FAILURE);
 	}
 	sem_wait(config->forks_sem);

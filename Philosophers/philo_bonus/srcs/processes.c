@@ -34,7 +34,10 @@ int	create_processes(t_config *config)
 			exit(EXIT_SUCCESS);
 		}
 		else if (pid > 0)
+		{
+			//philo_print("\nPID:", &philos[i]);
 			philos[i].pid = pid;
+		}
 		else
 			return (NEG_ERROR);
 		i++;
