@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:54:04 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:18:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	init_config_fields(t_config *config, int *arguments, int argc)
 	if (init_config_semaphores(config) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (config->max_eat_times == 0)
-		set_config_stop(config, true);
+		return (EXIT_FAILURE);
 	else
 		set_config_stop(config, false);
 	return (EXIT_SUCCESS);

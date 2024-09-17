@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:52:33 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:21:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,19 @@ int	init_processes(t_config *config)
 {
 	int		i;
 	pid_t	pid;
-	t_philo	*philos;
 
-	philos = config->philos;
 	i = 0;
 	while (i < config->number_of_philos)
 	{
 		pid = fork();
 		if (pid == 0)
 		{
-			philosopher_routine(&philos[i]);
+			gettimeofday(&(config->philos[i].last_eat_time), NULL);
+			philosopher_routine(&config->philos[i]);
 			exit(EXIT_SUCCESS);
 		}
 		else if (pid > 0)
-			philos[i].pid = pid;
+			config->philos[i].pid = pid;
 		else
 			return (NEG_ERROR);
 		i++;

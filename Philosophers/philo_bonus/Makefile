@@ -5,7 +5,7 @@ S = main utils clean init routines semaphores philo_actions processes
 
 COMPRESS = ar rcs
 RM = rm -f
-CFLAGS = -O3 -g3 -Wall -Wextra -Werror
+CFLAGS = -O2 -Wall -Wextra -Werror
 LDFLAGS = -pthread
 
 CC = cc

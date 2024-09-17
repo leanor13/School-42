@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:43:35 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 15:55:45 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	philo_print(const char *message, t_philo *philo)
 	unsigned long long	timestamp_in_ms;
 	static int			i;
 
+	sem_wait(philo->config->sem_write);
 	if (i == 1)
 		return ;
 	if (message[0] == 'd')
@@ -90,7 +91,7 @@ void	philo_print(const char *message, t_philo *philo)
 	gettimeofday(&current_time, NULL);
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
 			/ 1000);
-	sem_wait(config->sem_write);
+	//sem_wait(config->sem_write);
 	printf("%llu %i %s\n", timestamp_in_ms, philo->id, message);
 	sem_post(config->sem_write);
 }
