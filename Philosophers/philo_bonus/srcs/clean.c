@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 14:47:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 13:54:02 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	kill_all_philos(t_config *config)
 		if (config->philos[i].pid > 0)
 		{
 			kill(config->philos[i].pid, SIGKILL);
+			sem_post(config->sem_write);
 			//config->philos[i].pid = 0;
 		}
 		i++;

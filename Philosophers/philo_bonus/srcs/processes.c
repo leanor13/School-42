@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 10:48:38 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:28:12 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 static int	wait_for_fed_up(t_config *config)
 {
 	return (1);
+}
+
+static void release_all_forks(t_config *config)
+{
+	int i = 0;
+
+	while (i<config->number_of_philos)
+	{
+		sem_post(config->forks_sem);
+		i ++;
+	}
 }
 
 int	create_processes(t_config *config)
@@ -44,18 +55,16 @@ int	create_processes(t_config *config)
 		i++;
 	}
 	i = 0;
-	if (config->max_eat_times > -10)
+	while (i < config->number_of_philos)
 	{
-		while (i < config->number_of_philos)
-		{
-			//printf("here: %d\n", i);
-			sem_wait(config->sem_fed_up);
-			i++;
-		}
-		//philo_sleep(config->time_to_eat, config);
-		set_config_stop(config, true);
-		kill_all_philos(config);
+		//printf("here: %d\n", i);
+		sem_wait(config->sem_fed_up);
+		i++;
 	}
+	//philo_sleep(config->time_to_eat, config);
+	release_all_forks(config);
+	set_config_stop(config, true);
+	kill_all_philos(config);
 	return (EXIT_SUCCESS);
 }
 
