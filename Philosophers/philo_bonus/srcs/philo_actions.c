@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 15:55:45 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:42:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	philo_sleep(int duration_ms, t_config *config)
 	gettimeofday(&start_time, NULL);
 	while ((elapsed_time_ms < duration_ms) && !check_config_stop(config))
 	{
-		usleep(500);
+		usleep(100);
 		gettimeofday(&current_time, NULL);
 		elapsed_time_ms = time_diff_in_ms(start_time, current_time);
 	}
@@ -91,7 +91,6 @@ void	philo_print(const char *message, t_philo *philo)
 	gettimeofday(&current_time, NULL);
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
 			/ 1000);
-	//sem_wait(config->sem_write);
 	printf("%llu %i %s\n", timestamp_in_ms, philo->id, message);
 	sem_post(config->sem_write);
 }
