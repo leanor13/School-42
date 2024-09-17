@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:24:49 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:39:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,35 +80,17 @@ void	philo_print(const char *message, t_philo *philo)
 	t_config			*config;
 	struct timeval		current_time;
 	unsigned long long	timestamp_in_ms;
-	static int			i=0;
+	static int			i;
 
-	//usleep(10);
 	if (i == 1)
 		return;
 	if (message[0] == 'd')
 		i = 1;
-	// if (check_config_stop(config))  // Early return if stop is set
-        // return;
 	config = philo->config;
 	gettimeofday(&current_time, NULL);
 	timestamp_in_ms = (current_time.tv_sec * 1000) + (current_time.tv_usec
 			/ 1000);
 	sem_wait(config->sem_write);
-	// if (check_config_stop(config))
-	// {	
-	// 	sem_post(config->sem_write);
-	// 	return ;
-	// }
-	// ft_putnbr_fd(timestamp_in_ms, STDOUT_FILENO);
-	// write(STDOUT_FILENO, " ", 1);
-	// ft_putnbr_fd(philo->id, STDOUT_FILENO);
-	// write(STDOUT_FILENO, " ", 1);
-	// while (*message)
-	// {
-	// 	write(STDOUT_FILENO, message, 1);
-	// 	message++;
-	// }
-	// write(STDOUT_FILENO, "\n", 1);
 	printf("%llu %i %s\n", timestamp_in_ms, philo->id, message);
 	sem_post(config->sem_write);
 }
