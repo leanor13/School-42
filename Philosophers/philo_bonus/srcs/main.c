@@ -6,11 +6,13 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 09:55:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 11:13:56 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // put back flags
+// make sure to release all forks
+// check who can be waiting for which mutex and remove them all when fed up is reached!
 
 #include "../includes/philo_bonus.h"
 

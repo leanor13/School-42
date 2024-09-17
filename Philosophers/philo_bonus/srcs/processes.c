@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 11:51:30 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 10:48:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	create_processes(t_config *config)
 		else if (pid > 0)
 		{
 			//philo_print("\nPID:", &philos[i]);
+			//printf("PID %d: %d\n", i + 1, pid);
 			philos[i].pid = pid;
 		}
 		else
@@ -43,14 +44,15 @@ int	create_processes(t_config *config)
 		i++;
 	}
 	i = 0;
-	if (config->max_eat_times > 0)
+	if (config->max_eat_times > -10)
 	{
-		while (i < config->number_of_philos && !check_config_stop(config))
+		while (i < config->number_of_philos)
 		{
+			//printf("here: %d\n", i);
 			sem_wait(config->sem_fed_up);
 			i++;
 		}
-		philo_sleep(config->time_to_eat, config);
+		//philo_sleep(config->time_to_eat, config);
 		set_config_stop(config, true);
 		kill_all_philos(config);
 	}
