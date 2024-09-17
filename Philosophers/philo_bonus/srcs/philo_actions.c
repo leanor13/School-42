@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:19:02 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:39:20 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:43:35 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	philo_print(const char *message, t_philo *philo)
 	static int			i;
 
 	if (i == 1)
-		return;
+		return ;
 	if (message[0] == 'd')
 		i = 1;
 	config = philo->config;

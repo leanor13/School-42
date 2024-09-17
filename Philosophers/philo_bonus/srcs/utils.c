@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 19:03:23 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 11:50:07 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:52:13 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,26 @@ long	time_diff_in_ms(struct timeval start, struct timeval end)
 	sec_diff = (end.tv_sec - start.tv_sec) * 1000;
 	usec_diff = (end.tv_usec - start.tv_usec) / 1000;
 	return (sec_diff + usec_diff);
+}
+
+int	validate_input(int argc, char **argv, int *arguments)
+{
+	int	i;
+
+	i = 0;
+	if (argc != 5 && argc != 6)
+		return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
+			EXIT_FAILURE);
+	i = 0;
+	while (i < argc - 1)
+	{
+		arguments[i] = atoi_positive(argv[i + 1]);
+		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
+			return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
+				EXIT_FAILURE);
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }
 
 /* void	philo_print_debug(const char *message, t_philo *philo)

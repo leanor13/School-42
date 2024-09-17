@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:55:03 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:26:15 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:51:57 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ typedef struct s_philo
 
 t_config			*init_config(int argc, char **argv);
 int					init_philos(t_config *config);
-int					create_processes(t_config *config);
+int					init_processes(t_config *config);
+int					validate_input(int argc, char **argv, int *arguments);
 
 void				philosopher_routine(t_philo *philo);
 int					start_monitor_thread(t_philo *philo);

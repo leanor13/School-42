@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:54:49 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:35:31 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:52:59 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int argc, char **argv)
 {
 	t_config	*config;
 	t_philo		*philos;
-	pid_t		monitor_pid;
 
 	philos = NULL;
 	config = init_config(argc, argv);
@@ -26,7 +25,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (init_philos(config) == EXIT_FAILURE)
 		return (cleanup(config), EXIT_FAILURE);
-	if (create_processes(config) != EXIT_SUCCESS)
+	if (init_processes(config) != EXIT_SUCCESS)
 	{
 		cleanup(config);
 		return (EXIT_FAILURE);

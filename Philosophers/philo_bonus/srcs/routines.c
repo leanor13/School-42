@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:53:37 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 13:34:21 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:54:20 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ static int	death_check(t_philo *philo, t_config *config)
 {
 	long			time_since_last_eat;
 	struct timeval	current_time;
-	int				i = 0;
+	int				i;
 
 	sem_wait(config->sem_killer);
 	if (check_config_stop(config))
 		return (EXIT_FAILURE);
 	gettimeofday(&current_time, NULL);
 	time_since_last_eat = time_diff_in_ms(philo->last_eat_time, current_time);
+	i = 0;
 	if (time_since_last_eat > config->time_to_die)
 	{
-		//if (!check_config_stop(config))
 		philo_print("died", philo);
 		set_config_stop(config, true);
 		while (i < config->number_of_philos)
@@ -34,7 +34,6 @@ static int	death_check(t_philo *philo, t_config *config)
 			i ++;
 		}
 		sem_post(config->sem_killer);
-		//kill_all_philos(config);
 		return (EXIT_FAILURE);
 	}
 	sem_post(config->sem_killer);
@@ -74,7 +73,6 @@ int	start_monitor_thread(t_philo *philo)
 void	philosopher_routine(t_philo *philo)
 {
 	t_config	*config;
-	pthread_t	monitor_thread;
 
 	start_monitor_thread(philo);
 	config = philo->config;

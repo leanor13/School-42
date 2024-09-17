@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 13:53:13 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:54:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 {
-	char	sem_name[10];
-	char	id_str[5];
-
 	philo->config = config;
 	philo->id = num + 1;
 	gettimeofday(&philo->last_eat_time, NULL);
@@ -36,26 +33,6 @@ int	init_philos(t_config *config)
 	while (i < config->number_of_philos)
 	{
 		philo_fields_init(&config->philos[i], config, i);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-static int	validate_input(int argc, char **argv, int *arguments)
-{
-	int	i;
-
-	i = 0;
-	if (argc != 5 && argc != 6)
-		return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
-			EXIT_FAILURE);
-	i = 0;
-	while (i < argc - 1)
-	{
-		arguments[i] = atoi_positive(argv[i + 1]);
-		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
-			return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
-				EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);

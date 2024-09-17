@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/17 14:33:52 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:53:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	cleanup(t_config *config)
 {
-	int		i;
-	char	sem_name[10];
-	char	id_str[5];
-
 	if (config->philos)
 	{
 		kill_all_philos(config);
