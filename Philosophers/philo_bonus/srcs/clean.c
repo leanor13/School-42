@@ -6,29 +6,21 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:55:58 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:50:14 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 14:53:51 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-void	cleanup(t_philo *philos, t_config *config)
+void	cleanup(t_config *config)
 {
-	int		i;
-	char	sem_name[10];
-	char	id_str[5];
-	
-	if (philos)
-	{	
+	if (config->philos)
+	{
 		kill_all_philos(config);
-		free(philos);
+		free(config->philos);
 	}
 	if (config)
 	{
-		//if (config->monitor_pids)
-		//	free(config->monitor_pids);
-		//if (config->philos_pids)
-		//	free(config->philos_pids);
 		sem_close(config->forks_sem);
 		sem_unlink("/forks_sem");
 		sem_close(config->sem_write);
@@ -45,16 +37,18 @@ void	cleanup(t_philo *philos, t_config *config)
 
 void	kill_all_philos(t_config *config)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	sem_wait(config->sem_write);
 	while (i < config->number_of_philos)
 	{
-		// if not already killed - kill
 		if (config->philos[i].pid > 0)
+		{
 			kill(config->philos[i].pid, SIGKILL);
-		i ++;
+			sem_post(config->sem_write);
+		}
+		i++;
 	}
 	sem_post(config->sem_write);
 }

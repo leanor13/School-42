@@ -6,7 +6,7 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 19:56:08 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:15:34 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:18:44 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 {
-	char sem_name[10];
-	char id_str[5];
-
 	philo->config = config;
 	philo->id = num + 1;
 	gettimeofday(&philo->last_eat_time, NULL);
@@ -25,40 +22,45 @@ static void	philo_fields_init(t_philo *philo, t_config *config, int num)
 	philo->pid = 0;
 }
 
-t_philo	*init_philos(t_config *config)
+int	init_philos(t_config *config)
 {
-	int		i;
-	
+	int	i;
+
 	config->philos = malloc(sizeof(t_philo) * config->number_of_philos);
 	if (!config->philos)
-		return (NULL);
+		return (EXIT_FAILURE);
 	i = 0;
 	while (i < config->number_of_philos)
 	{
 		philo_fields_init(&config->philos[i], config, i);
-		i ++;
-	}
-
-	return (config->philos);
-}
-
-static int	validate_input(int argc, char **argv, int *arguments)
-{
-	int	i;
-
-	i = 0;
-	if (argc != 5 && argc != 6)
-		return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
-			EXIT_FAILURE);
-	i = 0;
-	while (i < argc - 1)
-	{
-		arguments[i] = atoi_positive(argv[i + 1]);
-		if (arguments[i] == NEG_ERROR || (i < 3 && arguments[i] == 0))
-			return (write(STDERR_FILENO, WRONG_INPUT, WRONG_INPUT_MSG_LEN),
-				EXIT_FAILURE);
 		i++;
 	}
+	return (EXIT_SUCCESS);
+}
+
+static int	init_config_semaphores(t_config *config)
+{
+	sem_unlink("/sem_write");
+	config->sem_write = sem_open("/sem_write", O_CREAT, 0644, 1);
+	if (config->sem_write == SEM_FAILED)
+		return (EXIT_FAILURE);
+	sem_unlink("/sem_stop");
+	config->sem_stop = sem_open("/sem_stop", O_CREAT, 0644, 1);
+	if (config->sem_stop == SEM_FAILED)
+		return (EXIT_FAILURE);
+	sem_unlink("/forks_sem");
+	config->forks_sem = sem_open("/forks_sem", O_CREAT, 0644,
+			config->number_of_philos);
+	if (config->forks_sem == SEM_FAILED)
+		return (EXIT_FAILURE);
+	sem_unlink("/sem_killer");
+	config->sem_killer = sem_open("/sem_killer", O_CREAT, 0644, 1);
+	if (config->sem_killer == SEM_FAILED)
+		return (EXIT_FAILURE);
+	sem_unlink("/sem_fed_up");
+	config->sem_fed_up = sem_open("/sem_fed_up", O_CREAT, 0644, 0);
+	if (config->sem_fed_up == SEM_FAILED)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -72,29 +74,14 @@ static int	init_config_fields(t_config *config, int *arguments, int argc)
 		config->max_eat_times = arguments[4];
 	else
 		config->max_eat_times = -1;
-	// add protections for example if config->sem_stop == SEM_FAILED ...
-	sem_unlink("/sem_write");
-	config->sem_write = sem_open("/sem_write", O_CREAT, 0644, 1);
-	sem_unlink("/sem_stop");
-	config->sem_stop = sem_open("/sem_stop", O_CREAT, 0644, 1);
-	sem_unlink("/forks_sem");
-	config->forks_sem = sem_open("/forks_sem", O_CREAT, 0644, config->number_of_philos);
-	sem_unlink("/sem_killer");
-	config->sem_killer = sem_open("/sem_killer", O_CREAT, 0644, 1);
-	sem_unlink("/sem_fed_up");
-	config->sem_fed_up = sem_open("/sem_fed_up", O_CREAT, 0644, 0);
-	// maybe send number of philos to sem_stop
+	if (init_config_semaphores(config) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (config->max_eat_times == 0)
-	{
-		set_config_stop(config, true);
-	}
+		return (EXIT_FAILURE);
 	else
-	{
 		set_config_stop(config, false);
-	}
 	return (EXIT_SUCCESS);
 }
-
 
 t_config	*init_config(int argc, char **argv)
 {
@@ -106,7 +93,7 @@ t_config	*init_config(int argc, char **argv)
 	while (i < 5)
 	{
 		arguments[i] = 0;
-		i ++;
+		i++;
 	}
 	if (validate_input(argc, argv, arguments) == EXIT_FAILURE)
 		return (NULL);

@@ -6,13 +6,37 @@
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 14:15:06 by yioffe            #+#    #+#             */
-/*   Updated: 2024/09/16 08:50:58 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/09/17 16:21:38 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo_bonus.h"
 
-int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
+static void	wait_for_fed_up(t_config *config)
+{
+	int	i;
+
+	i = 0;
+	while (i < config->number_of_philos)
+	{
+		sem_wait(config->sem_fed_up);
+		i++;
+	}
+}
+
+static void	release_all_forks(t_config *config)
+{
+	int	i;
+
+	i = 0;
+	while (i < config->number_of_philos)
+	{
+		sem_post(config->forks_sem);
+		i ++;
+	}
+}
+
+int	init_processes(t_config *config)
 {
 	int		i;
 	pid_t	pid;
@@ -23,58 +47,33 @@ int	create_processes(pid_t **pids, t_philo *philos, t_config *config)
 		pid = fork();
 		if (pid == 0)
 		{
-			philosopher_routine(&philos[i]);
+			gettimeofday(&(config->philos[i].last_eat_time), NULL);
+			philosopher_routine(&config->philos[i]);
 			exit(EXIT_SUCCESS);
 		}
 		else if (pid > 0)
-			philos[i].pid = pid;
+			config->philos[i].pid = pid;
 		else
 			return (NEG_ERROR);
-		i ++;
+		i++;
 	}
-	i = 0;
-	if (config->max_eat_times > 0)
-	{
-		while (i < config->number_of_philos && !check_config_stop(config))
-		{
-			sem_wait(config->sem_fed_up);
-			i ++;
-		}
-		philo_sleep(config->time_to_eat, config);
-		set_config_stop(config, true);
-		kill_all_philos(config);
-	}
-
+	wait_for_fed_up(config);
+	release_all_forks(config);
+	set_config_stop(config, true);
+	kill_all_philos(config);
 	return (EXIT_SUCCESS);
 }
-
-
-// int	start_monitor_process(t_config *config, pid_t *monitor_pid)
-// {
-// 	*monitor_pid = fork();
-// 	if (*monitor_pid == 0)
-// 	{
-// 		monitor_routine(config);
-// 		exit(EXIT_SUCCESS);
-// 	}
-// 	else if (*monitor_pid > 0)
-// 		return (EXIT_SUCCESS);
-// 	else
-// 		return (EXIT_FAILURE);
-// }
-
 
 int	wait_for_processes(t_config *config)
 {
-	int i;
-	int status;
+	int	i;
+	int	status;
 
-	for (i = 0; i < config->number_of_philos; i++)
+	i = 0;
+	while (i < config->number_of_philos)
 	{
 		waitpid(config->philos[i].pid, &status, 0);
-		//waitpid(config->monitor_pids[i], &status, 0);
-		break ;
+		i ++;
 	}
 	return (EXIT_SUCCESS);
 }
-
