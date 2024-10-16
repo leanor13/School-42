@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   micro_orig.c                                       :+:      :+:    :+:   */
+/*   microshell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 12:15:17 by shackbei          #+#    #+#             */
-/*   Updated: 2024/10/04 13:32:08 by yioffe           ###   ########.fr       */
+/*   Updated: 2024/10/05 11:13:04 by yioffe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
-
-/*not needed in exam, but necessary if you want to use this tester:
-https://github.com/Glagan/42-exam-rank-04/blob/master/microshell/test.sh*/
-// #ifdef TEST_SH
-// # define TEST		1
-// #else
-// # define TEST		0
-// #endif
 
 void	ft_putstr_fd2(char *str, char *arg)
 {

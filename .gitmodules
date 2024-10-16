@@ -4,3 +4,6 @@
 [submodule "Philosophers"]
 	path = Philosophers
 	url = git@github.com:leanor13/Philosophers.git
+[submodule "miniRT"]
+	path = miniRT
+	url = https://github.com/ngtina99/miniRT
