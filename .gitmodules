@@ -7,3 +7,6 @@
 [submodule "miniRT"]
 	path = miniRT
 	url = https://github.com/ngtina99/miniRT
+[submodule "minishell"]
+	path = minishell
+	url = https://github.com/leanor13/minishell
