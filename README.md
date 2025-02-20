@@ -47,4 +47,4 @@ Formatting and code styling are done according to Norminette rules - internal sc
 
 ## Contact
 
-Feel free to reach out to me on [GitHub](https://github.com/leanor) for any questions or collaboration opportunities.
+Feel free to reach out to me on [LinkedIn](https://www.linkedin.com/in/yuliaioffe/) for any questions or collaboration opportunities.
