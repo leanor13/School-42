@@ -13,3 +13,6 @@
 [submodule "CPPs"]
 	path = CPPs
 	url = git@github.com:leanor13/CPPs.git
+[submodule "webserver"]
+	path = webserver
+	url = git@github.com:andlukass/webserver.git
