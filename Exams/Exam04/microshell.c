@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   microshell.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yioffe <yioffe@student.42lisboa.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/15 12:15:17 by shackbei          #+#    #+#             */
-/*   Updated: 2024/10/05 11:13:04 by yioffe           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
@@ -63,8 +51,7 @@ void execute_in_stdout(char *argv[], int i, int *tmp_fd, char *env[])
 	else
 	{
 		close(*tmp_fd);
-		while (waitpid(-1, NULL, WUNTRACED) != -1)
-			;
+		while (waitpid(-1, NULL, WUNTRACED) != -1);
 		*tmp_fd = dup(STDIN_FILENO);
 	}
 }
