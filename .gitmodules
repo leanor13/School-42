@@ -16,3 +16,6 @@
 [submodule "webserver"]
 	path = webserver
 	url = git@github.com:andlukass/webserver.git
+[submodule "ft_transcendence"]
+	path = ft_transcendence
+	url = https://github.com/Best-transcendence/ft_transcendence
